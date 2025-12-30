@@ -51,6 +51,15 @@ const SNAPSHOT_DATA = {
             "title": "Real-Time Monitoring in Cybersecurity"
           }
         ]
+      },
+      "12": {
+        "title": "M4: Module 4: Incident Management and Response",
+        "lessons": [
+          {
+            "id": 32,
+            "title": "Introduction to Module 4: Incident Management and Response"
+          }
+        ]
       }
     },
     "DevOps Engineering": {
@@ -132,7 +141,12 @@ const SNAPSHOT_DATA = {
       },
       "11": {
         "title": "M3: Advanced Malware Analysis: Exploring Malware Dynamics and Behavior",
-        "lessons": []
+        "lessons": [
+          {
+            "id": 33,
+            "title": "\": \"Understanding JSON Formatting\",\n  \""
+          }
+        ]
       }
     },
     "Python Full Stack": {
@@ -438,6 +452,22 @@ const SNAPSHOT_DATA = {
       "starter_code": "# Example using break and continue in a loop names = [\"Alice\", \"Bob\", \"Charlie\", \"David\"] for name in names: if name == \"Bob\": print(f\"Found {name}, skipping to the next.\") continue # Skip the rest of the loop for this iteration if name == \"David\": print(f\"Stopping at {name}.\") break # Exit the loop entirely print(name)",
       "content": "- **Break Statement**: The `break` statement is used to exit a loop prematurely when a certain condition is met. It completely terminates the loop and moves on to the next line of code following the loop. - **Continue Statement**: The `continue` statement, on the other hand, skips the current iteration of the loop but continues with the subsequent iterations. It does not terminate the entire loop; it simply bypasses the remaining part of the loop's body for that particular iteration. - **Control Flow**: Both `break` and `continue` provide control over the flow of loops, allowing developers to optimize their code by avoiding unnecessary iterations or handling specific conditions efficiently.",
       "docs": "1. [Python Official Documentation on Loops](https://docs.python.org/3/tutorial/controlflow.html#break-and-continue-statements) 2. [Real Python - Break and Continue in Python](https://realpython.com/python-break-continue-statement/)",
+      "ide_mode": "python"
+    },
+    "32": {
+      "title": "Introduction to Module 4: Incident Management and Response",
+      "analogy": "Incident management is like managing traffic flow during peak hours.",
+      "starter_code": "def handle_incident():\n    \"\"\"Simulates incident handling in a system.\"\"\"\n    incidents = [\"Server restart needed\", \"Memory low\", \"User query\"]\n    \n    for incident in incidents:\n        priority = {\"Server restart needed\": \"critical\",\n                    \"Memory low\": \"high\",\n                    \"User query\": \"medium\"}\n        print(f\"Handling: {incident} with priority: {priority[incident]}\")\n        \n    print(\"All incidents handled successfully.\")",
+      "content": "- **Incident Management**: A structured approach to tracking, prioritizing, and resolving incidents.  \n- **Key Features**: Includes incident categorization, prioritization based on impact, and collaboration tools for efficient resolution.  \n- **Importance**: Ensures timely response to issues, enhancing system availability and user satisfaction.",
+      "docs": "1. [Incident Management](https://en.wikipedia.org/wiki/ITIL)\n2. [ITIL Incident Management](https://www.gartner.com)",
+      "ide_mode": "python"
+    },
+    "33": {
+      "title": "\": \"Understanding JSON Formatting\",\n  \"",
+      "analogy": "\": \"Just like how a recipe is organized in a structured way, JSON helps organize data neatly.\",\n  \"",
+      "starter_code": "\": \"const obj = {name: 'John', age: 30};\",\n  \"",
+      "content": "\": \"JSON (JavaScript Object Notation) is a lightweight data-interchange format that is easy for humans to read and write, and easy for machines to parse and generate. It is based on JavaScript objects and provides a simple structure for data representation. JSON is widely used in web applications for transmitting data between servers and clients.\",\n  \"",
+      "docs": "\": \"https://www.json.org/json\"\n}",
       "ide_mode": "python"
     }
   }
