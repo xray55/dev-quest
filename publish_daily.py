@@ -68,14 +68,17 @@ def generate_snapshot():
 def git_push():
     print(f"[{datetime.now()}] 🚀 Pushing to GitHub...")
     try:
-        # Add all changes
+        # 1. Always PULL first to sync with GitHub
+        subprocess.run(["git", "pull", "origin", "main"], check=False)
+
+        # 2. Add all changes
         subprocess.run(["git", "add", "."], check=True)
 
-        # Commit with timestamp
+        # 3. Commit with timestamp
         date_str = datetime.now().strftime("%Y-%m-%d %H:%M")
         subprocess.run(["git", "commit", "-m", f"Daily Curriculum Update: {date_str}"], check=True)
 
-        # Push
+        # 4. Push
         subprocess.run(["git", "push"], check=True)
         print("✅ Successfully pushed to GitHub.")
     except subprocess.CalledProcessError as e:

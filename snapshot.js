@@ -154,6 +154,10 @@ const SNAPSHOT_DATA = {
           {
             "id": 21,
             "title": "Loops in Introduction to Python Programming"
+          },
+          {
+            "id": 31,
+            "title": "Loops with Break and Continue"
           }
         ]
       }
@@ -427,6 +431,14 @@ const SNAPSHOT_DATA = {
       "content": "1. **Event Handling**: JavaScript allows developers to handle events such as clicks, key presses, and form submissions. This enables interactive user experiences.\n2. **DOM Manipulation**: JavaScript can manipulate the Document Object Model (DOM), allowing for dynamic changes to web pages without needing to reload the page.\n3. **Asynchronous Programming**: JavaScript supports asynchronous programming through callbacks, promises, and async/await, enabling non-blocking operations and smoother user interfaces.",
       "docs": "1. [JavaScript Guide](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide)\n2. [ECMAScript 2022 Specification](https://tc39.es/ecma262/)",
       "ide_mode": "javascript"
+    },
+    "31": {
+      "title": "Loops with Break and Continue",
+      "analogy": "Real World Comparison - Imagine reading a book where flipping through pages is like looping, skipping a boring part is like continue, and finding an interesting section to read again immediately is like break.",
+      "starter_code": "# Example using break and continue in a loop names = [\"Alice\", \"Bob\", \"Charlie\", \"David\"] for name in names: if name == \"Bob\": print(f\"Found {name}, skipping to the next.\") continue # Skip the rest of the loop for this iteration if name == \"David\": print(f\"Stopping at {name}.\") break # Exit the loop entirely print(name)",
+      "content": "- **Break Statement**: The `break` statement is used to exit a loop prematurely when a certain condition is met. It completely terminates the loop and moves on to the next line of code following the loop. - **Continue Statement**: The `continue` statement, on the other hand, skips the current iteration of the loop but continues with the subsequent iterations. It does not terminate the entire loop; it simply bypasses the remaining part of the loop's body for that particular iteration. - **Control Flow**: Both `break` and `continue` provide control over the flow of loops, allowing developers to optimize their code by avoiding unnecessary iterations or handling specific conditions efficiently.",
+      "docs": "1. [Python Official Documentation on Loops](https://docs.python.org/3/tutorial/controlflow.html#break-and-continue-statements) 2. [Real Python - Break and Continue in Python](https://realpython.com/python-break-continue-statement/)",
+      "ide_mode": "python"
     }
   }
 };
