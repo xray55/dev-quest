@@ -87,6 +87,10 @@ const SNAPSHOT_DATA = {
           {
             "id": 29,
             "title": "Introduction to JavaScript in Frontend Development"
+          },
+          {
+            "id": 30,
+            "title": "Introduction to Frontend Development - JavaScript Core Concept #3"
           }
         ]
       }
@@ -414,6 +418,14 @@ const SNAPSHOT_DATA = {
       "starter_code": "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n    <meta charset=\"UTF-8\">\n    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n    <title>JavaScript Example</title>\n    <style>\n        #colorBox {\n            width: 200px;\n            height: 200px;\n            background-color: lightblue;\n        }\n    </style>\n</head>\n<body>\n\n<div id=\"colorBox\"></div>\n\n<script>\n    document.getElementById('colorBox').addEventListener('click', function() {\n        this.style.backgroundColor = 'lightcoral';\n    });\n</script>\n\n</body>\n</html>",
       "content": "1. **Dynamic Behavior**: JavaScript allows web pages to respond dynamically to user actions such as clicks, key presses, and mouse movements.\n2. **Event Handling**: It enables developers to handle events like `click`, `mouseover`, and `keydown` to create interactive experiences.\n3. **DOM Manipulation**: JavaScript can manipulate the Document Object Model (DOM) to change the content and structure of a webpage without needing to reload it.",
       "docs": "1. [MDN Web Docs - JavaScript](https://developer.mozilla.org/en-US/docs/Web/JavaScript)\n2. [W3Schools - JavaScript Tutorial](https://www.w3schools.com/js/)",
+      "ide_mode": "javascript"
+    },
+    "30": {
+      "title": "Introduction to Frontend Development - JavaScript Core Concept #3",
+      "analogy": "Building a house where HTML is like the bricks that make up the structure, CSS is like the paint and decorations that make it look pretty, but JavaScript is like the electricity that brings the house to life.",
+      "starter_code": "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n    <meta charset=\"UTF-8\">\n    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n    <title>JavaScript Example</title>\n    <style>\n        #message {\n            font-size: 24px;\n            color: blue;\n        }\n    </style>\n</head>\n<body>\n\n<h1>Welcome to the Interactive Page!</h1>\n<button id=\"changeTextButton\">Click me!</button>\n<p id=\"message\">This text will change when you click the button.</p>\n\n<script>\n    document.getElementById('changeTextButton').addEventListener('click', function() {\n        document.getElementById('message').textContent = 'The text has been changed!';\n    });\n</script>\n\n</body>\n</html>",
+      "content": "1. **Event Handling**: JavaScript allows developers to handle events such as clicks, key presses, and form submissions. This enables interactive user experiences.\n2. **DOM Manipulation**: JavaScript can manipulate the Document Object Model (DOM), allowing for dynamic changes to web pages without needing to reload the page.\n3. **Asynchronous Programming**: JavaScript supports asynchronous programming through callbacks, promises, and async/await, enabling non-blocking operations and smoother user interfaces.",
+      "docs": "1. [JavaScript Guide](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide)\n2. [ECMAScript 2022 Specification](https://tc39.es/ecma262/)",
       "ide_mode": "javascript"
     }
   }
