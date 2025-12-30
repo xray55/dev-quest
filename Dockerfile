@@ -4,10 +4,12 @@ FROM python:3.11-slim
 # Set the working directory in the container
 WORKDIR /app
 
-# Install system dependencies (git is often needed for CrewAI/LangChain tools)
+# Install system dependencies
+# (Added curl/wget just in case we need them for healthchecks later)
 RUN apt-get update && apt-get install -y \
     git \
     docker.io \
+    curl \
     && rm -rf /var/lib/apt/lists/*
 
 # Install Python dependencies
@@ -22,10 +24,12 @@ RUN pip install --no-cache-dir \
     langchain-openai \
     fastapi \
     uvicorn \
+    flask \
+    flask-cors \
     -U ddgs
 
-# Copy the ONLY script we need now
-COPY daily_ops.py .
+# Copy EVERYTHING (server.py, academy.db, and any scripts)
+COPY . .
 
-# Run the engine
-CMD ["python", "daily_ops.py"]
+# Run the Flask Server instead of daily_ops
+CMD ["python", "server.py"]
