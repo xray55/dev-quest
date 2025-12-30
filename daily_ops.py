@@ -22,14 +22,194 @@ HTML_FILENAME = "index.html"
 REST_TIMER = 30
 MIN_LESSONS_PER_MODULE = 3
 
-PATHS = {
-    "Python Full Stack": "python",
-    "Frontend Master": "javascript",
-    "Cybersecurity Ops": "python",
-    "Malware Analysis": "python",
-    "Reverse Engineering": "python",
-    "DevOps Engineering": "python"
-}
+# --- CURRICULUM CONFIGURATION ---
+# The AI will rotate through these specialized faculties.
+# Topics range from "Hello World" (Zero) to "Kernel Hacking" (Master).
+
+CURRICULUM_TRACKS = [
+    # ☕ JAVA: From Syntax to Enterprise Architect
+    {
+        "name": "Java Engineering Faculty",
+        "focus": [
+            # LEVEL 1: FOUNDATION
+            "Java Syntax: Primitives, Loops, and Control Flow",
+            "Object-Oriented Programming (OOP): Classes vs Objects",
+            "Interfaces, Abstract Classes, and Polymorphism",
+            "Exception Handling: Try-Catch-Finally Blocks",
+            # LEVEL 2: INTERMEDIATE
+            "Java Collections Framework (List, Set, Map, Queue)",
+            "Java Streams API & Lambda Expressions",
+            "File I/O and NIO.2 Basics",
+            "Maven/Gradle Build Systems Explained",
+            # LEVEL 3: ADVANCED
+            "Multithreading: The volatile keyword & synchronized blocks",
+            "Java Memory Model: Heap vs Stack",
+            "Reflection API & Annotation Processing",
+            "Design Patterns: Singleton, Factory, Strategy in Java",
+            # LEVEL 4: MASTERY (ENTERPRISE)
+            "Spring Boot 3: Dependency Injection & IOC",
+            "JVM Tuning: Garbage Collection (G1GC vs ZGC)",
+            "Reactive Programming with Project Reactor (WebFlux)",
+            "Microservices Patterns: Circuit Breakers & Service Discovery"
+        ]
+    },
+
+    # 🎮 GAME DEV (C++): From Console to Engine Dev
+    {
+        "name": "C++ Game Engine Engineering",
+        "focus": [
+            # LEVEL 1: FOUNDATION
+            "C++ Basics: Variables, Functions, and Headers",
+            "Pointers vs References: The Critical Difference",
+            "Structs vs Classes in C++",
+            # LEVEL 2: INTERMEDIATE
+            "The Standard Template Library (STL): Vectors & Maps",
+            "RAII: Smart Pointers (unique_ptr, shared_ptr)",
+            "Operator Overloading & Copy Constructors",
+            # LEVEL 3: ADVANCED
+            "Memory Management: Stack Allocation vs Heap Fragmentation",
+            "Move Semantics & R-Value References",
+            "Template Metaprogramming & Concepts",
+            "Multithreading with std::thread and Mutexes",
+            # LEVEL 4: MASTERY (ENGINE ARCHITECTURE)
+            "Writing a Custom Memory Allocator",
+            "3D Math: Quaternions, Matrices, and Vectors",
+            "Entity Component Systems (ECS) Architecture",
+            "Vulkan/OpenGL Graphics Pipeline Basics"
+        ]
+    },
+
+    # 🕹️ GAME DEV (C#): From Scripting to Architecture
+    {
+        "name": "Unity & C# Game Development",
+        "focus": [
+            # LEVEL 1: FOUNDATION
+            "C# Syntax: Variables, Conditionals, Loops",
+            "Unity Basics: MonoBehaviours and the Update Loop",
+            "Input Systems: Keyboard & Mouse Events",
+            # LEVEL 2: INTERMEDIATE
+            "C# Delegates, Events, and Actions",
+            "LINQ: Querying Data Collections",
+            "Coroutines vs Async/Await in Games",
+            "Unity UI Toolkit & Event Systems",
+            # LEVEL 3: ADVANCED
+            "ScriptableObjects for Data-Driven Design",
+            "Garbage Collection Optimization in Unity",
+            "Asset Bundles & Addressables System",
+            "Custom Editor Scripting & Inspectors",
+            # LEVEL 4: MASTERY
+            "Unity DOTS (Data-Oriented Technology Stack)",
+            "Shader Graph & HLSL Shader Programming",
+            "Client-Side Prediction in Multiplayer Networking",
+            "Procedural Content Generation (PCG) Algorithms"
+        ]
+    },
+
+    # 🦀 RUST: From Hello World to Systems
+    {
+        "name": "Rust Systems Programming",
+        "focus": [
+            # LEVEL 1: FOUNDATION
+            "Rust Basics: Cargo, Variables, and Mutability",
+            "Control Flow: Match Expressions and Loops",
+            "Data Types: Tuples, Arrays, and Slices",
+            # LEVEL 2: INTERMEDIATE
+            "Ownership & Borrowing: The Rules of the Checker",
+            "Structs, Enums, and Pattern Matching",
+            "Traits and Generics (The Interface of Rust)",
+            "Error Handling: Result<T, E> and Option<T>",
+            # LEVEL 3: ADVANCED
+            "Lifetimes: 'a, 'static, and Elision Rules",
+            "Smart Pointers: Box, Rc, Arc, RefCell",
+            "Concurrency: Spawning Threads and Channels",
+            "Async Rust: Tokio Runtime & Futures",
+            # LEVEL 4: MASTERY
+            "Unsafe Rust: Raw Pointers & FFI",
+            "Writing Kubernetes Operators in Rust",
+            "Embedded Rust: Running on Microcontrollers",
+            "Macro Rules and Procedural Macros"
+        ]
+    },
+
+    # ⚔️ RED TEAM: From Scripting to Exploitation
+    # Uses Uncensored Model
+    {
+        "name": "Red Team Operations",
+        "focus": [
+            # LEVEL 1: FOUNDATION
+            "Python/Bash Scripting for Automation",
+            "Networking 101: TCP/IP, DNS, and Ports",
+            "Linux CLI Mastery for Hackers",
+            # LEVEL 2: INTERMEDIATE
+            "Reconnaissance: Nmap, Masscan, and OSINT",
+            "Web Vulnerabilities: SQLi, XSS, and CSRF",
+            "Metasploit Framework Basics",
+            "Password Cracking: Hashcat & John the Ripper",
+            # LEVEL 3: ADVANCED
+            "Privilege Escalation: Linux SUID & Windows Tokens",
+            "Active Directory: Kerberoasting & Bloodhound",
+            "Buffer Overflows: Stack-Based Exploitation",
+            "Evasion: Obfuscation and Antivirus Bypassing",
+            # LEVEL 4: MASTERY
+            "Writing Custom Malware in C/C++",
+            "Windows Internals: API Hooking & DLL Injection",
+            "C2 Infrastructure Design",
+            "Reverse Engineering with Ghidra"
+        ]
+    },
+
+    # 🛡️ BLUE TEAM: From Admin to Hunter
+    {
+        "name": "Blue Team & Cyber Defense",
+        "focus": [
+            # LEVEL 1: FOUNDATION
+            "System Administration: Users, Groups, Permissions",
+            "Understanding System Logs (Syslog, Event Viewer)",
+            "Firewall Basics (UFW, iptables)",
+            # LEVEL 2: INTERMEDIATE
+            "Network Traffic Analysis (Wireshark/Zeek)",
+            "Intrusion Detection Systems (Snort/Suricata)",
+            "Hardening Servers (CIS Benchmarks)",
+            "Secure SSH & VPN Configuration",
+            # LEVEL 3: ADVANCED
+            "SIEM Engineering: Splunk/ELK Query Languages",
+            "Digital Forensics: Disk Imaging & Artifacts",
+            "Memory Forensics (Volatility Framework)",
+            "Incident Response: The PICERL Process",
+            # LEVEL 4: MASTERY
+            "Malware Analysis: Sandboxing & Deobfuscation",
+            "Threat Hunting: Mapping to MITRE ATT&CK",
+            "Zero-Trust Architecture Implementation",
+            "Writing YARA Rules for Detection"
+        ]
+    },
+
+    # 🎨 WEB MASTERY: From HTML to Micro-Frontends
+    {
+        "name": "Full Stack Web Engineering",
+        "focus": [
+            # LEVEL 1: FOUNDATION
+            "HTML5 Semantic Structure & Accessibility",
+            "CSS3: Flexbox, Grid, and Responsive Design",
+            "JavaScript Basics: Variables, Functions, DOM",
+            # LEVEL 2: INTERMEDIATE
+            "ES6+ Features: Destructuring, Spread, Modules",
+            "Async JavaScript: Promises, Fetch, Async/Await",
+            "React Basics: Components, Props, and State",
+            "Tailwind CSS Configuration & Patterns",
+            # LEVEL 3: ADVANCED
+            "TypeScript: Interfaces, Types, and Generics",
+            "State Management: Redux Toolkit / Zustand",
+            "Next.js: Server Side Rendering (SSR) vs Static (SSG)",
+            "Web Security: CORS, CSP, and XSS Prevention",
+            # LEVEL 4: MASTERY
+            "WebAssembly (WASM): Running Rust/C++ in Browser",
+            "Micro-Frontends (Module Federation)",
+            "WebGL & Three.js for 3D Experiences",
+            "Performance Optimization: Critical Rendering Path"
+        ]
+    }
+]
 
 # --- 2. FRONTEND TEMPLATE ---
 FRONTEND_HTML = r"""<!DOCTYPE html>
@@ -269,8 +449,11 @@ llm_deep = LLM(
 
 
 def get_llm(path_name):
-    security_paths = ["Cybersecurity Ops", "Malware Analysis", "Reverse Engineering"]
-    return llm_deep if path_name in security_paths else llm_standard
+    # Use the uncensored model for Security and Systems Architecture
+    security_triggers = ["Cybersecurity", "Systems Programming", "Reverse Engineering", "Malware"]
+    if any(trigger in path_name for trigger in security_triggers):
+        return llm_deep
+    return llm_standard
 
 
 # --- 4. TOOL SETUP ---
@@ -513,10 +696,20 @@ def autonomous_loop():
 
     while True:
         try:
-            path = random.choice(list(PATHS.keys()))
-            ide_mode = PATHS[path]
-            active_mod = get_active_module(path)
+            # 1. Select a Track (Logic Updated to support Dictionary Structure)
+            track_data = random.choice(CURRICULUM_TRACKS)
+            path = track_data["name"]
 
+            # 2. Select a Sub-topic and Determine IDE Mode
+            sub_topic = random.choice(track_data["focus"])
+
+            # Simple heuristic to determine IDE mode for the browser
+            ide_mode = "python"
+            if "Frontend" in path or "Node.js" in sub_topic or "JavaScript" in sub_topic:
+                ide_mode = "javascript"
+
+            # 3. Get or Create Active Module
+            active_mod = get_active_module(path)
             next_topic, module_id, mod_title_str = "", None, ""
 
             if not active_mod:
@@ -524,13 +717,13 @@ def autonomous_loop():
                 new_title = generate_module_title(path, 1)
                 module_id = create_new_module(path, 1, new_title)
                 mod_title_str = new_title
-                next_topic = f"Introduction to {new_title}"
+                next_topic = f"Introduction to {new_title} ({sub_topic})"
             else:
                 module_id, mod_num, mod_title_str = active_mod[0], active_mod[1], active_mod[2]
                 existing = get_existing_lesson_titles(module_id)
 
                 if len(existing) < MIN_LESSONS_PER_MODULE:
-                    next_topic = f"Core concept #{len(existing) + 1} of {mod_title_str}"
+                    next_topic = f"Deep Dive: {sub_topic} within {mod_title_str}"
                 else:
                     logger.info(f"🧐 Dean Evaluating: '{mod_title_str}'...")
                     verdict = verify_module_completion(path, mod_title_str, existing)
@@ -539,7 +732,7 @@ def autonomous_loop():
                         new_title = generate_module_title(path, mod_num + 1)
                         module_id = create_new_module(path, mod_num + 1, new_title)
                         mod_title_str = new_title
-                        next_topic = f"Introduction to {new_title}"
+                        next_topic = f"Introduction to {new_title} ({sub_topic})"
                     else:
                         logger.info(f"🚧 Dean Req: '{verdict}'")
                         next_topic = verdict
