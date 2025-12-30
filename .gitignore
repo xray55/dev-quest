@@ -1,0 +1,19 @@
+﻿# 1. IGNORE EVERYTHING BY DEFAULT
+*
+
+# 2. ALLOW ONLY THESE FILES (Whitelist)
+!daily_ops.py
+!publish_daily.py
+!export.py
+!index.html
+!snapshot.js
+!Dockerfile
+!docker-compose.yml
+!.gitignore
+
+# 3. EXPLICITLY IGNORE HEAVY/SENSITIVE ITEMS (Just in case)
+academy.db
+__pycache__/
+.venv/
+.idea/
+.git/
