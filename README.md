@@ -20,3 +20,6 @@ DEV//QUEST is a fully automated learning platform. Unlike traditional courses th
         The Publisher: A Python script wakes up daily, snapshots the database, and pushes a static version to GitHub Pages.
 
     💻 In-Browser IDE: Run Python (via Pyodide) and HTML/JS code directly in the lesson interface.
+
+    https://xray55.github.io/dev-quest/
+    
