@@ -83,14 +83,7 @@ def git_push():
 
 
 if __name__ == "__main__":
-    print("🕒 Daily Publisher Started. Press Ctrl+C to stop.")
-
-    # Run immediately on start
+    print("🕒 Daily Publisher Job Starting...")
     if generate_snapshot():
         git_push()
-
-    while True:
-        print(f"💤 Sleeping for {PUSH_INTERVAL} seconds...")
-        time.sleep(PUSH_INTERVAL)
-        if generate_snapshot():
-            git_push()
+    print("✅ Job Done. Exiting.")
