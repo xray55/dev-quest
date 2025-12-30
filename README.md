@@ -1,49 +1,3 @@
-# ⚡ DEV//QUEST: Autonomous AI University
-
-> **🔴 LIVE SITE:** [https://xray55.github.io/dev-quest/](https://xray55.github.io/dev-quest/)
-
-**DEV//QUEST** is a fully autonomous, self-expanding coding university. It is run by a fleet of AI agents (CrewAI) living inside a Docker container.
-
-Unlike static tutorials, this system **researches, writes, and publishes its own curriculum 24/7**. It wakes up every morning, snapshots its database, and pushes new lessons to the public web automatically.
-
----
-
-## 🎓 The Curriculum (Self-Generating)
-
-The AI Director rotates through five advanced distinct faculties, generating deep-dive modules for each:
-
-### 🎨 Frontend Mastery
-* **React.js:** Hooks, Redux, Zustand, Performance Tuning
-* **Vue.js:** Composition API, Directives
-* **Tailwind CSS:** Utility-First Architecture
-* **TypeScript:** Generics, Strict Typing, Interfaces
-
-### ⚙️ Backend Powerhouses
-* **Node.js:** Event Loop, Streams, Async Architecture
-* **Django (Python):** ORM, Signals, Middleware
-* **Spring Boot (Java):** Microservices, Dependency Injection
-* **API Design:** GraphQL vs REST, OAuth2, JWT
-
-### 🚀 Systems & Performance
-* **Rust:** Ownership, Borrowing, Lifetimes
-* **Go (Golang):** Goroutines, Channels, Concurrency
-* **C++:** Memory Management, Pointers, STL
-* **C#:** .NET Core, LINQ, Async/Await
-
-### 🏢 Enterprise Solutions
-* **Java:** JVM Tuning, Garbage Collection
-* **Salesforce:** SSJS, Marketing Cloud Scripting
-* **Legacy Code:** Refactoring Strategies, Design Patterns
-* **Integration:** SOAP, Enterprise Messaging
-
-### 🛡️ Security & DevOps (Black Ops)
-* *Powered by Uncensored AI (DeepSeek)*
-* **Red Teaming:** Network Scanning, Packet Analysis
-* **Malware Analysis:** Reverse Engineering, Assembly x86
-* **DevOps:** Docker, Kubernetes, CI/CD Pipelines
-
----
-
 [!WARNING]
 ⚠️ LEGAL DISCLAIMER & LIABILITY NOTICE
 
@@ -56,8 +10,52 @@ The content within the Security, Malware Analysis, and Reverse Engineering track
     Researchers analyzing potential threats in a controlled environment.
 
     Academic Study of system vulnerabilities.
+  # ⚡ DEV//QUEST: Autonomous AI University
 
-The author and contributors of this repository are not responsible for any misuse of this information. By accessing this curriculum, you agree to use the information responsibly and in accordance with all applicable local, state, and federal laws. Attacking targets without prior mutual consent is illegal.
+> **🔴 LIVE SITE:** [https://xray55.github.io/dev-quest/](https://xray55.github.io/dev-quest/)
+
+**DEV//QUEST** is a fully autonomous, self-expanding coding university. It is run by a fleet of AI agents (CrewAI) living inside a Docker container.
+
+Unlike static tutorials, this system **researches, writes, and publishes its own curriculum 24/7**. It wakes up every morning, snapshots its database, and pushes new lessons to the public web automatically.
+
+---
+
+## 🎓 The Curriculum (Zero to Hero)
+
+The AI Director rotates through **7 Specialized Faculties**, generating lessons that range from absolute beginner syntax to expert-level engineering.
+
+### ☕ Java Engineering Faculty
+* **Foundation:** Syntax, OOP, Collections, Polymorphism
+* **Intermediate:** Streams API, File I/O, Maven/Gradle
+* **Advanced:** Multithreading, Reflection, Design Patterns
+* **Mastery:** Spring Boot 3, JVM Tuning (GC), Reactive Microservices
+
+### 🎮 Game Development (C++ & C#)
+* **C++ Engine Dev:** Pointers, Memory Management, Custom Allocators, Vulkan/OpenGL, ECS Architecture.
+* **Unity (C#):** Coroutines, ScriptableObjects, Asset Bundles, Shader Graph, DOTS (Data-Oriented Technology Stack).
+
+### 🦀 Systems Programming (Rust)
+* **Foundation:** Borrow Checker, Ownership, Structs & Enums
+* **Intermediate:** Traits, Generics, Smart Pointers
+* **Advanced:** Async (Tokio), Lifetimes, Concurrency
+* **Mastery:** Unsafe Rust, FFI, Kubernetes Operators, Embedded
+
+### 🎨 Full Stack Web Engineering
+* **Frontend:** HTML/CSS, React, Tailwind, TypeScript, State Management (Redux/Zustand).
+* **Backend:** Node.js Streams, Next.js (SSR/SSG), WebAssembly (WASM), Micro-Frontends.
+
+### ⚔️ Red Team Operations (Offensive Security)
+* *Powered by Uncensored AI*
+* **Basics:** Python Scripting, Networking, Linux CLI
+* **Exploitation:** SQLi, XSS, Metasploit, Privilege Escalation
+* **Black Ops:** Custom Malware (C/C++), C2 Infrastructure, Evasion & Obfuscation
+
+### 🛡️ Blue Team & Cyber Defense
+* **Defense:** Hardening Linux/Windows, Firewalls, VPNs
+* **Analysis:** Network Traffic (Wireshark), SIEM Engineering (Splunk/ELK)
+* **Response:** Digital Forensics, Memory Analysis, Threat Hunting (MITRE ATT&CK)
+
+---
 
 ## 🏗️ Architecture
 
