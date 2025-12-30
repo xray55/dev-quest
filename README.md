@@ -21,5 +21,5 @@ DEV//QUEST is a fully automated learning platform. Unlike traditional courses th
 
     💻 In-Browser IDE: Run Python (via Pyodide) and HTML/JS code directly in the lesson interface.
 
-    https://xray55.github.io/dev-quest/
+   [Visit the Academy](https://xray55.github.io/dev-quest/)
     
