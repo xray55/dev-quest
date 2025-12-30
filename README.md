@@ -18,45 +18,45 @@ The content within the Security, Malware Analysis, and Reverse Engineering track
 
 Unlike static tutorials, this system **researches, writes, and publishes its own curriculum 24/7**. It wakes up every morning, snapshots its database, and pushes new lessons to the public web automatically.
 
----
-
 ## 🎓 The Curriculum (Zero to Hero)
 
-The AI Director rotates through **7 Specialized Faculties**, generating lessons that range from absolute beginner syntax to expert-level engineering.
+The AI Director rotates through **8 Specialized Faculties**, generating lessons that range from absolute beginner syntax to expert-level engineering.
+
+### 🎨 Frontend & JavaScript Engineering
+* **Foundation:** Vanilla JS Syntax, DOM Manipulation, Events.
+* **Intermediate:** Closures, 'this' keyword, Prototypes, Async/Await.
+* **Frameworks:** React.js, Hooks, Redux, Tailwind CSS.
+* **Mastery:** Event Loop Internals, Web Workers, Browser Performance.
 
 ### ☕ Java Engineering Faculty
-* **Foundation:** Syntax, OOP, Collections, Polymorphism
-* **Intermediate:** Streams API, File I/O, Maven/Gradle
-* **Advanced:** Multithreading, Reflection, Design Patterns
-* **Mastery:** Spring Boot 3, JVM Tuning (GC), Reactive Microservices
+* **Foundation:** Syntax, OOP, Collections, Polymorphism.
+* **Intermediate:** Streams API, File I/O, Maven/Gradle.
+* **Mastery:** Spring Boot 3, JVM Tuning (GC), Reactive Microservices.
 
 ### 🎮 Game Development (C++ & C#)
-* **C++ Engine Dev:** Pointers, Memory Management, Custom Allocators, Vulkan/OpenGL, ECS Architecture.
-* **Unity (C#):** Coroutines, ScriptableObjects, Asset Bundles, Shader Graph, DOTS (Data-Oriented Technology Stack).
+* **C++ Engine Dev:** Pointers, Memory Management, Custom Allocators, Vulkan/OpenGL, ECS.
+* **Unity (C#):** Coroutines, ScriptableObjects, Asset Bundles, Shader Graph, DOTS.
 
 ### 🦀 Systems Programming (Rust)
-* **Foundation:** Borrow Checker, Ownership, Structs & Enums
-* **Intermediate:** Traits, Generics, Smart Pointers
-* **Advanced:** Async (Tokio), Lifetimes, Concurrency
-* **Mastery:** Unsafe Rust, FFI, Kubernetes Operators, Embedded
-
-### 🎨 Full Stack Web Engineering
-* **Frontend:** HTML/CSS, React, Tailwind, TypeScript, State Management (Redux/Zustand).
-* **Backend:** Node.js Streams, Next.js (SSR/SSG), WebAssembly (WASM), Micro-Frontends.
+* **Foundation:** Borrow Checker, Ownership, Structs & Enums.
+* **Intermediate:** Traits, Generics, Smart Pointers.
+* **Mastery:** Unsafe Rust, FFI, Async (Tokio), Embedded.
 
 ### ⚔️ Red Team Operations (Offensive Security)
 * *Powered by Uncensored AI*
-* **Basics:** Python Scripting, Networking, Linux CLI
-* **Exploitation:** SQLi, XSS, Metasploit, Privilege Escalation
-* **Black Ops:** Custom Malware (C/C++), C2 Infrastructure, Evasion & Obfuscation
+* **Basics:** Python Scripting, Networking, Linux CLI.
+* **Exploitation:** SQLi, XSS, Metasploit, Privilege Escalation.
+* **Black Ops:** Custom Malware (C/C++), C2 Infrastructure, Buffer Overflows.
 
 ### 🛡️ Blue Team & Cyber Defense
-* **Defense:** Hardening Linux/Windows, Firewalls, VPNs
-* **Analysis:** Network Traffic (Wireshark), SIEM Engineering (Splunk/ELK)
-* **Response:** Digital Forensics, Memory Analysis, Threat Hunting (MITRE ATT&CK)
+* **Defense:** Hardening Linux/Windows, Firewalls, VPNs.
+* **Analysis:** Network Traffic (Wireshark), SIEM Engineering (Splunk/ELK).
+* **Response:** Digital Forensics, Memory Analysis, Threat Hunting.
 
----
-
+### ⚙️ Backend & Distributed Systems
+* **Server:** Node.js, Express/NestJS, SQL vs NoSQL.
+* **Architecture:** Microservices, CAP Theorem, gRPC.
+* **DevOps:** Docker, Kubernetes, Terraform.
 ## 🏗️ Architecture
 
 The system operates on a **"Producer-Publisher"** model:
