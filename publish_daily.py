@@ -1,92 +1,96 @@
 import sqlite3
 import json
-import time
-import subprocess
 import os
-from datetime import datetime
+import subprocess
+import datetime
 
-# CONFIGURATION
 DB_FILE = "academy.db"
-EXPORT_FILE = "snapshot.js"
-PUSH_INTERVAL = 86400  # 24 Hours in seconds (Change to 60 for testing)
+SNAPSHOT_FILE = "snapshot.js"
 
 
 def generate_snapshot():
-    print(f"[{datetime.now()}] 📸 Generating Snapshot...")
+    """Reads the SQLite DB and dumps it into a JS file for the frontend."""
+    print(f"[{datetime.datetime.now()}] 📸 Generating Snapshot...")
 
     if not os.path.exists(DB_FILE):
-        print("⚠️ Database not found. Waiting for Docker to create it...")
+        print(f"❌ ERROR: Database {DB_FILE} not found!")
         return False
 
     try:
         conn = sqlite3.connect(DB_FILE)
         c = conn.cursor()
 
-        # 1. Get Tree
-        c.execute("""
-            SELECT m.path_name, m.id, m.module_number, m.title, 
-                   l.id, l.lesson_number, l.title
-            FROM modules m
-            LEFT JOIN lessons l ON m.id = l.module_id
-            ORDER BY m.path_name, m.module_number, l.lesson_number
-        """)
-        tree_rows = c.fetchall()
+        # 1. Fetch Curriculum Tree
+        c.execute("""SELECT m.path_name, m.id, m.module_number, m.title, l.id, l.lesson_number, l.title
+                     FROM modules m LEFT JOIN lessons l ON m.id = l.module_id
+                     ORDER BY m.path_name, m.module_number, l.lesson_number""")
+        rows = c.fetchall()
 
         tree = {}
-        for r in tree_rows:
+        for r in rows:
             path, mod_id, mod_num, mod_title, less_id, less_num, less_title = r
             if path not in tree: tree[path] = {}
             if mod_id not in tree[path]: tree[path][mod_id] = {"title": f"M{mod_num}: {mod_title}", "lessons": []}
             if less_id: tree[path][mod_id]["lessons"].append({"id": less_id, "title": less_title})
 
-        # 2. Get Lessons
-        c.execute("SELECT id, title, analogy, starter_code, content_markdown, docs, ide_mode FROM lessons")
-        lesson_rows = c.fetchall()
-        lessons = {}
-        for l in lesson_rows:
-            lessons[l[0]] = {
-                "title": l[1], "analogy": l[2], "starter_code": l[3],
-                "content": l[4], "docs": l[5], "ide_mode": l[6]
+        # 2. Fetch All Lesson Details
+        c.execute("SELECT * FROM lessons")
+        lessons_rows = c.fetchall()
+        lessons_data = {}
+
+        for r in lessons_rows:
+            # Schema: id, mod_id, less_num, title, analogy, starter_code, content, docs, ide_mode
+            l_id = r[0]
+            lessons_data[l_id] = {
+                "title": r[3],
+                "analogy": r[4],
+                "starter_code": r[5],
+                "content": r[6],
+                "docs": r[7],
+                "ide_mode": r[8]
             }
 
         conn.close()
 
-        # 3. Write JS File
-        data = {"tree": tree, "lessons": lessons}
-        js_content = f"const SNAPSHOT_DATA = {json.dumps(data, indent=2)};"
+        # 3. Write to JS File
+        final_data = {
+            "tree": tree,
+            "lessons": lessons_data
+        }
 
-        with open(EXPORT_FILE, 'w', encoding='utf-8') as f:
+        js_content = f"const SNAPSHOT_DATA = {json.dumps(final_data)};"
+
+        with open(SNAPSHOT_FILE, "w", encoding="utf-8") as f:
             f.write(js_content)
 
         print("✅ Snapshot saved.")
         return True
+
     except Exception as e:
-        print(f"❌ Error exporting DB: {e}")
+        print(f"⚠️ Error generating snapshot: {e}")
         return False
 
 
 def git_push():
-    print(f"[{datetime.now()}] 🚀 Pushing to GitHub...")
+    print(f"[{datetime.datetime.now()}] 🚀 Pushing to GitHub...")
     try:
-        # 1. Always PULL first to sync with GitHub
+        # Always PULL first to avoid conflicts
         subprocess.run(["git", "pull", "origin", "main"], check=False)
 
-        # 2. Add all changes
+        # Add changes
         subprocess.run(["git", "add", "."], check=True)
 
-        # 3. Commit with timestamp
-        date_str = datetime.now().strftime("%Y-%m-%d %H:%M")
-        subprocess.run(["git", "commit", "-m", f"Daily Curriculum Update: {date_str}"], check=True)
+        # Commit
+        date_str = datetime.datetime.now().strftime("%Y-%m-%d %H:%M")
+        subprocess.run(["git", "commit", "-m", f"Daily Curriculum Update: {date_str}"], check=False)
 
-        # 4. Push
+        # Push
         subprocess.run(["git", "push"], check=True)
         print("✅ Successfully pushed to GitHub.")
     except subprocess.CalledProcessError as e:
-        print(f"⚠️ Git Error (might be nothing to commit): {e}")
+        print(f"⚠️ Git Error: {e}")
 
 
 if __name__ == "__main__":
-    print("🕒 Daily Publisher Job Starting...")
     if generate_snapshot():
         git_push()
-    print("✅ Job Done. Exiting.")

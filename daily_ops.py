@@ -6,10 +6,10 @@ import re
 import random
 import sys
 from threading import Thread
-from fastapi import FastAPI, Request
+from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 import uvicorn
-from crewai import Agent, Task, Crew, Process, LLM
+from crewai import Agent, Task, Crew, LLM
 from langchain_community.tools import DuckDuckGoSearchRun
 from crewai.tools import tool
 
@@ -19,38 +19,50 @@ logger = logging.getLogger(__name__)
 
 DB_FILE = "academy.db"
 HTML_FILENAME = "index.html"
-REST_TIMER = 30
-MIN_LESSONS_PER_MODULE = 3
+REST_TIMER = 15  # Optimized speed
+MIN_LESSONS_PER_MODULE = 10
 
 # --- CURRICULUM CONFIGURATION ---
-# The AI will rotate through these specialized faculties.
-# Topics range from "Hello World" (Zero) to "Kernel Hacking" (Master).
-
 CURRICULUM_TRACKS = [
+    # 🎨 FRONTEND & JAVASCRIPT MASTERY
+    {
+        "name": "Frontend & JavaScript Engineering",
+        "focus": [
+            # LEVEL 1: VANILLA JAVASCRIPT FOUNDATIONS
+            "JavaScript Basics: Variables, Types, and Loops",
+            "DOM Manipulation: QuerySelectors and ClassList",
+            "Event Listeners: Bubbling, Capturing, and Delegation",
+            "ES6+ Modern Syntax: Arrow Functions, Destructuring, Spread",
+            # LEVEL 2: INTERMEDIATE JAVASCRIPT
+            "Closures and Lexical Scope Explained",
+            "The 'this' Keyword: Call, Apply, and Bind",
+            "Asynchronous JS: Callbacks vs Promises vs Async/Await",
+            "Prototypal Inheritance and ES6 Classes",
+            # LEVEL 3: MODERN FRAMEWORKS (REACT/VUE)
+            "React.js Core: Components, Props, and State",
+            "React Hooks: useState, useEffect, and Custom Hooks",
+            "State Management: Redux Toolkit vs Zustand",
+            "Tailwind CSS: Utility-First Architecture",
+            # LEVEL 4: BROWSER INTERNALS & PERFORMANCE
+            "The Event Loop: Microtasks vs Macrotasks",
+            "Browser Storage: LocalStorage, SessionStorage, IndexedDB",
+            "Web Workers: Multithreading in the Browser",
+            "Critical Rendering Path & Performance Optimization"
+        ]
+    },
+
     # ☕ JAVA: From Syntax to Enterprise Architect
     {
         "name": "Java Engineering Faculty",
         "focus": [
-            # LEVEL 1: FOUNDATION
             "Java Syntax: Primitives, Loops, and Control Flow",
             "Object-Oriented Programming (OOP): Classes vs Objects",
-            "Interfaces, Abstract Classes, and Polymorphism",
-            "Exception Handling: Try-Catch-Finally Blocks",
-            # LEVEL 2: INTERMEDIATE
             "Java Collections Framework (List, Set, Map, Queue)",
-            "Java Streams API & Lambda Expressions",
-            "File I/O and NIO.2 Basics",
-            "Maven/Gradle Build Systems Explained",
-            # LEVEL 3: ADVANCED
             "Multithreading: The volatile keyword & synchronized blocks",
             "Java Memory Model: Heap vs Stack",
             "Reflection API & Annotation Processing",
-            "Design Patterns: Singleton, Factory, Strategy in Java",
-            # LEVEL 4: MASTERY (ENTERPRISE)
             "Spring Boot 3: Dependency Injection & IOC",
-            "JVM Tuning: Garbage Collection (G1GC vs ZGC)",
-            "Reactive Programming with Project Reactor (WebFlux)",
-            "Microservices Patterns: Circuit Breakers & Service Discovery"
+            "JVM Tuning: Garbage Collection (G1GC vs ZGC)"
         ]
     },
 
@@ -58,22 +70,12 @@ CURRICULUM_TRACKS = [
     {
         "name": "C++ Game Engine Engineering",
         "focus": [
-            # LEVEL 1: FOUNDATION
             "C++ Basics: Variables, Functions, and Headers",
             "Pointers vs References: The Critical Difference",
-            "Structs vs Classes in C++",
-            # LEVEL 2: INTERMEDIATE
             "The Standard Template Library (STL): Vectors & Maps",
             "RAII: Smart Pointers (unique_ptr, shared_ptr)",
-            "Operator Overloading & Copy Constructors",
-            # LEVEL 3: ADVANCED
             "Memory Management: Stack Allocation vs Heap Fragmentation",
-            "Move Semantics & R-Value References",
             "Template Metaprogramming & Concepts",
-            "Multithreading with std::thread and Mutexes",
-            # LEVEL 4: MASTERY (ENGINE ARCHITECTURE)
-            "Writing a Custom Memory Allocator",
-            "3D Math: Quaternions, Matrices, and Vectors",
             "Entity Component Systems (ECS) Architecture",
             "Vulkan/OpenGL Graphics Pipeline Basics"
         ]
@@ -83,25 +85,14 @@ CURRICULUM_TRACKS = [
     {
         "name": "Unity & C# Game Development",
         "focus": [
-            # LEVEL 1: FOUNDATION
             "C# Syntax: Variables, Conditionals, Loops",
             "Unity Basics: MonoBehaviours and the Update Loop",
-            "Input Systems: Keyboard & Mouse Events",
-            # LEVEL 2: INTERMEDIATE
             "C# Delegates, Events, and Actions",
-            "LINQ: Querying Data Collections",
             "Coroutines vs Async/Await in Games",
-            "Unity UI Toolkit & Event Systems",
-            # LEVEL 3: ADVANCED
-            "ScriptableObjects for Data-Driven Design",
             "Garbage Collection Optimization in Unity",
             "Asset Bundles & Addressables System",
-            "Custom Editor Scripting & Inspectors",
-            # LEVEL 4: MASTERY
             "Unity DOTS (Data-Oriented Technology Stack)",
-            "Shader Graph & HLSL Shader Programming",
-            "Client-Side Prediction in Multiplayer Networking",
-            "Procedural Content Generation (PCG) Algorithms"
+            "Shader Graph & HLSL Shader Programming"
         ]
     },
 
@@ -109,52 +100,29 @@ CURRICULUM_TRACKS = [
     {
         "name": "Rust Systems Programming",
         "focus": [
-            # LEVEL 1: FOUNDATION
             "Rust Basics: Cargo, Variables, and Mutability",
-            "Control Flow: Match Expressions and Loops",
-            "Data Types: Tuples, Arrays, and Slices",
-            # LEVEL 2: INTERMEDIATE
             "Ownership & Borrowing: The Rules of the Checker",
-            "Structs, Enums, and Pattern Matching",
             "Traits and Generics (The Interface of Rust)",
-            "Error Handling: Result<T, E> and Option<T>",
-            # LEVEL 3: ADVANCED
             "Lifetimes: 'a, 'static, and Elision Rules",
             "Smart Pointers: Box, Rc, Arc, RefCell",
-            "Concurrency: Spawning Threads and Channels",
             "Async Rust: Tokio Runtime & Futures",
-            # LEVEL 4: MASTERY
             "Unsafe Rust: Raw Pointers & FFI",
-            "Writing Kubernetes Operators in Rust",
-            "Embedded Rust: Running on Microcontrollers",
-            "Macro Rules and Procedural Macros"
+            "Embedded Rust: Running on Microcontrollers"
         ]
     },
 
-    # ⚔️ RED TEAM: From Scripting to Exploitation
-    # Uses Uncensored Model
+    # ⚔️ RED TEAM: From Scripting to Exploitation (Uncensored)
     {
         "name": "Red Team Operations",
         "focus": [
-            # LEVEL 1: FOUNDATION
             "Python/Bash Scripting for Automation",
-            "Networking 101: TCP/IP, DNS, and Ports",
             "Linux CLI Mastery for Hackers",
-            # LEVEL 2: INTERMEDIATE
             "Reconnaissance: Nmap, Masscan, and OSINT",
             "Web Vulnerabilities: SQLi, XSS, and CSRF",
-            "Metasploit Framework Basics",
-            "Password Cracking: Hashcat & John the Ripper",
-            # LEVEL 3: ADVANCED
             "Privilege Escalation: Linux SUID & Windows Tokens",
-            "Active Directory: Kerberoasting & Bloodhound",
             "Buffer Overflows: Stack-Based Exploitation",
-            "Evasion: Obfuscation and Antivirus Bypassing",
-            # LEVEL 4: MASTERY
             "Writing Custom Malware in C/C++",
-            "Windows Internals: API Hooking & DLL Injection",
-            "C2 Infrastructure Design",
-            "Reverse Engineering with Ghidra"
+            "C2 Infrastructure Design"
         ]
     },
 
@@ -162,51 +130,29 @@ CURRICULUM_TRACKS = [
     {
         "name": "Blue Team & Cyber Defense",
         "focus": [
-            # LEVEL 1: FOUNDATION
             "System Administration: Users, Groups, Permissions",
             "Understanding System Logs (Syslog, Event Viewer)",
-            "Firewall Basics (UFW, iptables)",
-            # LEVEL 2: INTERMEDIATE
             "Network Traffic Analysis (Wireshark/Zeek)",
-            "Intrusion Detection Systems (Snort/Suricata)",
             "Hardening Servers (CIS Benchmarks)",
-            "Secure SSH & VPN Configuration",
-            # LEVEL 3: ADVANCED
             "SIEM Engineering: Splunk/ELK Query Languages",
             "Digital Forensics: Disk Imaging & Artifacts",
-            "Memory Forensics (Volatility Framework)",
-            "Incident Response: The PICERL Process",
-            # LEVEL 4: MASTERY
-            "Malware Analysis: Sandboxing & Deobfuscation",
             "Threat Hunting: Mapping to MITRE ATT&CK",
-            "Zero-Trust Architecture Implementation",
             "Writing YARA Rules for Detection"
         ]
     },
 
-    # 🎨 WEB MASTERY: From HTML to Micro-Frontends
+    # ⚙️ BACKEND & DISTRIBUTED SYSTEMS
     {
-        "name": "Full Stack Web Engineering",
+        "name": "Backend & Distributed Systems",
         "focus": [
-            # LEVEL 1: FOUNDATION
-            "HTML5 Semantic Structure & Accessibility",
-            "CSS3: Flexbox, Grid, and Responsive Design",
-            "JavaScript Basics: Variables, Functions, DOM",
-            # LEVEL 2: INTERMEDIATE
-            "ES6+ Features: Destructuring, Spread, Modules",
-            "Async JavaScript: Promises, Fetch, Async/Await",
-            "React Basics: Components, Props, and State",
-            "Tailwind CSS Configuration & Patterns",
-            # LEVEL 3: ADVANCED
-            "TypeScript: Interfaces, Types, and Generics",
-            "State Management: Redux Toolkit / Zustand",
-            "Next.js: Server Side Rendering (SSR) vs Static (SSG)",
-            "Web Security: CORS, CSP, and XSS Prevention",
-            # LEVEL 4: MASTERY
-            "WebAssembly (WASM): Running Rust/C++ in Browser",
-            "Micro-Frontends (Module Federation)",
-            "WebGL & Three.js for 3D Experiences",
-            "Performance Optimization: Critical Rendering Path"
+            "Node.js: Event Loop & Streams",
+            "Express.js vs NestJS Architecture",
+            "Database Design: SQL (Postgres) vs NoSQL (Mongo)",
+            "Redis: Caching Strategies & Pub/Sub",
+            "System Design: CAP Theorem & Consistency Models",
+            "Microservices: gRPC vs REST vs GraphQL",
+            "Docker & Kubernetes Containerization",
+            "Infrastructure as Code (Terraform)"
         ]
     }
 ]
@@ -217,7 +163,7 @@ FRONTEND_HTML = r"""<!DOCTYPE html>
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>DEV//QUEST MASTERY</title>
+    <title>DEV//QUEST UNIVERSITY</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/marked/9.1.2/marked.min.js"></script>
@@ -274,7 +220,7 @@ FRONTEND_HTML = r"""<!DOCTYPE html>
         </div>
         <div id="ide-pane">
             <div id="toolbar">
-                <span id="file-name" style="color:#fff; font-family:var(--font-code); font-size:0.8rem;">code.py</span>
+                <span id="file-name" style="color:#fff; font-family:var(--font-code); font-size:0.8rem;">code_editor</span>
                 <button id="run-btn" onclick="runCode()">EXECUTE</button>
             </div>
             <div id="editor"></div>
@@ -301,20 +247,31 @@ FRONTEND_HTML = r"""<!DOCTYPE html>
         async function checkConnection() {
             const statusEl = document.getElementById('connection-status');
             try {
-                const res = await fetch(`${API_URL}/curriculum`);
+                // ⚡ TIMEOUT FIX: If DB doesn't answer in 1 second, abort and use Snapshot.
+                const controller = new AbortController();
+                const timeoutId = setTimeout(() => controller.abort(), 1000);
+
+                const res = await fetch(`${API_URL}/curriculum`, { signal: controller.signal });
+                clearTimeout(timeoutId);
+
                 if (!res.ok) throw new Error("API Error");
+
+                // If we get here, we are Local!
                 const tree = await res.json();
                 IS_OFFLINE = false;
                 statusEl.innerHTML = '<span class="live-dot"></span> LIVE AI MODE';
                 renderSidebar(tree);
             } catch (e) {
-                console.warn("Live Server Offline. Switching to Snapshot Mode.");
+                // If we get here, we are on Mobile/GitHub
+                console.warn("Live Server Unreachable. Switching to Snapshot Mode.");
                 IS_OFFLINE = true;
+
                 if (typeof SNAPSHOT_DATA !== 'undefined') {
-                    statusEl.innerHTML = '<span class="offline-dot"></span> SNAPSHOT MODE';
+                    statusEl.innerHTML = '<span class="offline-dot"></span> CLOUD MODE';
                     renderSidebar(SNAPSHOT_DATA.tree);
                 } else {
-                    statusEl.innerHTML = '<span style="color:red">OFFLINE</span>';
+                    statusEl.innerHTML = '<span style="color:red">OFFLINE (No Data)</span>';
+                    document.getElementById('track-list').innerHTML = "<div style='padding:20px; font-size:0.8rem; color:#8b949e'>Could not load Snapshot data. Please check publish_daily.py</div>";
                 }
             }
         }
@@ -331,8 +288,15 @@ FRONTEND_HTML = r"""<!DOCTYPE html>
         function renderSidebar(tree) {
             const container = document.getElementById('track-list');
             if (container.matches(':hover')) return;
+
             const scrollPos = container.scrollTop;
             container.innerHTML = "";
+
+            if (Object.keys(tree).length === 0) {
+                container.innerHTML = "<div style='padding:20px'>No modules generated yet.</div>";
+                return;
+            }
+
             for (const [pathName, modules] of Object.entries(tree)) {
                 const pathHeader = document.createElement('div');
                 pathHeader.className = 'path-header';
@@ -381,16 +345,17 @@ FRONTEND_HTML = r"""<!DOCTYPE html>
         }
 
         function renderLesson(l) {
+            if (!l) return;
             document.getElementById('lesson-content').innerHTML = `
                 <div style="color:var(--accent); font-family:var(--font-code); margin-bottom:10px; font-size:0.8rem;">
-                    ${l.ide_mode.toUpperCase()} // ${l.title}
+                    ${l.ide_mode ? l.ide_mode.toUpperCase() : 'TEXT'} // ${l.title}
                 </div>
                 <h1>${l.title}</h1>
                 <div class="analogy-card">
                     <div style="color:#fff; font-weight:700; margin-bottom:8px; font-size:0.8rem;">CONCEPT ANALOGY</div>
-                    ${marked.parse(l.analogy)}
+                    ${marked.parse(l.analogy || "")}
                 </div>
-                <div style="line-height:1.6; font-size:0.95rem;">${marked.parse(l.content)}</div>
+                <div style="line-height:1.6; font-size:0.95rem;">${marked.parse(l.content || "")}</div>
                 <div style="margin-top:40px; padding-top:20px; border-top:1px solid #30363d; font-size:0.9rem;">
                     <strong>DOCS:</strong> ${marked.parse(l.docs||"")}
                 </div>
@@ -450,7 +415,7 @@ llm_deep = LLM(
 
 def get_llm(path_name):
     # Use the uncensored model for Security and Systems Architecture
-    security_triggers = ["Cybersecurity", "Systems Programming", "Reverse Engineering", "Malware"]
+    security_triggers = ["Cybersecurity", "Systems Programming", "Reverse Engineering", "Red Team", "Blue Team"]
     if any(trigger in path_name for trigger in security_triggers):
         return llm_deep
     return llm_standard
@@ -470,6 +435,7 @@ def web_search(query: str):
 def init_db():
     conn = sqlite3.connect(DB_FILE)
     c = conn.cursor()
+    c.execute("PRAGMA journal_mode=WAL;")  # ⚡ FIX: Enable Write-Ahead Logging for concurrency
     c.execute('''CREATE TABLE IF NOT EXISTS modules (
                     id INTEGER PRIMARY KEY AUTOINCREMENT,
                     path_name TEXT,
@@ -696,19 +662,17 @@ def autonomous_loop():
 
     while True:
         try:
-            # 1. Select a Track (Logic Updated to support Dictionary Structure)
+            # 1. Select a Track
             track_data = random.choice(CURRICULUM_TRACKS)
             path = track_data["name"]
 
-            # 2. Select a Sub-topic and Determine IDE Mode
+            # 2. Select Sub-topic & IDE Mode
             sub_topic = random.choice(track_data["focus"])
-
-            # Simple heuristic to determine IDE mode for the browser
             ide_mode = "python"
-            if "Frontend" in path or "Node.js" in sub_topic or "JavaScript" in sub_topic:
+            if "JavaScript" in path or "Frontend" in path or "Node.js" in sub_topic:
                 ide_mode = "javascript"
 
-            # 3. Get or Create Active Module
+            # 3. Get/Create Module
             active_mod = get_active_module(path)
             next_topic, module_id, mod_title_str = "", None, ""
 
@@ -761,7 +725,7 @@ def autonomous_loop():
 
 
 if __name__ == "__main__":
-    init_db()  # Run DB Init BEFORE server starts to prevent "no such table" error
+    init_db()  # Run DB Init BEFORE server starts
     ensure_frontend_exists()
     Thread(target=lambda: uvicorn.run(app, host="0.0.0.0", port=8000, log_level="error"), daemon=True).start()
     try:
