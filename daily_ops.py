@@ -246,32 +246,44 @@ FRONTEND_HTML = r"""<!DOCTYPE html>
 
         async function checkConnection() {
             const statusEl = document.getElementById('connection-status');
-            try {
-                // ⚡ TIMEOUT FIX: If DB doesn't answer in 1 second, abort and use Snapshot.
-                const controller = new AbortController();
-                const timeoutId = setTimeout(() => controller.abort(), 1000);
+            
+            // 🚀 SMARTER CHECK: Am I on the public web?
+            const isPublicWeb = window.location.hostname.includes("github.io") || 
+                                window.location.hostname.includes("vercel.app");
 
-                const res = await fetch(`${API_URL}/curriculum`, { signal: controller.signal });
-                clearTimeout(timeoutId);
-
-                if (!res.ok) throw new Error("API Error");
-
-                // If we get here, we are Local!
-                const tree = await res.json();
-                IS_OFFLINE = false;
-                statusEl.innerHTML = '<span class="live-dot"></span> LIVE AI MODE';
-                renderSidebar(tree);
-            } catch (e) {
-                // If we get here, we are on Mobile/GitHub
-                console.warn("Live Server Unreachable. Switching to Snapshot Mode.");
+            if (isPublicWeb) {
+                // WE ARE ON MOBILE/WEB -> LOAD SNAPSHOT IMMEDIATELY
+                console.log("Public Web detected. Skipping Localhost check.");
                 IS_OFFLINE = true;
-
                 if (typeof SNAPSHOT_DATA !== 'undefined') {
                     statusEl.innerHTML = '<span class="offline-dot"></span> CLOUD MODE';
                     renderSidebar(SNAPSHOT_DATA.tree);
                 } else {
                     statusEl.innerHTML = '<span style="color:red">OFFLINE (No Data)</span>';
-                    document.getElementById('track-list').innerHTML = "<div style='padding:20px; font-size:0.8rem; color:#8b949e'>Could not load Snapshot data. Please check publish_daily.py</div>";
+                    document.getElementById('track-list').innerHTML = "<div style='padding:20px'>Snapshot data missing. Check GitHub repo.</div>";
+                }
+                return; // Stop here!
+            }
+
+            // IF WE ARE HERE, WE ARE LIKELY ON LOCALHOST
+            try {
+                const controller = new AbortController();
+                const timeoutId = setTimeout(() => controller.abort(), 1000);
+                const res = await fetch(`${API_URL}/curriculum`, { signal: controller.signal });
+                clearTimeout(timeoutId);
+                
+                if (!res.ok) throw new Error("API Error");
+                
+                const tree = await res.json();
+                IS_OFFLINE = false;
+                statusEl.innerHTML = '<span class="live-dot"></span> LIVE AI MODE';
+                renderSidebar(tree);
+            } catch (e) {
+                console.warn("Localhost failed. Fallback to Snapshot.");
+                IS_OFFLINE = true;
+                if (typeof SNAPSHOT_DATA !== 'undefined') {
+                    statusEl.innerHTML = '<span class="offline-dot"></span> SNAPSHOT MODE';
+                    renderSidebar(SNAPSHOT_DATA.tree);
                 }
             }
         }
