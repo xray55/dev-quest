@@ -310,12 +310,22 @@
         }
 
         async function updateLogs() {
+            const container = document.getElementById('logs-container');
             try {
                 const res = await fetch(`${BASE_URL}/ai-status`);
+                if (!res.ok) throw new Error('Server error');
                 const logs = await res.json();
-                document.getElementById('logs-container').innerHTML =
-                    logs.map(l => `<div class="log-line">> ${l.message}</div>`).join('');
-            } catch(e) {}
+                
+                if (logs && logs.length > 0) {
+                    container.innerHTML = logs.map(l => 
+                        `<div class="log-line">> ${l.message}</div>`
+                    ).join('');
+                } else {
+                    container.innerHTML = '<div class="log-line" style="color:#666">> Initializing neural network...</div>';
+                }
+            } catch(e) {
+                container.innerHTML = '<div class="log-line" style="color:#ef4444">> Connection lost. Retrying...</div>';
+            }
         }
 
         /* ---------- BOOT ---------- */
