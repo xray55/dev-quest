@@ -6,6 +6,8 @@
 
 **DEV//QUEST** is a self-generating coding academy that runs entirely on local hardware. It uses a swarm of AI agents to design a curriculum, write technical lessons, and publish them to a live web interface in real-time.
 
+[![Launch Academy](https://img.shields.io/badge/🚀_Launch-Dev%2F%2FQuest_Academy-2ea44f?style=for-the-badge)](https://xray55.github.io/dev-quest/)
+
 ## 🚀 How It Works
 
 The system operates as an autonomous loop inside a Docker container:
