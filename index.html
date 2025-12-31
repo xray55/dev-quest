@@ -3,232 +3,277 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>DEV//QUEST UNIVERSITY</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <title>DEV//QUEST: ZERO TO HERO</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;900&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/marked/9.1.2/marked.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.32.7/ace.js"></script>
     <script src="https://cdn.jsdelivr.net/pyodide/v0.25.0/full/pyodide.js"></script>
     <style>
-        :root { --bg-dark: #0d1117; --bg-panel: #161b22; --border: #30363d; --accent: #238636; --text-main: #c9d1d9; --font-code: 'JetBrains Mono', monospace; }
-        body { margin: 0; background: var(--bg-dark); color: var(--text-main); font-family: 'Inter', sans-serif; height: 100vh; overflow: hidden; display: flex; }
-        #sidebar { width: 320px; background: var(--bg-panel); border-right: 1px solid var(--border); display: flex; flex-direction: column; }
-        .brand { padding: 20px; font-weight: 800; color: #fff; border-bottom: 1px solid var(--border); font-size: 1.1rem; cursor:pointer; }
-        #track-list { flex: 1; overflow-y: auto; padding: 10px; }
-        .path-header { font-size: 0.75rem; font-weight: 800; color: #58a6ff; margin: 20px 0 5px 5px; text-transform: uppercase; letter-spacing: 1px; }
-        .module-btn { background: #21262d; color: #c9d1d9; padding: 10px; border-radius: 6px; margin-bottom: 2px; cursor: pointer; font-size: 0.85rem; font-weight: 600; display: flex; justify-content: space-between; align-items: center; }
-        .module-btn:hover { background: #30363d; color: #fff; }
-        .lesson-list { display: none; padding-left: 10px; margin-bottom: 10px; border-left: 2px solid var(--border); margin-left: 10px; }
-        .lesson-list.open { display: block; }
-        .lesson-btn { padding: 6px 10px; cursor: pointer; font-size: 0.8rem; color: #8b949e; display: flex; gap: 8px; align-items: center; }
-        .lesson-btn:hover { color: #fff; }
-        .lesson-btn.active { color: var(--accent); font-weight: 700; }
-        #main-area { flex: 1; display: flex; }
-        #lesson-pane { flex: 1; overflow-y: auto; border-right: 1px solid var(--border); max-width: 45%; padding: 40px; background: var(--bg-dark); }
-        .analogy-card { background: rgba(35, 134, 54, 0.1); border: 1px solid var(--accent); border-radius: 8px; padding: 20px; margin: 25px 0; }
-        #ide-pane { flex: 1; display: flex; flex-direction: column; background: #0d1117; min-width: 400px; }
-        #toolbar { height: 45px; background: var(--bg-panel); border-bottom: 1px solid var(--border); display: flex; align-items: center; justify-content: space-between; padding: 0 10px; }
-        #run-btn { background: var(--accent); color: #fff; border: none; padding: 6px 14px; border-radius: 4px; font-weight: 600; cursor: pointer; }
-        #editor { flex: 2; }
-        #output-panel { flex: 1; background: #0d1117; border-top: 1px solid var(--border); display: flex; flex-direction: column; max-height: 40%; }
-        #output-console { flex: 1; padding: 15px; font-family: var(--font-code); font-size: 0.9rem; color: #fff; overflow: auto; white-space: pre-wrap; }
-        #web-preview { width: 100%; height: 100%; background: #fff; border: none; }
-        .hidden { display: none !important; }
-        .mode-badge { font-size: 0.7rem; padding: 2px 6px; border-radius: 4px; background: #30363d; color: #8b949e; }
-        .live-dot { height: 8px; width: 8px; background-color: #238636; border-radius: 50%; display: inline-block; margin-right: 5px; }
-        .offline-dot { height: 8px; width: 8px; background-color: #8b949e; border-radius: 50%; display: inline-block; margin-right: 5px; }
+        :root {
+            --bg: #09090b;
+            --sidebar: #121214;
+            --card-bg: #1c1c1f;
+            --accent: #dcfce7; /* Soft Green */
+            --accent-glow: #22c55e;
+            --text-main: #f4f4f5;
+            --text-dim: #a1a1aa;
+            --border: #27272a;
+        }
+
+        body { margin: 0; background: var(--bg); color: var(--text-main); font-family: 'Inter', sans-serif; height: 100vh; display: flex; overflow: hidden; }
+
+        /* --- SIDEBAR (CURRICULUM) --- */
+        #sidebar { width: 350px; background: var(--sidebar); border-right: 1px solid var(--border); display: flex; flex-direction: column; z-index: 10; }
+
+        .brand { padding: 30px; border-bottom: 1px solid var(--border); }
+        .brand h1 { margin: 0; font-size: 1.5rem; font-weight: 900; letter-spacing: -1px; background: linear-gradient(to right, #fff, #666); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .brand p { margin: 5px 0 0 0; font-size: 0.8rem; color: var(--text-dim); text-transform: uppercase; letter-spacing: 1px; }
+
+        #track-list { flex: 1; overflow-y: auto; padding: 20px; }
+
+        .track-block { margin-bottom: 30px; }
+        .track-title { font-size: 0.7rem; color: var(--text-dim); font-weight: 700; text-transform: uppercase; margin-bottom: 10px; padding-left: 10px; border-left: 2px solid var(--accent-glow); }
+
+        .lesson-btn {
+            display: flex; align-items: center; gap: 10px;
+            padding: 12px 15px;
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            margin-bottom: 8px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        .lesson-btn:hover { border-color: var(--text-dim); transform: translateX(2px); }
+        .lesson-btn.active { border-color: var(--accent-glow); background: #142819; }
+        .lesson-btn i { color: var(--accent-glow); font-size: 0.8rem; }
+        .lesson-title { font-size: 0.9rem; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+
+        /* --- MAIN AREA --- */
+        #main-area { flex: 1; display: flex; position: relative; }
+
+        /* LESSON READING PANE */
+        #lesson-pane { flex: 1; padding: 60px; overflow-y: auto; max-width: 800px; margin: 0 auto; }
+
+        .badge { display: inline-block; padding: 4px 12px; border-radius: 20px; background: #27272a; color: #fff; font-size: 0.75rem; font-weight: 700; margin-bottom: 20px; }
+        h1 { font-size: 2.5rem; font-weight: 900; letter-spacing: -1px; margin-bottom: 30px; line-height: 1.1; }
+
+        .analogy-box {
+            background: #1e1e24; border-left: 4px solid #a78bfa;
+            padding: 20px; margin: 30px 0; border-radius: 0 8px 8px 0;
+            font-size: 1.05rem; line-height: 1.6; color: #e4e4e7;
+        }
+
+        .content-body { font-size: 1.1rem; line-height: 1.7; color: #d4d4d8; }
+        .content-body h2 { margin-top: 40px; color: #fff; font-size: 1.5rem; }
+        .content-body code { background: #27272a; padding: 2px 6px; border-radius: 4px; font-family: 'JetBrains Mono', monospace; font-size: 0.9rem; }
+
+        /* --- IDE PANE (Right Side) --- */
+        #ide-toggle { position: absolute; top: 20px; right: 20px; z-index: 100; }
+        #ide-container {
+            width: 40%; border-left: 1px solid var(--border); background: var(--bg); display: flex; flex-direction: column;
+            transition: width 0.3s ease;
+        }
+        .ide-header { padding: 15px; background: var(--sidebar); border-bottom: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; }
+        .play-btn { background: var(--accent-glow); color: #000; border: none; padding: 8px 20px; border-radius: 6px; font-weight: 800; cursor: pointer; display: flex; align-items: center; gap: 8px; }
+        .play-btn:hover { opacity: 0.9; }
+
+        #editor { flex: 1; }
+        #console { height: 150px; background: #000; color: #0f0; padding: 15px; font-family: 'JetBrains Mono', monospace; font-size: 0.85rem; border-top: 1px solid var(--border); overflow-y: auto; }
+
+        /* --- AI STATUS FOOTER --- */
+        #ai-status-bar {
+            position: fixed; bottom: 0; left: 0; width: 350px;
+            background: #000; border-top: 1px solid var(--border);
+            padding: 10px; font-family: 'JetBrains Mono', monospace; font-size: 0.7rem; color: #666;
+            height: 120px; overflow: hidden;
+        }
+        .log-line { margin-bottom: 4px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        .log-new { color: var(--accent-glow); }
+
+        /* SCROLLBARS */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-thumb { background: #333; border-radius: 4px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+
     </style>
 </head>
 <body>
-    <aside id="sidebar">
-        <div class="brand" onclick="window.location.reload()">
-            <i class="fa-solid fa-network-wired"></i> DEV//QUEST
-            <div id="connection-status" style="font-size: 0.7rem; font-weight: 400; color: #8b949e; margin-top: 5px;">Checking...</div>
-        </div>
-        <div id="track-list"></div>
 
-        <div id="ai-console" style="height: 400px; background: #000; border-top: 1px solid #30363d; padding: 10px; font-family: 'JetBrains Mono', monospace; font-size: 0.7rem; overflow-y: auto; color: #39ff14;">
-            <div style="color: #8b949e; border-bottom: 1px solid #30363d; margin-bottom: 5px; padding-bottom: 2px;">LIVE_AI_TERMINAL</div>
-            <div id="log-entries"></div>
+    <aside id="sidebar">
+        <div class="brand">
+            <h1>DEV//QUEST</h1>
+            <p>Academy of Engineering</p>
+        </div>
+        <div id="track-list">
+            <div style="text-align:center; padding:40px; color:#555;">
+                <i class="fa-solid fa-circle-notch fa-spin"></i><br><br>
+                Connecting to Neural Net...
+            </div>
+        </div>
+        <div id="ai-status-bar">
+            <div id="logs-container"></div>
         </div>
     </aside>
 
     <div id="main-area">
         <div id="lesson-pane">
             <div id="lesson-content">
-                <div style="text-align:center; margin-top:100px; color:#8b949e;">
-                    <i class="fa-solid fa-layer-group" style="font-size:3rem; margin-bottom:20px;"></i>
-                    <h2>Select a Module</h2>
-                    <p>Load knowledge from the Neural Network.</p>
+                <div style="margin-top:100px; text-align:center; opacity:0.5;">
+                    <h2>Welcome, Initiate.</h2>
+                    <p>Select a module on the left to begin your training.</p>
                 </div>
             </div>
         </div>
-        <div id="ide-pane">
-            <div id="toolbar">
-                <span id="file-name" style="color:#fff; font-family:var(--font-code); font-size:0.8rem;">code_editor</span>
-                <button id="run-btn" onclick="runCode()">EXECUTE</button>
+
+        <div id="ide-container">
+            <div class="ide-header">
+                <span style="font-size:0.8rem; font-weight:bold; color:#777;">PYTHON TERMINAL</span>
+                <button class="play-btn" onclick="runCode()"><i class="fa-solid fa-play"></i> RUN</button>
             </div>
-            <div id="editor"></div>
-            <div id="output-panel"><div id="output-console"></div><iframe id="web-preview" class="hidden"></iframe></div>
+            <div id="editor"># Code goes here...</div>
+            <div id="console">// Output waiting...</div>
         </div>
     </div>
+
     <script>
-        // ----------------------------------------------------
-        // PUBLIC MODE: Points to your Tunnel URL
-        // ----------------------------------------------------
-        const BASE_URL = 'https://devquest.uk';
-
-        let currentLesson = null;
+        const BASE_URL = 'https://devquest.uk'; // Tunneled URL
         let pyodide = null;
+        let currentEditor = null;
 
-        const editor = ace.edit("editor");
-        editor.setTheme("ace/theme/one_dark");
-        editor.setFontSize(14);
-        editor.setShowPrintMargin(false);
-
-        async function init() {
-            try { pyodide = await loadPyodide(); } catch(e){ console.log("Pyodide loading..."); }
-            await checkConnection();
-            setInterval(checkConnection, 5000); // Check for new lessons every 5s
+        // Init Ace Editor
+        function initEditor() {
+            currentEditor = ace.edit("editor");
+            currentEditor.setTheme("ace/theme/twilight");
+            currentEditor.session.setMode("ace/mode/python");
+            currentEditor.setFontSize(14);
+            currentEditor.setShowPrintMargin(false);
         }
 
-        async function updateAIStatus() {
+        // Init Python
+        async function initPyodide() {
             try {
-                const res = await fetch(`${BASE_URL}/ai-status`);
-                let logs = await res.json();
-
-                // Logs are already sorted by the backend query (Newest First usually)
-                // If you want Newest at the BOTTOM, uncomment:
-                logs.reverse();
-
-                const container = document.getElementById('log-entries');
-                container.innerHTML = logs.map(l => {
-                    let timeDisplay = "...";
-                    if (l.created_at) {
-                        const utcDate = new Date(l.created_at.replace(" ", "T") + "Z");
-                        timeDisplay = utcDate.toLocaleTimeString();
-                    }
-                    return `<div style="margin-bottom: 4px;"><span style="color: #58a6ff;">[${timeDisplay}]</span> ${l.message}</div>`;
-                }).join('');
-
-                // Auto-scroll to bottom
-                const consoleDiv = document.getElementById('ai-console');
-                consoleDiv.scrollTop = consoleDiv.scrollHeight;
-
-            } catch (e) {
-                console.log("Status check failed (Tunnel might be sleeping)...");
-            }
+                pyodide = await loadPyodide();
+                console.log("Python Ready");
+            } catch(e) { console.log("Pyodide Load Error", e); }
         }
-        setInterval(updateAIStatus, 2000);
 
-        async function checkConnection() {
+        // --- FETCHING ---
+        async function fetchCurriculum() {
             try {
                 const res = await fetch(`${BASE_URL}/curriculum`);
                 const tree = await res.json();
-                document.getElementById('connection-status').innerHTML = '<span class="live-dot"></span> LIVE TUNNEL';
                 renderSidebar(tree);
-            } catch (e) {
-                console.warn("Tunnel unavailable.");
-                document.getElementById('connection-status').innerHTML = '<span class="offline-dot"></span> DISCONNECTED';
-            }
+            } catch(e) { console.log("Offline / Connecting..."); }
         }
 
         function renderSidebar(tree) {
             const container = document.getElementById('track-list');
+            // If hovering, don't update to prevent jumpiness
             if (container.matches(':hover')) return;
 
-            const scrollPos = container.scrollTop;
-            container.innerHTML = "";
+            container.innerHTML = '';
 
             if (Object.keys(tree).length === 0) {
-                container.innerHTML = "<div style='padding:20px'>Waiting for AI...</div>";
+                container.innerHTML = '<div style="padding:20px; text-align:center; color:#555;">Building Roadmap...</div>';
                 return;
             }
 
-            for (const [pathName, modules] of Object.entries(tree)) {
-                const pathHeader = document.createElement('div');
-                pathHeader.className = 'path-header';
-                pathHeader.innerText = pathName;
-                container.appendChild(pathHeader);
+            for (const [trackName, modules] of Object.entries(tree)) {
+                const trackDiv = document.createElement('div');
+                trackDiv.className = 'track-block';
+
+                const title = document.createElement('div');
+                title.className = 'track-title';
+                title.innerText = trackName;
+                trackDiv.appendChild(title);
+
                 for (const [modId, modData] of Object.entries(modules)) {
-                    const modBtn = document.createElement('div');
-                    modBtn.className = 'module-btn';
-                    modBtn.innerHTML = `<span>${modData.title}</span> <i class="fa-solid fa-chevron-down" style="font-size:0.7em"></i>`;
-                    const lessonList = document.createElement('div');
-                    lessonList.className = 'lesson-list';
-                    modBtn.onclick = () => {
-                        lessonList.classList.toggle('open');
-                        const icon = modBtn.querySelector('i');
-                        icon.className = lessonList.classList.contains('open') ? 'fa-solid fa-chevron-up' : 'fa-solid fa-chevron-down';
-                    };
-                    modData.lessons.forEach(l => {
-                        const lBtn = document.createElement('div');
-                        lBtn.className = 'lesson-btn';
-                        lBtn.innerText = l.title;
-                        lBtn.onclick = () => fetchLesson(l.id, lBtn);
-                        lessonList.appendChild(lBtn);
+                    modData.lessons.forEach(lesson => {
+                        const btn = document.createElement('div');
+                        btn.className = 'lesson-btn';
+                        btn.innerHTML = `<i class="fa-solid fa-file-code"></i> <div class="lesson-title">${lesson.title}</div>`;
+                        btn.onclick = () => loadLesson(lesson.id, btn);
+                        trackDiv.appendChild(btn);
                     });
-                    container.appendChild(modBtn);
-                    container.appendChild(lessonList);
                 }
+                container.appendChild(trackDiv);
             }
-            container.scrollTop = scrollPos;
         }
 
-        async function fetchLesson(id, btnEl) {
+        async function loadLesson(id, btn) {
+            // Highlight active
             document.querySelectorAll('.lesson-btn').forEach(b => b.classList.remove('active'));
-            if(btnEl) btnEl.classList.add('active');
-            document.getElementById('lesson-content').innerHTML = `<div style="text-align:center; margin-top:50px;"><i class="fa-solid fa-spinner fa-spin"></i> Fetching...</div>`;
+            btn.classList.add('active');
+
+            const container = document.getElementById('lesson-content');
+            container.innerHTML = '<div style="opacity:0.5;">Loading Data...</div>';
 
             try {
                 const res = await fetch(`${BASE_URL}/lesson/${id}`);
-                const lesson = await res.json();
-                currentLesson = lesson;
-                renderLesson(lesson);
-            } catch(e) {
-                console.error(e);
-                document.getElementById('lesson-content').innerText = "Error loading lesson.";
-            }
-        }
+                const data = await res.json();
 
-        function renderLesson(l) {
-            if (!l) return;
-            document.getElementById('lesson-content').innerHTML = `
-                <div style="color:var(--accent); font-family:var(--font-code); margin-bottom:10px; font-size:0.8rem;">
-                    ${l.ide_mode ? l.ide_mode.toUpperCase() : 'TEXT'} // ${l.title}
-                </div>
-                <h1>${l.title}</h1>
-                <div class="analogy-card">
-                    <div style="color:#fff; font-weight:700; margin-bottom:8px; font-size:0.8rem;">CONCEPT ANALOGY</div>
-                    ${marked.parse(l.analogy || "")}
-                </div>
-                <div style="line-height:1.6; font-size:0.95rem;">${marked.parse(l.content_markdown || l.content || "")}</div>
-                <div style="margin-top:40px; padding-top:20px; border-top:1px solid #30363d; font-size:0.9rem;">
-                    <strong>DOCS:</strong> ${marked.parse(l.docs||"")}
-                </div>
-            `;
-            let mode = "ace/mode/python";
-            if (l.ide_mode === 'javascript') mode = "ace/mode/javascript";
-            editor.session.setMode(mode);
-            editor.setValue(l.starter_code || "", -1);
-            document.getElementById('output-console').innerText = "Ready.";
+                container.innerHTML = `
+                    <div class="badge">PYTHON BASICS</div>
+                    <h1>${data.title}</h1>
+                    <div class="analogy-box">
+                        <strong>💡 Concept:</strong> ${marked.parse(data.analogy)}
+                    </div>
+                    <div class="content-body">
+                        ${marked.parse(data.content_markdown || data.content)}
+                    </div>
+                    <div style="margin-top:50px; padding-top:20px; border-top:1px solid #333; font-size:0.9rem; color:#666;">
+                        <strong>Reference:</strong> ${marked.parse(data.docs || "No docs linked.")}
+                    </div>
+                `;
+
+                if (data.starter_code) {
+                    currentEditor.setValue(data.starter_code, -1);
+                }
+
+            } catch(e) {
+                container.innerHTML = "Error loading lesson.";
+            }
         }
 
         async function runCode() {
-            const code = editor.getValue();
-            const out = document.getElementById('output-console');
-            const mode = currentLesson ? currentLesson.ide_mode : 'python';
-            out.innerText = "Executing...";
-            if (mode === 'python') {
-                if(!pyodide) { out.innerText="Loading Python..."; return; }
-                try {
-                    pyodide.setStdout({ batched: (t) => out.innerText += t + "\n" });
-                    out.innerText = "";
-                    await pyodide.runPythonAsync(code);
-                } catch(e) { out.innerText = e; }
+            const code = currentEditor.getValue();
+            const consoleDiv = document.getElementById('console');
+            consoleDiv.innerHTML = "Executing...";
+
+            if (!pyodide) {
+                consoleDiv.innerHTML = "Python is still loading... wait 5s.";
+                return;
+            }
+
+            try {
+                // Redirect stdout
+                pyodide.setStdout({ batched: (text) => { consoleDiv.innerHTML += text + "\n"; } });
+                consoleDiv.innerHTML = ""; // Clear previous
+                await pyodide.runPythonAsync(code);
+            } catch(e) {
+                consoleDiv.innerHTML = `<span style="color:red">${e}</span>`;
             }
         }
-        init();
+
+        // --- AI LOGS ---
+        async function updateLogs() {
+            try {
+                const res = await fetch(`${BASE_URL}/ai-status`);
+                const logs = await res.json();
+                const container = document.getElementById('logs-container');
+                container.innerHTML = logs.map(l => `<div class="log-line"><span class="log-new">></span> ${l.message}</div>`).join('');
+            } catch(e) {}
+        }
+
+        // Init
+        initEditor();
+        initPyodide();
+        fetchCurriculum();
+        setInterval(fetchCurriculum, 5000);
+        setInterval(updateLogs, 2000);
+
     </script>
 </body>
 </html>
