@@ -99,7 +99,7 @@
             }
         }
 
-        // --- UPDATED AI STATUS LOGIC ---
+// --- UPDATED AI STATUS LOGIC (Timezone Fix) ---
         async function updateAIStatus() {
             try {
                 const res = await fetch(`https://devquest.uk/ai-status`);
@@ -109,11 +109,22 @@
                 logs.reverse();
 
                 const container = document.getElementById('log-entries');
-                container.innerHTML = logs.map(l => `
-                    <div style="margin-bottom: 4px;">
-                        <span style="color: #58a6ff;">[${l.created_at ? l.created_at.split(' ')[1] : '...'}]</span> ${l.message}
-                    </div>
-                `).join('');
+                container.innerHTML = logs.map(l => {
+                    // FIX: Convert UTC Server Time to Local Computer Time
+                    let timeDisplay = "...";
+                    if (l.created_at) {
+                        // "2025-12-30 03:00:00" -> "2025-12-30T03:00:00Z" (ISO Standard)
+                        const utcDate = new Date(l.created_at.replace(" ", "T") + "Z");
+                        // Converts to your local browser time (e.g., 9:00:00 PM)
+                        timeDisplay = utcDate.toLocaleTimeString();
+                    }
+
+                    return `
+                        <div style="margin-bottom: 4px;">
+                            <span style="color: #58a6ff;">[${timeDisplay}]</span> ${l.message}
+                        </div>
+                    `;
+                }).join('');
 
                 // 2. Auto-scroll to BOTTOM to show new lines
                 const consoleDiv = document.getElementById('ai-console');
