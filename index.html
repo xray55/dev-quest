@@ -167,7 +167,12 @@
 
     <!-- ================= SCRIPT ENGINE ================= -->
     <script>
-        const BASE_URL = 'http://localhost:8000';
+        // FOR GITHUB PAGES: Always use your API domain
+        const BASE_URL = 'https://devquest.uk';
+        
+        console.log('🔧 API Base URL:', BASE_URL);
+        console.log('📍 Frontend hosted on:', window.location.origin);
+        
         let pyodide = null;
         let currentEditor = null;
 
@@ -242,7 +247,9 @@
                 const res = await fetch(`${BASE_URL}/curriculum`);
                 const tree = await res.json();
                 renderSidebar(tree);
-            } catch(e) { console.warn("Backend Sync Pending..."); }
+            } catch(e) { 
+                console.warn("Backend Sync Pending...", e); 
+            }
         }
 
         function renderSidebar(tree) {
@@ -292,7 +299,9 @@
                 `;
 
                 if(data.starter_code) currentEditor.setValue(data.starter_code, -1);
-            } catch(e) { console.error(e); }
+            } catch(e) { 
+                console.error("Failed to load lesson:", e); 
+            }
         }
 
         /* ---------- PYTHON RUNNER ---------- */
