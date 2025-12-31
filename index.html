@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>DEV//QUEST UNIVERSITY</title>
+    <title>DEV//QUEST ACADEMY</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/marked/9.1.2/marked.min.js"></script>
@@ -73,8 +73,10 @@
         </div>
     </div>
     <script>
-        // Force the app to always use the Tunnel, even when hosted on GitHub
-        const BASE_URL = 'https://devquest.uk';
+        // ----------------------------------------------------
+        // FIX: Point to LOCALHOST (Your Docker Container)
+        // ----------------------------------------------------
+        const BASE_URL = 'http://localhost:5000';
         const IS_GITHUB = false;
 
         let currentLesson = null;
@@ -87,70 +89,33 @@
 
         async function init() {
             try { pyodide = await loadPyodide(); } catch(e){ console.log("Pyodide loading..."); }
-
-            if (IS_GITHUB) {
-                // CLOUD MODE: Fetch static JSON
-                document.getElementById('connection-status').innerHTML = '<span class="offline-dot"></span> CLOUD MODE';
-                await loadStaticCurriculum();
-            } else {
-                // LIVE MODE: Fetch from Python
-                await checkLocalConnection();
-                setInterval(checkLocalConnection, 15000); // Polling for new lessons
-            }
+            await checkLocalConnection();
+            setInterval(checkLocalConnection, 5000); // Check for new lessons every 5s
         }
 
-// --- UPDATED AI STATUS LOGIC (Timezone Fix) ---
         async function updateAIStatus() {
             try {
-                const res = await fetch(`https://devquest.uk/ai-status`);
+                const res = await fetch(`${BASE_URL}/ai-status`);
                 let logs = await res.json();
 
-                // 1. REVERSE logs so they flow naturally (Oldest -> Newest)
-                logs.reverse();
+                // Reverse to show newest at bottom if needed, or keep top
+                // logs.reverse();
 
                 const container = document.getElementById('log-entries');
                 container.innerHTML = logs.map(l => {
-                    // FIX: Convert UTC Server Time to Local Computer Time
                     let timeDisplay = "...";
                     if (l.created_at) {
-                        // "2025-12-30 03:00:00" -> "2025-12-30T03:00:00Z" (ISO Standard)
                         const utcDate = new Date(l.created_at.replace(" ", "T") + "Z");
-                        // Converts to your local browser time (e.g., 9:00:00 PM)
                         timeDisplay = utcDate.toLocaleTimeString();
                     }
-
-                    return `
-                        <div style="margin-bottom: 4px;">
-                            <span style="color: #58a6ff;">[${timeDisplay}]</span> ${l.message}
-                        </div>
-                    `;
+                    return `<div style="margin-bottom: 4px;"><span style="color: #58a6ff;">[${timeDisplay}]</span> ${l.message}</div>`;
                 }).join('');
-
-                // 2. Auto-scroll to BOTTOM to show new lines
-                const consoleDiv = document.getElementById('ai-console');
-                consoleDiv.scrollTop = consoleDiv.scrollHeight;
 
             } catch (e) {
                 console.log("Status check failed...");
             }
         }
-
-        // Call it every 3 seconds for a smoother "real-time" feel
-        setInterval(updateAIStatus, 3000);
-        updateAIStatus();
-
-        async function loadStaticCurriculum() {
-            try {
-                // Fetch the tiny menu file
-                const res = await fetch(`${BASE_URL}/curriculum.json`);
-                if (!res.ok) throw new Error("Manifest missing");
-                const tree = await res.json();
-                renderSidebar(tree);
-            } catch (e) {
-                console.error(e);
-                document.getElementById('track-list').innerHTML = "<div style='padding:20px'>Loading curriculum...</div>";
-            }
-        }
+        setInterval(updateAIStatus, 2000);
 
         async function checkLocalConnection() {
             try {
@@ -160,19 +125,19 @@
                 renderSidebar(tree);
             } catch (e) {
                 console.warn("Localhost unavailable.");
-                document.getElementById('connection-status').innerHTML = '<span style="color:red">OFFLINE</span>';
+                document.getElementById('connection-status').innerHTML = '<span class="offline-dot"></span> OFFLINE';
             }
         }
 
         function renderSidebar(tree) {
             const container = document.getElementById('track-list');
-            if (container.matches(':hover')) return;
+            if (container.matches(':hover')) return; // Don't redraw if user is clicking
 
             const scrollPos = container.scrollTop;
             container.innerHTML = "";
 
             if (Object.keys(tree).length === 0) {
-                container.innerHTML = "<div style='padding:20px'>No modules generated yet.</div>";
+                container.innerHTML = "<div style='padding:20px'>Waiting for AI...</div>";
                 return;
             }
 
@@ -196,7 +161,6 @@
                         const lBtn = document.createElement('div');
                         lBtn.className = 'lesson-btn';
                         lBtn.innerText = l.title;
-                        // Determine fetch strategy
                         lBtn.onclick = () => fetchLesson(l.id, lBtn);
                         lessonList.appendChild(lBtn);
                     });
@@ -213,23 +177,13 @@
             document.getElementById('lesson-content').innerHTML = `<div style="text-align:center; margin-top:50px;"><i class="fa-solid fa-spinner fa-spin"></i> Fetching...</div>`;
 
             try {
-                let url;
-                if (IS_GITHUB) {
-                    // Fetch individual JSON file
-                    url = `${BASE_URL}/lessons/${id}.json`;
-                } else {
-                    // Fetch from API
-                    url = `${BASE_URL}/lesson/${id}`;
-                }
-
-                const res = await fetch(url);
-                if (!res.ok) throw new Error("Lesson Not Found");
+                const res = await fetch(`${BASE_URL}/lesson/${id}`);
                 const lesson = await res.json();
                 currentLesson = lesson;
                 renderLesson(lesson);
             } catch(e) {
                 console.error(e);
-                document.getElementById('lesson-content').innerText = "Error loading lesson data. Try refreshing.";
+                document.getElementById('lesson-content').innerText = "Error loading lesson.";
             }
         }
 
@@ -244,41 +198,29 @@
                     <div style="color:#fff; font-weight:700; margin-bottom:8px; font-size:0.8rem;">CONCEPT ANALOGY</div>
                     ${marked.parse(l.analogy || "")}
                 </div>
-                <div style="line-height:1.6; font-size:0.95rem;">${marked.parse(l.content || "")}</div>
+                <div style="line-height:1.6; font-size:0.95rem;">${marked.parse(l.content_markdown || l.content || "")}</div>
                 <div style="margin-top:40px; padding-top:20px; border-top:1px solid #30363d; font-size:0.9rem;">
                     <strong>DOCS:</strong> ${marked.parse(l.docs||"")}
                 </div>
             `;
             let mode = "ace/mode/python";
             if (l.ide_mode === 'javascript') mode = "ace/mode/javascript";
-            if (l.ide_mode === 'assembly_x86') mode = "ace/mode/assembly_x86";
             editor.session.setMode(mode);
             editor.setValue(l.starter_code || "", -1);
             document.getElementById('output-console').innerText = "Ready.";
-            document.getElementById('output-console').classList.remove('hidden');
-            document.getElementById('web-preview').classList.add('hidden');
         }
 
         async function runCode() {
             const code = editor.getValue();
             const out = document.getElementById('output-console');
-            const web = document.getElementById('web-preview');
             const mode = currentLesson ? currentLesson.ide_mode : 'python';
             out.innerText = "Executing...";
-            if (mode === 'python' || mode === 'assembly_x86') {
+            if (mode === 'python') {
                 if(!pyodide) { out.innerText="Loading Python..."; return; }
                 try {
                     pyodide.setStdout({ batched: (t) => out.innerText += t + "\n" });
                     out.innerText = "";
                     await pyodide.runPythonAsync(code);
-                } catch(e) { out.innerText = e; }
-            } else if (mode === 'javascript') {
-                try {
-                    out.innerText = "";
-                    const log = console.log;
-                    console.log = (...args) => { out.innerText += args.join(' ') + "\n"; };
-                    eval(code);
-                    console.log = log;
                 } catch(e) { out.innerText = e; }
             }
         }
