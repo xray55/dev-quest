@@ -2,13 +2,17 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>DEV//QUEST: ZERO TO HERO</title>
+
+    <!-- Fonts & Icons -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;900&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+
+    <!-- Markdown Parser / Ace / Pyodide -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/marked/9.1.2/marked.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.32.7/ace.js"></script>
     <script src="https://cdn.jsdelivr.net/pyodide/v0.25.0/full/pyodide.js"></script>
+
     <style>
         :root {
             --bg: #09090b;
@@ -16,99 +20,107 @@
             --card-bg: #1c1c1f;
             --accent: #dcfce7;
             --accent-glow: #22c55e;
-            --link-color: #38bdf8; /* NEON SKY BLUE */
+            --danger: #ef4444;
+            --link-color: #38bdf8;
             --text-main: #f4f4f5;
             --text-dim: #a1a1aa;
             --border: #27272a;
         }
 
-        body { margin: 0; background: var(--bg); color: var(--text-main); font-family: 'Inter', sans-serif; height: 100vh; display: flex; overflow: hidden; }
+        body {
+            margin: 0;
+            background: var(--bg);
+            color: var(--text-main);
+            font-family: 'Inter', sans-serif;
+            height: 100vh;
+            display: flex;
+            overflow: hidden;
+        }
 
         /* --- SIDEBAR --- */
         #sidebar { width: 350px; background: var(--sidebar); border-right: 1px solid var(--border); display: flex; flex-direction: column; z-index: 10; }
 
         .brand { padding: 30px; border-bottom: 1px solid var(--border); }
-        .brand h1 { margin: 0; font-size: 1.5rem; font-weight: 900; letter-spacing: -1px; background: linear-gradient(to right, #fff, #666); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-        .brand p { margin: 5px 0 0 0; font-size: 0.8rem; color: var(--text-dim); text-transform: uppercase; letter-spacing: 1px; }
+        .brand h1 { margin: 0; font-size: 1.5rem; font-weight: 900; letter-spacing: -1px;
+            background: linear-gradient(to right, #fff, #666);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .brand p { margin: 5px 0 0; font-size: 0.8rem; color: var(--text-dim); text-transform: uppercase; letter-spacing: 1px; }
 
-        /* --- NEW STATUS BAR (TOP) --- */
-        #ai-status-bar {
-            background: #000;
-            border-bottom: 1px solid var(--border);
-            padding: 15px;
-            height: 140px;
-            display: flex; flex-direction: column;
-            font-family: 'JetBrains Mono', monospace; font-size: 0.7rem; color: #666;
+        #ai-status-bar { background: #000; border-bottom: 1px solid var(--border); padding: 15px; height: 140px;
+            display: flex; flex-direction: column; font-family: 'JetBrains Mono', monospace; font-size: 0.7rem; color: #666;
         }
-        .status-header { font-size: 0.6rem; font-weight: bold; color: #444; margin-bottom: 8px; letter-spacing: 1px; }
-        #logs-container {
-            flex: 1; overflow-y: auto; overflow-x: hidden;
-            display: flex; flex-direction: column-reverse; /* Newest logs at top */
-        }
-        .log-line {
-            margin-bottom: 6px; line-height: 1.4;
-            word-wrap: break-word; /* FIXES OVERHANG */
-            border-left: 2px solid #333; padding-left: 8px;
-        }
-        .log-new { color: var(--accent-glow); font-weight: bold; }
+        #logs-container { flex: 1; overflow-y: auto; display: flex; flex-direction: column-reverse; }
+        .log-line { margin-bottom: 6px; border-left: 2px solid #333; padding-left: 8px; }
 
-        /* --- TRACK LIST --- */
         #track-list { flex: 1; overflow-y: auto; padding: 20px; }
         .track-block { margin-bottom: 30px; }
-        .track-title { font-size: 0.7rem; color: var(--text-dim); font-weight: 700; text-transform: uppercase; margin-bottom: 10px; padding-left: 10px; border-left: 2px solid var(--accent-glow); }
+        .track-title { font-size: 0.7rem; color: var(--text-dim); font-weight: 700; text-transform: uppercase;
+            margin-bottom: 10px; border-left: 2px solid var(--accent-glow); padding-left: 10px;
+        }
 
-        .lesson-btn {
-            display: flex; align-items: center; gap: 10px;
-            padding: 12px 15px;
-            background: var(--card-bg);
-            border: 1px solid var(--border);
-            border-radius: 8px;
-            margin-bottom: 8px;
-            cursor: pointer;
-            transition: all 0.2s ease;
+        .lesson-btn { display: flex; align-items: center; gap: 10px; padding: 12px 15px;
+            background: var(--card-bg); border: 1px solid var(--border); border-radius: 8px;
+            margin-bottom: 8px; cursor: pointer; transition: 0.2s;
         }
         .lesson-btn:hover { border-color: var(--text-dim); transform: translateX(2px); }
         .lesson-btn.active { border-color: var(--accent-glow); background: #142819; }
-        .lesson-btn i { color: var(--accent-glow); font-size: 0.8rem; }
-        .lesson-title { font-size: 0.9rem; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 
         /* --- MAIN AREA --- */
-        #main-area { flex: 1; display: flex; position: relative; }
-        #lesson-pane { flex: 1; padding: 60px; overflow-y: auto; max-width: 800px; margin: 0 auto; }
+        #main-area { flex: 1; display: flex; flex-direction: column; position: relative; overflow-y: auto; }
 
-        .badge { display: inline-block; padding: 4px 12px; border-radius: 20px; background: #27272a; color: #fff; font-size: 0.75rem; font-weight: 700; margin-bottom: 20px; }
-        h1 { font-size: 2.5rem; font-weight: 900; letter-spacing: -1px; margin-bottom: 30px; line-height: 1.1; }
-
-        .analogy-box {
-            background: #1e1e24; border-left: 4px solid #a78bfa;
-            padding: 20px; margin: 30px 0; border-radius: 0 8px 8px 0;
-            font-size: 1.05rem; line-height: 1.6; color: #e4e4e7;
+        #sim-lab-container {
+            background: #000; border-bottom: 1px solid var(--border);
+            padding: 20px; min-height: 250px; display: none;
+            justify-content: center; align-items: center; flex-direction: column;
         }
 
-        .content-body { font-size: 1.1rem; line-height: 1.7; color: #d4d4d8; }
-        .content-body h2 { margin-top: 40px; color: #fff; font-size: 1.5rem; }
-        .content-body code { background: #27272a; padding: 2px 6px; border-radius: 4px; font-family: 'JetBrains Mono', monospace; font-size: 0.9rem; }
+        .sim-header { font-family: 'JetBrains Mono', monospace; color: var(--accent-glow);
+            font-size: 0.8rem; margin-bottom: 15px; text-transform: uppercase;
+        }
 
-        /* --- FORCED LINK STYLES --- */
-        a, a:visited, a:hover, a:active { color: var(--link-color) !important; text-decoration: none; font-weight: bold; }
-        a:hover { text-shadow: 0 0 10px rgba(56, 189, 248, 0.5); }
+        #lesson-pane { flex: 1; padding: 40px 60px; max-width: 900px; margin: 0 auto; width: 100%; }
+        .badge { display: inline-block; padding: 4px 12px; border-radius: 20px;
+            background: #27272a; color: #fff; font-size: 0.75rem; font-weight: 700; margin-bottom: 20px;
+        }
 
-        /* --- IDE PANE --- */
-        #ide-container { width: 40%; border-left: 1px solid var(--border); background: var(--bg); display: flex; flex-direction: column; transition: width 0.3s ease; }
-        .ide-header { padding: 15px; background: var(--sidebar); border-bottom: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; }
-        .play-btn { background: var(--accent-glow); color: #000; border: none; padding: 8px 20px; border-radius: 6px; font-weight: 800; cursor: pointer; display: flex; align-items: center; gap: 8px; }
-        .play-btn:hover { opacity: 0.9; }
+        .hint-box {
+            background: #1a1a1a;
+            border: 1px dashed #444;
+            padding: 10px;
+            margin-top: 20px;
+            font-size: 0.85rem;
+        }
+
+        /* --- SIM WIDGETS --- */
+        .gate-row { display: flex; gap: 20px; align-items: center; margin: 10px 0; }
+        .switch { width: 40px; height: 25px; background: var(--danger); cursor: pointer; border-radius: 4px;
+            display: flex; align-items: center; justify-content: center; font-weight: bold; font-family: monospace;
+        }
+        .switch.on { background: var(--accent-glow); color: #000; }
+
+        .memory-grid { display: grid; grid-template-columns: repeat(10, 1fr); gap: 4px; max-width: 300px; }
+        .mem-block { width: 25px; height: 25px; background: #333; border-radius: 2px; cursor: pointer; }
+        .mem-block.used { background: var(--danger); }
+        .mem-block.selected { background: var(--link-color); }
+
+        /* --- IDE --- */
+        #ide-container { width: 450px; border-left: 1px solid var(--border); display: flex; flex-direction: column; background: var(--bg); }
         #editor { flex: 1; }
-        #console { height: 150px; background: #000; color: #0f0; padding: 15px; font-family: 'JetBrains Mono', monospace; font-size: 0.85rem; border-top: 1px solid var(--border); overflow-y: auto; }
+        #console { height: 180px; background: #000; color: #0f0; padding: 15px;
+            font-family: 'JetBrains Mono', monospace; font-size: 0.8rem; border-top: 1px solid var(--border); overflow-y: auto;
+        }
 
-        /* SCROLLBARS */
-        ::-webkit-scrollbar { width: 8px; }
-        ::-webkit-scrollbar-thumb { background: #333; border-radius: 4px; }
-        ::-webkit-scrollbar-track { background: transparent; }
+        .play-btn { background: var(--accent-glow); color: #000; border: none; padding: 8px 20px;
+            border-radius: 6px; font-weight: 800; cursor: pointer;
+        }
     </style>
 </head>
+
 <body>
 
+    <!-- SIDEBAR -->
     <aside id="sidebar">
         <div class="brand">
             <h1>DEV//QUEST</h1>
@@ -120,151 +132,177 @@
             <div id="logs-container"></div>
         </div>
 
-        <div id="track-list">
-            <div style="text-align:center; padding:40px; color:#555;">
-                <i class="fa-solid fa-circle-notch fa-spin"></i><br><br>
-                Connecting to Neural Net...
-            </div>
-        </div>
+        <div id="track-list"></div>
     </aside>
 
-    <div id="main-area">
+    <!-- MAIN CONTENT -->
+    <main id="main-area">
+        <div id="sim-lab-container">
+            <div class="sim-header" id="sim-title">Interactive Simulation Offline</div>
+            <div id="sim-content"></div>
+        </div>
+
         <div id="lesson-pane">
             <div id="lesson-content">
                 <div style="margin-top:100px; text-align:center; opacity:0.5;">
-                    <h2>Welcome, Initiate.</h2>
-                    <p>Select a module on the left to begin your training.</p>
+                    <h2>Neural Link Established.</h2>
+                    <p>Select a data module to begin synchronization.</p>
                 </div>
             </div>
         </div>
+    </main>
 
-        <div id="ide-container">
-            <div class="ide-header">
-                <span style="font-size:0.8rem; font-weight:bold; color:#777;">PYTHON TERMINAL</span>
-                <button class="play-btn" onclick="runCode()"><i class="fa-solid fa-play"></i> RUN</button>
-            </div>
-            <div id="editor"># Code goes here...</div>
-            <div id="console">// Output waiting...</div>
+    <!-- IDE -->
+    <section id="ide-container">
+        <div style="padding:15px; background:var(--sidebar); border-bottom:1px solid var(--border);
+            display:flex; justify-content:space-between; align-items:center;">
+            <span style="font-size:0.7rem; font-weight:bold; color:#777;">DEBUG TERMINAL</span>
+            <button class="play-btn" onclick="runCode()">RUN</button>
         </div>
-    </div>
 
+        <div id="editor"></div>
+        <div id="console">// Output waiting...</div>
+    </section>
+
+
+    <!-- ================= SCRIPT ENGINE ================= -->
     <script>
-        const BASE_URL = 'https://devquest.uk';
+        const BASE_URL = 'http://localhost:8000';
         let pyodide = null;
         let currentEditor = null;
 
+        /* ---------- SIMULATIONS ---------- */
+        function loadSimulation(track) {
+            const container = document.getElementById('sim-lab-container');
+            const simContent = document.getElementById('sim-content');
+            const simTitle = document.getElementById('sim-title');
+
+            container.style.display = "flex";
+            simContent.innerHTML = "";
+
+            if (track.includes("Foundations")) {
+                simTitle.innerText = "Logic Gate Lab";
+                simContent.innerHTML = `
+                    <div class="gate-row">
+                        <div class="switch" id="in1" onclick="this.classList.toggle('on'); this.innerText=this.classList.contains('on')?'1':'0'; updateLogic();">0</div>
+                        <span style="font-family:monospace">AND</span>
+                        <div class="switch" id="in2" onclick="this.classList.toggle('on'); this.innerText=this.classList.contains('on')?'1':'0'; updateLogic();">0</div>
+                        <span style="font-family:monospace">=</span>
+                        <div class="switch" id="logic-out" style="cursor:default">0</div>
+                    </div>
+                `;
+            } else if (track.includes("Systems")) {
+                simTitle.innerText = "Heap Allocator Sim";
+                simContent.innerHTML = `<div class="memory-grid" id="memGrid"></div>`;
+                initMemGame();
+            } else if (track.includes("Security")) {
+                simTitle.innerText = "Packet Filter Firewall";
+                simContent.innerHTML = `<p>Firewall simulation placeholder</p>`;
+            } else {
+                container.style.display = "none";
+            }
+        }
+
+        function updateLogic() {
+            const i1 = document.getElementById('in1').innerText === "1";
+            const i2 = document.getElementById('in2').innerText === "1";
+            const out = document.getElementById('logic-out');
+            const res = i1 && i2;
+            out.innerText = res ? "1" : "0";
+            res ? out.classList.add('on') : out.classList.remove('on');
+        }
+
+        function initMemGame() {
+            const grid = document.getElementById('memGrid');
+            grid.innerHTML = "";
+            for(let i=0; i<30; i++) {
+                const b = document.createElement('div');
+                b.className = 'mem-block';
+                if(Math.random() < 0.2) b.classList.add('used');
+                else b.onclick = () => b.classList.toggle('selected');
+                grid.appendChild(b);
+            }
+        }
+
+        /* ---------- EDITOR ---------- */
         function initEditor() {
             currentEditor = ace.edit("editor");
             currentEditor.setTheme("ace/theme/twilight");
             currentEditor.session.setMode("ace/mode/python");
-            currentEditor.setFontSize(14);
             currentEditor.setShowPrintMargin(false);
         }
 
         async function initPyodide() {
-            try {
-                pyodide = await loadPyodide();
-                console.log("Python Ready");
-            } catch(e) { console.log("Pyodide Load Error", e); }
+            pyodide = await loadPyodide();
         }
 
+        /* ---------- CURRICULUM ---------- */
         async function fetchCurriculum() {
             try {
                 const res = await fetch(`${BASE_URL}/curriculum`);
                 const tree = await res.json();
                 renderSidebar(tree);
-            } catch(e) { console.log("Offline / Connecting..."); }
+            } catch(e) { console.warn("Backend Sync Pending..."); }
         }
 
         function renderSidebar(tree) {
             const container = document.getElementById('track-list');
-            if (container.matches(':hover')) return;
-
             container.innerHTML = '';
-
-            if (Object.keys(tree).length === 0) {
-                container.innerHTML = '<div style="padding:20px; text-align:center; color:#555;">Building Roadmap...</div>';
-                return;
-            }
-
             for (const [trackName, modules] of Object.entries(tree)) {
-                const trackDiv = document.createElement('div');
-                trackDiv.className = 'track-block';
-
-                const title = document.createElement('div');
-                title.className = 'track-title';
-                title.innerText = trackName;
-                trackDiv.appendChild(title);
-
-                for (const [modId, modData] of Object.entries(modules)) {
-                    modData.lessons.forEach(lesson => {
+                const block = document.createElement('div');
+                block.className = 'track-block';
+                block.innerHTML = `<div class="track-title">${trackName}</div>`;
+                Object.values(modules).forEach(mod => {
+                    mod.lessons.forEach(lesson => {
                         const btn = document.createElement('div');
                         btn.className = 'lesson-btn';
-                        btn.innerHTML = `<i class="fa-solid fa-file-code"></i> <div class="lesson-title">${lesson.title}</div>`;
-                        btn.onclick = () => loadLesson(lesson.id, btn);
-                        trackDiv.appendChild(btn);
+                        btn.innerHTML = `<i class="fa-solid fa-bolt"></i><div>${lesson.title}</div>`;
+                        btn.onclick = () => loadLesson(lesson.id, btn, trackName);
+                        block.appendChild(btn);
                     });
-                }
-                container.appendChild(trackDiv);
+                });
+                container.appendChild(block);
             }
         }
 
-        async function loadLesson(id, btn) {
+        async function loadLesson(id, btn, trackName) {
             document.querySelectorAll('.lesson-btn').forEach(b => b.classList.remove('active'));
             btn.classList.add('active');
-
-            const container = document.getElementById('lesson-content');
-            container.innerHTML = '<div style="opacity:0.5;">Loading Data...</div>';
 
             try {
                 const res = await fetch(`${BASE_URL}/lesson/${id}`);
                 const data = await res.json();
 
-                container.innerHTML = `
-                    <div class="badge">PYTHON BASICS</div>
+                loadSimulation(trackName);
+
+                document.getElementById('lesson-content').innerHTML = `
+                    <div class="badge">${trackName}</div>
                     <h1>${data.title}</h1>
-                    <div class="analogy-box">
-                        <strong>💡 Concept:</strong> ${marked.parse(data.analogy)}
-                    </div>
+
+                    <div class="analogy-box"><strong>Analogy:</strong> ${data.analogy}</div>
+
                     <div class="content-body">
-                        ${marked.parse(data.content_markdown || data.content)}
+                        ${marked.parse(data.content || data.content_markdown || "")}
                     </div>
-                    <div style="margin-top:50px; padding-top:20px; border-top:1px solid #333; font-size:0.9rem; color:#666;">
-                        <strong>Reference:</strong> ${marked.parse(data.docs || "No docs linked.")}
+
+                    <div class="hint-box">
+                        <strong>🛠 Project Hints</strong><br>
+                        ${marked.parse(data.docs || "")}
                     </div>
                 `;
 
-                if (data.starter_code) {
-                    currentEditor.setValue(data.starter_code, -1);
-                }
-
-                // --- NUCLEAR COLOR FIX ---
-                // Manually force every link to be bright blue after rendering
-                const links = container.getElementsByTagName("a");
-                for(let link of links) {
-                    link.style.color = "#38bdf8";
-                    link.style.fontWeight = "bold";
-                }
-                // -------------------------
-
-            } catch(e) {
-                container.innerHTML = "Error loading lesson.";
-            }
+                if(data.starter_code) currentEditor.setValue(data.starter_code, -1);
+            } catch(e) { console.error(e); }
         }
 
+        /* ---------- PYTHON RUNNER ---------- */
         async function runCode() {
             const code = currentEditor.getValue();
             const consoleDiv = document.getElementById('console');
-            consoleDiv.innerHTML = "Executing...";
-
-            if (!pyodide) {
-                consoleDiv.innerHTML = "Python is still loading... wait 5s.";
-                return;
-            }
+            consoleDiv.innerHTML = "";
 
             try {
-                pyodide.setStdout({ batched: (text) => { consoleDiv.innerHTML += text + "\n"; } });
-                consoleDiv.innerHTML = "";
+                pyodide.setStdout({ batched: (t) => { consoleDiv.innerHTML += t + "\n"; } });
                 await pyodide.runPythonAsync(code);
             } catch(e) {
                 consoleDiv.innerHTML = `<span style="color:red">${e}</span>`;
@@ -275,17 +313,18 @@
             try {
                 const res = await fetch(`${BASE_URL}/ai-status`);
                 const logs = await res.json();
-                const container = document.getElementById('logs-container');
-                container.innerHTML = logs.map(l => `<div class="log-line"><span class="log-new">></span> ${l.message}</div>`).join('');
+                document.getElementById('logs-container').innerHTML =
+                    logs.map(l => `<div class="log-line">> ${l.message}</div>`).join('');
             } catch(e) {}
         }
 
+        /* ---------- BOOT ---------- */
         initEditor();
         initPyodide();
         fetchCurriculum();
         setInterval(fetchCurriculum, 5000);
         setInterval(updateLogs, 2000);
-
     </script>
+
 </body>
 </html>
