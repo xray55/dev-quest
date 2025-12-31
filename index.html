@@ -16,6 +16,7 @@
             --card-bg: #1c1c1f;
             --accent: #dcfce7; /* Soft Green */
             --accent-glow: #22c55e;
+            --link-color: #60a5fa; /* New Bright Blue for Links */
             --text-main: #f4f4f5;
             --text-dim: #a1a1aa;
             --border: #27272a;
@@ -68,6 +69,19 @@
         .content-body { font-size: 1.1rem; line-height: 1.7; color: #d4d4d8; }
         .content-body h2 { margin-top: 40px; color: #fff; font-size: 1.5rem; }
         .content-body code { background: #27272a; padding: 2px 6px; border-radius: 4px; font-family: 'JetBrains Mono', monospace; font-size: 0.9rem; }
+
+        /* --- LINK COLOR FIX --- */
+        .content-body a {
+            color: var(--link-color);
+            text-decoration: none;
+            border-bottom: 1px solid transparent;
+            font-weight: 600;
+            transition: all 0.2s ease;
+        }
+        .content-body a:hover {
+            border-bottom-color: var(--link-color);
+            opacity: 0.8;
+        }
 
         /* --- IDE PANE (Right Side) --- */
         #ide-toggle { position: absolute; top: 20px; right: 20px; z-index: 100; }
