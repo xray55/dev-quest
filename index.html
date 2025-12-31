@@ -14,9 +14,9 @@
             --bg: #09090b;
             --sidebar: #121214;
             --card-bg: #1c1c1f;
-            --accent: #dcfce7; /* Soft Green */
+            --accent: #dcfce7;
             --accent-glow: #22c55e;
-            --link-color: #60a5fa; /* New Bright Blue for Links */
+            --link-color: #38bdf8; /* NEON SKY BLUE */
             --text-main: #f4f4f5;
             --text-dim: #a1a1aa;
             --border: #27272a;
@@ -24,15 +24,36 @@
 
         body { margin: 0; background: var(--bg); color: var(--text-main); font-family: 'Inter', sans-serif; height: 100vh; display: flex; overflow: hidden; }
 
-        /* --- SIDEBAR (CURRICULUM) --- */
+        /* --- SIDEBAR --- */
         #sidebar { width: 350px; background: var(--sidebar); border-right: 1px solid var(--border); display: flex; flex-direction: column; z-index: 10; }
 
         .brand { padding: 30px; border-bottom: 1px solid var(--border); }
         .brand h1 { margin: 0; font-size: 1.5rem; font-weight: 900; letter-spacing: -1px; background: linear-gradient(to right, #fff, #666); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
         .brand p { margin: 5px 0 0 0; font-size: 0.8rem; color: var(--text-dim); text-transform: uppercase; letter-spacing: 1px; }
 
-        #track-list { flex: 1; overflow-y: auto; padding: 20px; }
+        /* --- NEW STATUS BAR (TOP) --- */
+        #ai-status-bar {
+            background: #000;
+            border-bottom: 1px solid var(--border);
+            padding: 15px;
+            height: 140px;
+            display: flex; flex-direction: column;
+            font-family: 'JetBrains Mono', monospace; font-size: 0.7rem; color: #666;
+        }
+        .status-header { font-size: 0.6rem; font-weight: bold; color: #444; margin-bottom: 8px; letter-spacing: 1px; }
+        #logs-container {
+            flex: 1; overflow-y: auto; overflow-x: hidden;
+            display: flex; flex-direction: column-reverse; /* Newest logs at top */
+        }
+        .log-line {
+            margin-bottom: 6px; line-height: 1.4;
+            word-wrap: break-word; /* FIXES OVERHANG */
+            border-left: 2px solid #333; padding-left: 8px;
+        }
+        .log-new { color: var(--accent-glow); font-weight: bold; }
 
+        /* --- TRACK LIST --- */
+        #track-list { flex: 1; overflow-y: auto; padding: 20px; }
         .track-block { margin-bottom: 30px; }
         .track-title { font-size: 0.7rem; color: var(--text-dim); font-weight: 700; text-transform: uppercase; margin-bottom: 10px; padding-left: 10px; border-left: 2px solid var(--accent-glow); }
 
@@ -53,8 +74,6 @@
 
         /* --- MAIN AREA --- */
         #main-area { flex: 1; display: flex; position: relative; }
-
-        /* LESSON READING PANE */
         #lesson-pane { flex: 1; padding: 60px; overflow-y: auto; max-width: 800px; margin: 0 auto; }
 
         .badge { display: inline-block; padding: 4px 12px; border-radius: 20px; background: #27272a; color: #fff; font-size: 0.75rem; font-weight: 700; margin-bottom: 20px; }
@@ -70,52 +89,22 @@
         .content-body h2 { margin-top: 40px; color: #fff; font-size: 1.5rem; }
         .content-body code { background: #27272a; padding: 2px 6px; border-radius: 4px; font-family: 'JetBrains Mono', monospace; font-size: 0.9rem; }
 
-        /* --- LINK COLOR FIX (BULLETPROOF) --- */
-        .content-body a,
-        .content-body a:visited,
-        .content-body a:hover,
-        .content-body a:active {
-            color: #60a5fa !important; /* Bright Cyan/Blue */
-            text-decoration: none;
-            border-bottom: 1px solid transparent;
-            font-weight: 600;
-            transition: all 0.2s ease;
-        }
+        /* --- FORCED LINK STYLES --- */
+        a, a:visited, a:hover, a:active { color: var(--link-color) !important; text-decoration: none; font-weight: bold; }
+        a:hover { text-shadow: 0 0 10px rgba(56, 189, 248, 0.5); }
 
-        .content-body a:hover {
-            border-bottom-color: #60a5fa !important;
-            opacity: 0.8;
-            text-shadow: 0 0 8px rgba(96, 165, 250, 0.4); /* Glow effect */
-        }
-
-        /* --- IDE PANE (Right Side) --- */
-        #ide-toggle { position: absolute; top: 20px; right: 20px; z-index: 100; }
-        #ide-container {
-            width: 40%; border-left: 1px solid var(--border); background: var(--bg); display: flex; flex-direction: column;
-            transition: width 0.3s ease;
-        }
+        /* --- IDE PANE --- */
+        #ide-container { width: 40%; border-left: 1px solid var(--border); background: var(--bg); display: flex; flex-direction: column; transition: width 0.3s ease; }
         .ide-header { padding: 15px; background: var(--sidebar); border-bottom: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; }
         .play-btn { background: var(--accent-glow); color: #000; border: none; padding: 8px 20px; border-radius: 6px; font-weight: 800; cursor: pointer; display: flex; align-items: center; gap: 8px; }
         .play-btn:hover { opacity: 0.9; }
-
         #editor { flex: 1; }
         #console { height: 150px; background: #000; color: #0f0; padding: 15px; font-family: 'JetBrains Mono', monospace; font-size: 0.85rem; border-top: 1px solid var(--border); overflow-y: auto; }
-
-        /* --- AI STATUS FOOTER --- */
-        #ai-status-bar {
-            position: fixed; bottom: 0; left: 0; width: 350px;
-            background: #000; border-top: 1px solid var(--border);
-            padding: 10px; font-family: 'JetBrains Mono', monospace; font-size: 0.7rem; color: #666;
-            height: 120px; overflow: hidden;
-        }
-        .log-line { margin-bottom: 4px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-        .log-new { color: var(--accent-glow); }
 
         /* SCROLLBARS */
         ::-webkit-scrollbar { width: 8px; }
         ::-webkit-scrollbar-thumb { background: #333; border-radius: 4px; }
         ::-webkit-scrollbar-track { background: transparent; }
-
     </style>
 </head>
 <body>
@@ -125,14 +114,17 @@
             <h1>DEV//QUEST</h1>
             <p>Academy of Engineering</p>
         </div>
+
+        <div id="ai-status-bar">
+            <div class="status-header">SYSTEM INTELLIGENCE</div>
+            <div id="logs-container"></div>
+        </div>
+
         <div id="track-list">
             <div style="text-align:center; padding:40px; color:#555;">
                 <i class="fa-solid fa-circle-notch fa-spin"></i><br><br>
                 Connecting to Neural Net...
             </div>
-        </div>
-        <div id="ai-status-bar">
-            <div id="logs-container"></div>
         </div>
     </aside>
 
@@ -157,11 +149,10 @@
     </div>
 
     <script>
-        const BASE_URL = 'https://devquest.uk'; // Tunneled URL
+        const BASE_URL = 'https://devquest.uk';
         let pyodide = null;
         let currentEditor = null;
 
-        // Init Ace Editor
         function initEditor() {
             currentEditor = ace.edit("editor");
             currentEditor.setTheme("ace/theme/twilight");
@@ -170,7 +161,6 @@
             currentEditor.setShowPrintMargin(false);
         }
 
-        // Init Python
         async function initPyodide() {
             try {
                 pyodide = await loadPyodide();
@@ -178,7 +168,6 @@
             } catch(e) { console.log("Pyodide Load Error", e); }
         }
 
-        // --- FETCHING ---
         async function fetchCurriculum() {
             try {
                 const res = await fetch(`${BASE_URL}/curriculum`);
@@ -189,7 +178,6 @@
 
         function renderSidebar(tree) {
             const container = document.getElementById('track-list');
-            // If hovering, don't update to prevent jumpiness
             if (container.matches(':hover')) return;
 
             container.innerHTML = '';
@@ -222,7 +210,6 @@
         }
 
         async function loadLesson(id, btn) {
-            // Highlight active
             document.querySelectorAll('.lesson-btn').forEach(b => b.classList.remove('active'));
             btn.classList.add('active');
 
@@ -251,6 +238,15 @@
                     currentEditor.setValue(data.starter_code, -1);
                 }
 
+                // --- NUCLEAR COLOR FIX ---
+                // Manually force every link to be bright blue after rendering
+                const links = container.getElementsByTagName("a");
+                for(let link of links) {
+                    link.style.color = "#38bdf8";
+                    link.style.fontWeight = "bold";
+                }
+                // -------------------------
+
             } catch(e) {
                 container.innerHTML = "Error loading lesson.";
             }
@@ -267,16 +263,14 @@
             }
 
             try {
-                // Redirect stdout
                 pyodide.setStdout({ batched: (text) => { consoleDiv.innerHTML += text + "\n"; } });
-                consoleDiv.innerHTML = ""; // Clear previous
+                consoleDiv.innerHTML = "";
                 await pyodide.runPythonAsync(code);
             } catch(e) {
                 consoleDiv.innerHTML = `<span style="color:red">${e}</span>`;
             }
         }
 
-        // --- AI LOGS ---
         async function updateLogs() {
             try {
                 const res = await fetch(`${BASE_URL}/ai-status`);
@@ -286,7 +280,6 @@
             } catch(e) {}
         }
 
-        // Init
         initEditor();
         initPyodide();
         fetchCurriculum();
