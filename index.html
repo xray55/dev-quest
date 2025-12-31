@@ -46,10 +46,10 @@
             <div id="connection-status" style="font-size: 0.7rem; font-weight: 400; color: #8b949e; margin-top: 5px;">Checking...</div>
         </div>
         <div id="track-list"></div>
-        <div id="ai-console" style="height: 150px; background: #000; border-top: 1px solid #30363d; padding: 10px; font-family: 'JetBrains Mono', monospace; font-size: 0.7rem; overflow-y: auto; color: #39ff14;">
-    <div style="color: #8b949e; border-bottom: 1px solid #30363d; margin-bottom: 5px; padding-bottom: 2px;">LIVE_AI_TERMINAL</div>
-    <div id="log-entries"></div>
-</div>
+        <div id="ai-console" style="height: 300px; background: #000; border-top: 1px solid #30363d; padding: 10px; font-family: 'JetBrains Mono', monospace; font-size: 0.7rem; overflow-y: auto; color: #39ff14;">
+            <div style="color: #8b949e; border-bottom: 1px solid #30363d; margin-bottom: 5px; padding-bottom: 2px;">LIVE_AI_TERMINAL</div>
+            <div id="log-entries"></div>
+        </div>
     </aside>
     <div id="main-area">
         <div id="lesson-pane">
@@ -96,26 +96,35 @@
                 setInterval(checkLocalConnection, 15000); // Polling for new lessons
             }
         }
-        async function updateAIStatus() {
-        try {
-            const res = await fetch(`https://devquest.uk/ai-status`);
-            const logs = await res.json();
-            const container = document.getElementById('log-entries');
-            container.innerHTML = logs.map(l => `
-                <div style="margin-bottom: 4px;">
-                    <span style="color: #58a6ff;">[${l.created_at ? l.created_at.split(' ')[1] : '...'}]</span> ${l.message}
-                </div>
-            `).join('');
-            // Auto-scroll to top (newest first)
-            document.getElementById('ai-console').scrollTop = 0;
-        } catch (e) {
-            console.log("Status check failed...");
-        }
-    }
 
-    // Call it every 5 seconds
-    setInterval(updateAIStatus, 5000);
-    updateAIStatus();
+        // --- UPDATED AI STATUS LOGIC ---
+        async function updateAIStatus() {
+            try {
+                const res = await fetch(`https://devquest.uk/ai-status`);
+                let logs = await res.json();
+
+                // 1. REVERSE logs so they flow naturally (Oldest -> Newest)
+                logs.reverse();
+
+                const container = document.getElementById('log-entries');
+                container.innerHTML = logs.map(l => `
+                    <div style="margin-bottom: 4px;">
+                        <span style="color: #58a6ff;">[${l.created_at ? l.created_at.split(' ')[1] : '...'}]</span> ${l.message}
+                    </div>
+                `).join('');
+
+                // 2. Auto-scroll to BOTTOM to show new lines
+                const consoleDiv = document.getElementById('ai-console');
+                consoleDiv.scrollTop = consoleDiv.scrollHeight;
+
+            } catch (e) {
+                console.log("Status check failed...");
+            }
+        }
+
+        // Call it every 3 seconds for a smoother "real-time" feel
+        setInterval(updateAIStatus, 3000);
+        updateAIStatus();
 
         async function loadStaticCurriculum() {
             try {
@@ -205,9 +214,9 @@
                 const lesson = await res.json();
                 currentLesson = lesson;
                 renderLesson(lesson);
-            } catch(e) { 
+            } catch(e) {
                 console.error(e);
-                document.getElementById('lesson-content').innerText = "Error loading lesson data. Try refreshing."; 
+                document.getElementById('lesson-content').innerText = "Error loading lesson data. Try refreshing.";
             }
         }
 
@@ -256,7 +265,7 @@
                     const log = console.log;
                     console.log = (...args) => { out.innerText += args.join(' ') + "\n"; };
                     eval(code);
-                    console.log = log; 
+                    console.log = log;
                 } catch(e) { out.innerText = e; }
             }
         }
