@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>DEV//QUEST ACADEMY</title>
+    <title>DEV//QUEST UNIVERSITY</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/marked/9.1.2/marked.min.js"></script>
@@ -74,10 +74,9 @@
     </div>
     <script>
         // ----------------------------------------------------
-        // FIX: Point to LOCALHOST (Your Docker Container)
+        // PUBLIC MODE: Points to your Tunnel URL
         // ----------------------------------------------------
-        const BASE_URL = 'http://localhost:5000';
-        const IS_GITHUB = false;
+        const BASE_URL = 'https://devquest.uk';
 
         let currentLesson = null;
         let pyodide = null;
@@ -89,8 +88,8 @@
 
         async function init() {
             try { pyodide = await loadPyodide(); } catch(e){ console.log("Pyodide loading..."); }
-            await checkLocalConnection();
-            setInterval(checkLocalConnection, 5000); // Check for new lessons every 5s
+            await checkConnection();
+            setInterval(checkConnection, 5000); // Check for new lessons every 5s
         }
 
         async function updateAIStatus() {
@@ -98,8 +97,9 @@
                 const res = await fetch(`${BASE_URL}/ai-status`);
                 let logs = await res.json();
 
-                // Reverse to show newest at bottom if needed, or keep top
-                // logs.reverse();
+                // Logs are already sorted by the backend query (Newest First usually)
+                // If you want Newest at the BOTTOM, uncomment:
+                logs.reverse();
 
                 const container = document.getElementById('log-entries');
                 container.innerHTML = logs.map(l => {
@@ -111,27 +111,31 @@
                     return `<div style="margin-bottom: 4px;"><span style="color: #58a6ff;">[${timeDisplay}]</span> ${l.message}</div>`;
                 }).join('');
 
+                // Auto-scroll to bottom
+                const consoleDiv = document.getElementById('ai-console');
+                consoleDiv.scrollTop = consoleDiv.scrollHeight;
+
             } catch (e) {
-                console.log("Status check failed...");
+                console.log("Status check failed (Tunnel might be sleeping)...");
             }
         }
         setInterval(updateAIStatus, 2000);
 
-        async function checkLocalConnection() {
+        async function checkConnection() {
             try {
                 const res = await fetch(`${BASE_URL}/curriculum`);
                 const tree = await res.json();
-                document.getElementById('connection-status').innerHTML = '<span class="live-dot"></span> LIVE LOCAL';
+                document.getElementById('connection-status').innerHTML = '<span class="live-dot"></span> LIVE TUNNEL';
                 renderSidebar(tree);
             } catch (e) {
-                console.warn("Localhost unavailable.");
-                document.getElementById('connection-status').innerHTML = '<span class="offline-dot"></span> OFFLINE';
+                console.warn("Tunnel unavailable.");
+                document.getElementById('connection-status').innerHTML = '<span class="offline-dot"></span> DISCONNECTED';
             }
         }
 
         function renderSidebar(tree) {
             const container = document.getElementById('track-list');
-            if (container.matches(':hover')) return; // Don't redraw if user is clicking
+            if (container.matches(':hover')) return;
 
             const scrollPos = container.scrollTop;
             container.innerHTML = "";
