@@ -1,15 +1,17 @@
-# DEV//QUEST: Zero to Hero Academy
+# 🛡️ DEV//QUEST: The Architect's Forge
 
 <div align="center">
 
-![DEV//QUEST Banner](https://img.shields.io/badge/DEV%2F%2FQUEST-Zero%20to%20Hero-00ff88?style=for-the-badge&logo=rocket&logoColor=white)
+![DEV//QUEST Status](https://img.shields.io/badge/Status-Active_Development-00ff88?style=for-the-badge&logo=cpu)
+![AI Core](https://img.shields.io/badge/AI_Core-DeepSeek_R1_Local-blueviolet?style=for-the-badge&logo=ollama)
+![Infrastructure](https://img.shields.io/badge/Infra-Docker_Native-blue?style=for-the-badge&logo=docker)
 
-### 🚀 An AI-Powered Learning Platform That Teaches You to Code From Absolute Zero to Professional Developer
+### 🚀 A Self-Hostable, AI-Powered Curriculum Generator for the Modern Omni-Developer
+**From Absolute Zero to System Architect, Bot Developer, and Reverse Engineer.**
+
 [![License](https://img.shields.io/badge/License-MIT-green?style=flat-square)](LICENSE)
 [![Python](https://img.shields.io/badge/Python-3.11+-blue?style=flat-square&logo=python)](https://python.org)
-[![FastAPI](https://img.shields.io/badge/FastAPI-0.100+-teal?style=flat-square&logo=fastapi)](https://fastapi.tiangolo.com)
-
-**[🎮 Try It Now](https://xray55.github.io/dev-quest/)**
+[![FastAPI](https://img.shields.io/badge/FastAPI-High_Performance-teal?style=flat-square&logo=fastapi)](https://fastapi.tiangolo.com)
 
 </div>
 
@@ -17,78 +19,49 @@
 
 ## 🤔 What Is This?
 
-**DEV//QUEST** is a free, self-paced coding academy that takes you from "I've never used a computer" to "I can build production applications." 
+**DEV//QUEST** is not just a coding course—it is a **local content generation engine**. 
 
-Unlike traditional courses, this platform uses **AI agents to generate lessons in real-time**, meaning the content is always evolving and improving. You learn by doing—every lesson includes interactive labs, coding challenges, and guided projects.
+Unlike static bootcamps, this platform runs on your own hardware using **local Large Language Models (LLMs)**. It utilizes a multi-agent AI system (CrewAI) to autonomously research, synthesize, and write educational modules based on a massive "Omni-Stack" roadmap.
 
-The AI continuously generates new lessons following a predefined curriculum roadmap, with each lesson including theory, analogies, code examples, interactive simulations, and assessment criteria.
-
----
-
-## ✨ Features
-
-| Feature | Description |
-|---------|-------------|
-| 🤖 **AI-Generated Content** | Lessons are created by AI agents that research topics and write educational content |
-| 🧪 **Interactive Labs** | Visual simulations for logic gates, memory allocation, terminal commands, and more |
-| ⚡ **Coding Challenges** | Problems with automated test cases and progressive hints |
-| 🔨 **Guided Projects** | Multi-step projects that build real applications |
-| 🏆 **Capstone Projects** | Portfolio-ready projects at the end of each track |
-| 💻 **In-Browser IDE** | Write and run Python/JavaScript code without installing anything |
-| 📊 **Progress Tracking** | See your advancement through the curriculum |
-| 🌙 **Dark Mode UI** | Easy on the eyes for those long coding sessions |
+It covers the skills corporate bootcamps won't touch: **Game Reverse Engineering, Bot Automation (Rust/Java), Kernel Manipulation, and Offensive Security**, alongside standard Enterprise Architecture (Spring Boot/.NET).
 
 ---
 
-## 🚀 Getting Started
+## 🧠 The AI Core (DeepSeek R1)
 
-### Option 1: Just Use It (Recommended for Learners)
+This system is designed to run **offline** and **uncensored**. It relies on internal expert knowledge synthesis rather than web scraping.
 
-👉 **[Click here to start learning](https://xray55.github.io/dev-quest/)**
-
-No installation required. Open the link and begin your journey.
-
----
-
----
-
-### Priority Areas
-- New interactive lab simulations
-- Additional challenge test cases
-- Frontend accessibility improvements
-- Documentation and tutorials
+* **Model:** `DeepSeek-R1-Distill-Qwen-32B-abliterated-Q5_K_M`
+* **Engine:** [Ollama](https://ollama.com/)
+* **Mode:** **Internal Knowledge Only** (No internet search dependency).
+* **Hardware:** Optimized for Dual-GPU setups (e.g., RTX 3060 + 5060 Ti) splitting ~23GB VRAM.
 
 ---
 
-## 📄 License
+## 🗺️ The Omni-Curriculum
 
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+The engine follows a rigid "Grand Unified Roadmap" covering **10 Levels** of mastery:
 
----
-
-## 🙏 Acknowledgments
-
-- **CrewAI** for the multi-agent framework
-- **Ollama** for making local LLMs accessible
-- **Pyodide** for Python in the browser
-- **Ace Editor** for the code editing experience
-- **DeepSeek** teams for amazing open models
-- The open-source community for inspiration
-
----
-
-<div align="center">
-
-### Ready to Start Your Journey?
-
-[![Start Learning](https://img.shields.io/badge/🎮_START_LEARNING-Click_Here-00ff88?style=for-the-badge)](https://xray55.github.io/dev-quest/)
-
-**574+ lessons. Zero to Hero. One lesson at a time.**
+| Level | Focus | Tech Stack |
+| :--- | :--- | :--- |
+| **00** | **The Metal** | CPU Architecture, Registers, Assembly, Kernel Space |
+| **01** | **The Interface** | HTML5, CSS3, JavaScript ES6+, DOM Manipulation |
+| **02** | **Enterprise** | **Java** (Spring Boot, Kafka), **C#** (.NET Core, Entity Framework) |
+| **03** | **Data & AI** | **Python** (PyTorch, Pandas, FastAPI, Scikit-Learn) |
+| **04** | **Systems** | **C++** (Pointers, Memory Mgmt, STL), **Assembly** (x86-64) |
+| **05** | **Grey Hat** | **Bot Dev** (Rust + Java JNI), **Game Reversing** (Cheat Engine, Ghidra) |
+| **06** | **DevOps** | Docker, Kubernetes, Terraform, AWS/Azure |
+| **07** | **Standards** | CI/CD, Git Flow, Agile, Clean Code Principles |
+| **10** | **Capstones** | "Final Boss" projects for specific Job Roles |
 
 ---
 
-Made with 💚 by developers, for future developers
+## 🛠️ Tech Architecture
 
-*If this project helped you, consider giving it a ⭐*
+* **Containerization:** Fully Dockerized application.
+* **Backend API:** FastAPI (Asynchronous Python).
+* **Orchestration:** CrewAI (Managing "Architect" and "Writer" agents).
+* **Database:** SQLite (Stores generated lessons and curriculum tree).
+* **Frontend:** React/Static (Consumes the JSON curriculum).
 
-</div>
+---
