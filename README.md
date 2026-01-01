@@ -7,6 +7,7 @@
 ### 🚀 An AI-Powered Learning Platform That Teaches You to Code From Absolute Zero to Professional Developer
 
 [![Live Demo](https://img.shields.io/badge/🌐_LIVE_DEMO-Click_Here-blue?style=for-the-badge)](https://xray55.github.io/dev-quest/)
+[![Lessons](https://img.shields.io/badge/Lessons-574+-purple?style=flat-square)](https://xray55.github.io/dev-quest/)
 [![License](https://img.shields.io/badge/License-MIT-green?style=flat-square)](LICENSE)
 [![Python](https://img.shields.io/badge/Python-3.11+-blue?style=flat-square&logo=python)](https://python.org)
 [![FastAPI](https://img.shields.io/badge/FastAPI-0.100+-teal?style=flat-square&logo=fastapi)](https://fastapi.tiangolo.com)
@@ -66,57 +67,153 @@ The AI continuously generates new lessons following a predefined curriculum road
 
 ## 📚 Curriculum Overview
 
-The curriculum takes you from absolute beginner to job-ready developer across **10 levels** and **180+ lessons**:
+The curriculum takes you from absolute beginner to job-ready developer across **16 phases** and **574+ lessons**:
+
+### 🎯 The Complete Learning Path
 
 ```
-Level 00: Digital Foundations (Pre-Code)
+Phase 00: Digital Foundations (20 lessons)
          └── Computer basics, terminal, dev environment setup
+         └── For people who have never coded before
          
-Level 01A: Web Foundations (HTML/CSS)
-         └── Build and style web pages
+Phase 01A: Web Foundations - HTML (15 lessons)
+         └── Tags, structure, forms, accessibility
          
-Level 01B: Programming Logic (JavaScript)
-         └── Variables, loops, functions, DOM manipulation
+Phase 01B: Web Foundations - CSS (25 lessons)
+         └── Selectors, box model, Flexbox, Grid, responsive design
          
-Level 01C: Version Control (Git & GitHub)
-         └── Collaboration and code management
+Phase 02A: JavaScript Basics (27 lessons)
+         └── Variables, operators, control flow, functions
          
-Level 02: CS Fundamentals
-         └── Data structures, algorithms, Big O notation
+Phase 02B: JavaScript Data Structures (14 lessons)
+         └── Arrays, objects, destructuring, spread operator
          
-Level 03A: Modern Frontend (React + TypeScript)
-         └── Build interactive web applications
+Phase 02C: JavaScript DOM (15 lessons)
+         └── Selecting elements, events, forms, interactivity
          
-Level 03B: Backend Development (Node.js)
-         └── APIs, databases, authentication
+Phase 02D: JavaScript Advanced (17 lessons)
+         └── Scope, closures, async/await, fetch, modules
          
-Level 03C: Python Essentials
-         └── Scripting, automation, FastAPI
+Phase 03: Version Control - Git (24 lessons)
+         └── Commits, branches, merging, GitHub, pull requests
          
-Level 04: DevOps & Cloud
-         └── Docker, CI/CD, AWS basics, deployment
+Phase 04A: CS Fundamentals - Math (8 lessons)
+         └── Binary, hexadecimal, boolean logic
          
-Level 05: Systems Programming (C/C++) [Optional]
-         └── Memory management, networking, low-level concepts
+Phase 04B: Data Structures (24 lessons)
+         └── Arrays, linked lists, stacks, queues, trees, graphs
          
-Level 06A: AI for Developers
-         └── LLMs, RAG, prompt engineering, building AI features
+Phase 04C: Algorithms (24 lessons)
+         └── Searching, sorting, recursion, Big O, dynamic programming
          
-Level 06B: Professional Skills
-         └── Code review, interviews, portfolio building
+Phase 05: TypeScript (15 lessons)
+         └── Types, interfaces, generics, utility types
          
-Level 07: Architecture & System Design
-         └── Scalability, microservices, distributed systems
+Phase 06A: React Fundamentals (10 lessons)
+         └── Components, JSX, props, conditional rendering
          
-Level 08A: Security (Red Team)
-         └── Penetration testing, vulnerability assessment
+Phase 06B: React State (11 lessons)
+         └── useState, useEffect, data fetching
          
-Level 08B: Security (Blue Team)
-         └── Defense, incident response, forensics
+Phase 06C: React Advanced Hooks (11 lessons)
+         └── useRef, useMemo, useCallback, useReducer, Context
          
-Level 09+: Specializations
-         └── Mobile, Data Engineering, ML Engineering
+Phase 06D: React Ecosystem (10 lessons)
+         └── Router, forms, state management, testing
+         
+Phase 07: Next.js (15 lessons)
+         └── App Router, SSR, SSG, API routes, deployment
+         
+Phase 08A: Node.js Fundamentals (8 lessons)
+         └── Event loop, modules, npm, file system
+         
+Phase 08B: Express.js (10 lessons)
+         └── Routing, middleware, REST APIs
+         
+Phase 08C: Databases - SQL (16 lessons)
+         └── Queries, PostgreSQL, Prisma ORM
+         
+Phase 08D: Authentication (10 lessons)
+         └── Sessions, JWT, OAuth, RBAC
+         
+Phase 09A: Python Fundamentals (15 lessons)
+         └── Syntax, data structures, functions
+         
+Phase 09B: Python Advanced (16 lessons)
+         └── Decorators, OOP, async, FastAPI
+         
+Phase 10A: Linux & Command Line (11 lessons)
+         └── File system, permissions, bash scripting
+         
+Phase 10B: Docker (11 lessons)
+         └── Containers, Dockerfile, Compose
+         
+Phase 10C: CI/CD (8 lessons)
+         └── GitHub Actions, automated pipelines
+         
+Phase 10D: Cloud & Deployment (11 lessons)
+         └── AWS basics, PaaS platforms, DNS, SSL
+         
+Phase 11A: System Design Basics (13 lessons)
+         └── Scaling, load balancing, caching
+         
+Phase 11B: Databases at Scale (6 lessons)
+         └── Replication, sharding, CAP theorem
+         
+Phase 11C: Distributed Systems (11 lessons)
+         └── Microservices, message queues, event-driven
+         
+Phase 12A: AI Fundamentals (7 lessons)
+         └── LLMs, prompt engineering, ethics
+         
+Phase 12B: OpenAI API (8 lessons)
+         └── Chat completions, function calling, vision
+         
+Phase 12C: Local LLMs (5 lessons)
+         └── Ollama, model selection, GPU optimization
+         
+Phase 12D: RAG & Embeddings (10 lessons)
+         └── Vector databases, semantic search, LangChain
+         
+Phase 13A: Security Fundamentals (6 lessons)
+         └── CIA triad, cryptography, threat modeling
+         
+Phase 13B: Web Security - Red Team (12 lessons)
+         └── OWASP Top 10, SQL injection, XSS, reconnaissance
+         
+Phase 13C: Defense - Blue Team (12 lessons)
+         └── SOC, SIEM, incident response, forensics
+         
+Phase 14: Professional Skills (20 lessons)
+         └── Clean code, interviews, portfolio, career
+         
+Phase 15A: Systems Programming - C/C++ (21 lessons)
+         └── Pointers, memory management, threads, sockets
+         
+Phase 15B: Kubernetes (11 lessons)
+         └── Pods, deployments, services, Helm
+         
+Phase 15C: Machine Learning (14 lessons)
+         └── Regression, neural networks, PyTorch
+         
+Phase 15D: Mobile - React Native (9 lessons)
+         └── Cross-platform apps, Expo, navigation
+         
+Phase 16: Continuous Learning (10+ lessons)
+         └── WebAssembly, Rust, Go, emerging tech
 ```
+
+### 📊 Curriculum Stats
+
+| Category | Count |
+|----------|-------|
+| **Total Lessons** | 574+ |
+| **Concept Lessons** | ~350 |
+| **Interactive Labs** | ~80 |
+| **Coding Challenges** | ~70 |
+| **Guided Projects** | ~50 |
+| **Capstone Projects** | ~24 |
+| **Tracks** | 16 |
 
 ### 📖 Lesson Types
 
@@ -149,8 +246,9 @@ Each lesson is one of five types:
 
 ### AI/LLM
 - **Ollama** - Local LLM inference server
-- **Qwen 2.5 Coder 14B** - Research agent model
-- **DeepSeek R1 32B** - Content writing agent model
+- **DeepSeek R1 32B** - Primary content writing model
+- **Qwen 2.5 Coder 14B** - Research and fast tasks
+- **Qwen3 Abliterated 14B** - Creative content generation
 
 ### Infrastructure
 - **Docker** - Containerized deployment
@@ -167,8 +265,8 @@ Each lesson is one of five types:
 │  ┌─────────────┐  ┌─────────────┐  ┌─────────────┐          │
 │  │   Sidebar   │  │   Lesson    │  │     IDE     │          │
 │  │  (Tracks)   │  │   Viewer    │  │   (Ace +    │          │
-│  │             │  │  (Labs/     │  │   Pyodide)  │          │
-│  │             │  │  Challenges)│  │             │          │
+│  │  Progress   │  │  (Labs/     │  │   Pyodide)  │          │
+│  │  574+ items │  │  Challenges)│  │             │          │
 │  └─────────────┘  └─────────────┘  └─────────────┘          │
 └────────────────────────────┬────────────────────────────────┘
                              │ HTTP/REST
@@ -184,7 +282,8 @@ Each lesson is one of five types:
 │  │              AUTONOMOUS AI LOOP                  │        │
 │  │  ┌──────────┐    ┌──────────┐    ┌──────────┐  │        │
 │  │  │ Research │ →  │  Writer  │ →  │  Parser  │  │        │
-│  │  │  Agent   │    │  Agent   │    │          │  │        │
+│  │  │  Agent   │    │  Agent   │    │ (No fake │  │        │
+│  │  │ (Qwen14B)│    │(DS-R1 32)│    │  URLs!)  │  │        │
 │  │  └──────────┘    └──────────┘    └──────────┘  │        │
 │  └──────────────────────────────────────────────────┘        │
 └────────────────────────────┬────────────────────────────────┘
@@ -207,12 +306,14 @@ Each lesson is one of five types:
 
 No installation required. Open the link and begin your journey.
 
+---
+
 ## 📂 Project Structure
 
 ```
 dev-quest/
 ├── index.html          # Frontend SPA
-├── daily_ops.py        # Backend + AI engine
+├── daily_ops.py        # Backend + AI engine (574 lesson curriculum)
 ├── server.py           # Server entry point
 ├── Dockerfile          # Container configuration
 ├── docker-compose.yml  # Multi-service orchestration
@@ -224,11 +325,14 @@ dev-quest/
 
 ## 🎯 Roadmap
 
-- [x] Core curriculum structure (180+ lessons)
+- [x] Core curriculum structure (574+ lessons)
 - [x] 5 lesson types (concept, lab, challenge, project, capstone)
 - [x] Interactive lab simulations
 - [x] In-browser code execution
 - [x] AI content generation pipeline
+- [x] Fake URL detection and removal
+- [x] Real documentation links only
+- [x] Multi-model AI support (DeepSeek, Qwen)
 - [ ] User authentication and progress saving
 - [ ] Peer code review system
 - [ ] Community challenges
@@ -237,6 +341,8 @@ dev-quest/
 - [ ] Offline mode / PWA
 
 ---
+
+## 🤝 Contributing
 
 ### Priority Areas
 - New interactive lab simulations
@@ -258,6 +364,7 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 - **Ollama** for making local LLMs accessible
 - **Pyodide** for Python in the browser
 - **Ace Editor** for the code editing experience
+- **DeepSeek** and **Qwen** teams for amazing open models
 - The open-source community for inspiration
 
 ---
@@ -268,7 +375,7 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 [![Start Learning](https://img.shields.io/badge/🎮_START_LEARNING-Click_Here-00ff88?style=for-the-badge)](https://xray55.github.io/dev-quest/)
 
-**From Zero to Hero. One lesson at a time.**
+**574+ lessons. Zero to Hero. One lesson at a time.**
 
 ---
 
