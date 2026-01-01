@@ -5,14 +5,11 @@
 ![DEV//QUEST Banner](https://img.shields.io/badge/DEV%2F%2FQUEST-Zero%20to%20Hero-00ff88?style=for-the-badge&logo=rocket&logoColor=white)
 
 ### 🚀 An AI-Powered Learning Platform That Teaches You to Code From Absolute Zero to Professional Developer
-
-[![Live Demo](https://img.shields.io/badge/🌐_LIVE_DEMO-Click_Here-blue?style=for-the-badge)](https://xray55.github.io/dev-quest/)
-[![Lessons](https://img.shields.io/badge/Lessons-574+-purple?style=flat-square)](https://xray55.github.io/dev-quest/)
 [![License](https://img.shields.io/badge/License-MIT-green?style=flat-square)](LICENSE)
 [![Python](https://img.shields.io/badge/Python-3.11+-blue?style=flat-square&logo=python)](https://python.org)
 [![FastAPI](https://img.shields.io/badge/FastAPI-0.100+-teal?style=flat-square&logo=fastapi)](https://fastapi.tiangolo.com)
 
-**[🎮 Try It Now](https://xray55.github.io/dev-quest/)** | **[📖 Curriculum](#-curriculum-overview)** | **[🛠 Tech Stack](#-tech-stack)** | **[🤝 Contributing](#-contributing)**
+**[🎮 Try It Now](https://xray55.github.io/dev-quest/)**
 
 </div>
 
@@ -52,13 +49,6 @@ The AI continuously generates new lessons following a predefined curriculum road
 No installation required. Open the link and begin your journey.
 
 ---
-
-## 📂 Project Structure
-
-dev-quest/
-├── index.html          # Frontend SPA
-├── daily_ops.py        # Backend + AI engine 
-└── README.md           # You are here
 
 ---
 
