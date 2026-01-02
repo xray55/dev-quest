@@ -111,6 +111,124 @@
             overflow: hidden;
         }
 
+        /* ========== CAREER PATH SELECTOR ========== */
+        .path-selector {
+            padding: 16px;
+            background: var(--bg-secondary);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .path-selector-header {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 11px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--text-tertiary);
+            margin-bottom: 10px;
+        }
+
+        #career-path-select {
+            width: 100%;
+            padding: 10px 12px;
+            background: var(--bg-elevated);
+            border: 1px solid var(--border-light);
+            border-radius: 6px;
+            color: var(--text-primary);
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-family: 'Literata', Georgia, serif;
+        }
+
+        #career-path-select:hover {
+            border-color: var(--accent);
+        }
+
+        #career-path-select:focus {
+            outline: none;
+            border-color: var(--accent);
+            box-shadow: 0 0 0 3px var(--accent-glow);
+        }
+
+        .path-info {
+            margin-top: 10px;
+            padding: 12px;
+            background: var(--accent-dim);
+            border: 1px solid var(--border-light);
+            border-radius: 6px;
+            font-size: 12px;
+            line-height: 1.6;
+            color: var(--text-secondary);
+            display: none;
+        }
+
+        .path-info.visible {
+            display: block;
+        }
+
+        .path-info-desc {
+            margin-bottom: 8px;
+        }
+
+        .path-info-salary {
+            color: var(--success);
+            font-weight: 600;
+            font-family: 'Space Mono', monospace;
+        }
+
+        /* ========== SEARCH ========== */
+        .search-container {
+            padding: 12px 16px;
+            background: var(--bg-primary);
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .search-container i.fa-search {
+            color: var(--text-tertiary);
+            font-size: 14px;
+        }
+
+        #lesson-search {
+            flex: 1;
+            background: var(--bg-elevated);
+            border: 1px solid var(--border-light);
+            border-radius: 6px;
+            padding: 8px 12px;
+            color: var(--text-primary);
+            font-size: 14px;
+            transition: all 0.2s;
+        }
+
+        #lesson-search:focus {
+            outline: none;
+            border-color: var(--accent);
+            box-shadow: 0 0 0 3px var(--accent-glow);
+        }
+
+        #lesson-search::placeholder {
+            color: var(--text-tertiary);
+        }
+
+        .search-clear {
+            background: transparent;
+            border: none;
+            color: var(--text-tertiary);
+            cursor: pointer;
+            padding: 4px;
+            font-size: 14px;
+            transition: color 0.2s;
+        }
+
+        .search-clear:hover {
+            color: var(--text-primary);
+        }
+
         .sidebar-header {
             padding: 24px 20px;
             border-bottom: 1px solid var(--border);
@@ -251,6 +369,39 @@
 
         .lesson-item.active .lesson-title {
             color: var(--text-primary);
+        }
+
+        /* Filtering styles */
+        .track-group.hidden {
+            display: none;
+        }
+
+        .lesson-item.hidden {
+            display: none;
+        }
+
+        .lesson-item.search-highlight .lesson-title {
+            background: var(--highlight);
+            border-radius: 3px;
+            padding: 2px 4px;
+        }
+
+        /* No results message */
+        .no-results {
+            padding: 60px 20px;
+            text-align: center;
+            color: var(--text-tertiary);
+        }
+
+        .no-results i {
+            font-size: 48px;
+            margin-bottom: 16px;
+            opacity: 0.3;
+        }
+
+        .no-results p {
+            font-size: 14px;
+            line-height: 1.6;
         }
 
         /* ========== MAIN CONTENT ========== */
@@ -658,6 +809,43 @@
     <div class="app-container">
         <!-- Sidebar -->
         <aside class="sidebar">
+            <!-- Career Path Selector -->
+            <div class="path-selector">
+                <div class="path-selector-header">
+                    <i class="fa-solid fa-briefcase"></i>
+                    <span>Career Path</span>
+                </div>
+                <select id="career-path-select" onchange="filterByCareerPath()">
+                    <option value="all">📚 All Lessons</option>
+                    <option value="frontend_dev">⚛️ Frontend Developer</option>
+                    <option value="backend_dev">🖥️ Backend Developer</option>
+                    <option value="fullstack_dev">🌐 Full-Stack Developer</option>
+                    <option value="mobile_dev">📱 Mobile Developer</option>
+                    <option value="devops_engineer">☁️ DevOps Engineer</option>
+                    <option value="cloud_architect">🏗️ Cloud Architect</option>
+                    <option value="data_engineer">📊 Data Engineer</option>
+                    <option value="ml_engineer">🤖 ML Engineer</option>
+                    <option value="security_engineer">🛡️ Security Engineer</option>
+                    <option value="penetration_tester">🎯 Penetration Tester</option>
+                    <option value="soc_analyst">🔍 SOC Analyst</option>
+                </select>
+                <div class="path-info" id="path-info"></div>
+            </div>
+
+            <!-- Search Bar -->
+            <div class="search-container">
+                <i class="fa-solid fa-search"></i>
+                <input 
+                    type="text" 
+                    id="lesson-search" 
+                    placeholder="Search lessons, languages, topics..."
+                    oninput="searchLessons()"
+                />
+                <button class="search-clear" id="search-clear" onclick="clearSearch()" style="display: none;">
+                    <i class="fa-solid fa-times"></i>
+                </button>
+            </div>
+
             <div class="sidebar-header">
                 <div class="brand">
                     <div class="brand-icon">D/Q</div>
@@ -770,6 +958,97 @@
         let editor;
         let pyodide;
         let originalCode = '';
+        
+        // Career path and search state
+        let currentCareerPath = 'all';
+        let searchQuery = '';
+
+        // Career paths configuration (matches curriculum.py SKILL_PATHS)
+        const CAREER_PATHS = {
+            all: {
+                name: "All Lessons",
+                icon: "📚",
+                description: "Complete curriculum - all tracks",
+                tracks: []
+            },
+            frontend_dev: {
+                name: "Frontend Developer",
+                icon: "⚛️",
+                description: "Master React, Vue, HTML/CSS, and modern frontend technologies",
+                salary: "$70k-$160k",
+                tracks: ["00", "01A", "01B", "02A", "02B", "02C", "02D", "03", "05", "06A", "06B", "07", "12A"]
+            },
+            backend_dev: {
+                name: "Backend Developer",
+                icon: "🖥️",
+                description: "APIs, databases, Python, Node.js, and server-side development",
+                salary: "$80k-$180k",
+                tracks: ["00", "03", "04B", "08A", "08B", "08C", "08D", "09A", "09B", "10A", "11A"]
+            },
+            fullstack_dev: {
+                name: "Full-Stack Developer",
+                icon: "🌐",
+                description: "Complete web development stack from frontend to backend",
+                salary: "$85k-$190k",
+                tracks: ["00", "01A", "01B", "02A", "02D", "03", "05", "06A", "06B", "07", "08A", "08B", "09A", "11A"]
+            },
+            mobile_dev: {
+                name: "Mobile Developer",
+                icon: "📱",
+                description: "React Native and cross-platform mobile development",
+                salary: "$90k-$175k",
+                tracks: ["00", "02A", "02D", "05", "06A", "12A"]
+            },
+            devops_engineer: {
+                name: "DevOps Engineer",
+                icon: "☁️",
+                description: "Docker, Kubernetes, AWS, and CI/CD automation",
+                salary: "$95k-$200k",
+                tracks: ["00", "03", "09A", "10A", "11A", "11B", "11C", "11D", "11E", "11F", "11G"]
+            },
+            cloud_architect: {
+                name: "Cloud Architect",
+                icon: "🏗️",
+                description: "AWS, Azure, GCP, and cloud infrastructure design",
+                salary: "$120k-$250k",
+                tracks: ["00", "03", "11A", "11B", "11C", "11D", "11E"]
+            },
+            data_engineer: {
+                name: "Data Engineer",
+                icon: "📊",
+                description: "Big data, ETL pipelines, and data infrastructure",
+                salary: "$100k-$210k",
+                tracks: ["00", "03", "08B", "08C", "09A", "09B", "13A"]
+            },
+            ml_engineer: {
+                name: "ML Engineer",
+                icon: "🤖",
+                description: "Machine learning, AI models, and deep learning",
+                salary: "$110k-$230k",
+                tracks: ["00", "04A", "04B", "09A", "09B", "13A", "13B", "13C"]
+            },
+            security_engineer: {
+                name: "Security Engineer",
+                icon: "🛡️",
+                description: "Application security and secure coding practices",
+                salary: "$95k-$195k",
+                tracks: ["00", "03", "09A", "10A", "14A", "14B", "15A", "15B", "15E"]
+            },
+            penetration_tester: {
+                name: "Penetration Tester",
+                icon: "🎯",
+                description: "Ethical hacking and red team operations",
+                salary: "$85k-$180k",
+                tracks: ["00", "03", "10A", "14A", "14B", "14C", "14D", "14E"]
+            },
+            soc_analyst: {
+                name: "SOC Analyst",
+                icon: "🔍",
+                description: "Security monitoring and incident response",
+                salary: "$70k-$140k",
+                tracks: ["00", "03", "10A", "15A", "15B", "15C", "15D", "15E", "15F"]
+            }
+        };
 
         // Language configurations
         const langConfig = {
@@ -800,6 +1079,9 @@
             
             // Load progress from localStorage
             loadProgress();
+            
+            // Load saved career path preference
+            loadSavedPreferences();
             
             // Fetch curriculum
             await loadCurriculum();
@@ -857,7 +1139,7 @@
                 if (!track.lessons || track.lessons.length === 0) return;
                 
                 html += `
-                    <div class="track-group">
+                    <div class="track-group" data-track="${escapeHtml(track.id)}">
                         <div class="track-header">${escapeHtml(track.title)}</div>
                 `;
                 
@@ -867,6 +1149,7 @@
                     
                     html += `
                         <div class="lesson-item ${active ? 'active' : ''} ${completed ? 'completed' : ''}" 
+                             data-lesson-id="${lesson.id}"
                              onclick="loadLesson(${lesson.id})">
                             <div class="lesson-icon">
                                 ${completed ? '<i class="fa-solid fa-check"></i>' : lesson.id}
@@ -880,6 +1163,9 @@
             });
             
             container.innerHTML = html;
+            
+            // Apply saved filters
+            applyFilters();
         }
 
         // ========================================
@@ -936,6 +1222,135 @@
                 
             } catch (error) {
                 console.error('Failed to load lesson:', error);
+            }
+        }
+
+        // ========================================
+        // CAREER PATH FILTER
+        // ========================================
+        function filterByCareerPath() {
+            const select = document.getElementById('career-path-select');
+            currentCareerPath = select.value;
+            
+            const pathConfig = CAREER_PATHS[currentCareerPath];
+            const pathInfo = document.getElementById('path-info');
+            
+            // Update path info display
+            if (currentCareerPath === 'all') {
+                pathInfo.classList.remove('visible');
+            } else {
+                pathInfo.innerHTML = `
+                    <div class="path-info-desc">${pathConfig.description}</div>
+                    <div class="path-info-salary">💰 ${pathConfig.salary}</div>
+                `;
+                pathInfo.classList.add('visible');
+            }
+            
+            // Apply filter
+            applyFilters();
+            
+            // Save preference
+            localStorage.setItem('devquest_career_path', currentCareerPath);
+        }
+
+        // ========================================
+        // SEARCH
+        // ========================================
+        function searchLessons() {
+            const input = document.getElementById('lesson-search');
+            searchQuery = input.value.toLowerCase().trim();
+            
+            const clearBtn = document.getElementById('search-clear');
+            clearBtn.style.display = searchQuery ? 'block' : 'none';
+            
+            applyFilters();
+        }
+
+        function clearSearch() {
+            document.getElementById('lesson-search').value = '';
+            searchQuery = '';
+            document.getElementById('search-clear').style.display = 'none';
+            applyFilters();
+        }
+
+        // ========================================
+        // APPLY FILTERS (Combined career path + search)
+        // ========================================
+        function applyFilters() {
+            const container = document.getElementById('syllabus');
+            const pathConfig = CAREER_PATHS[currentCareerPath];
+            
+            if (!curriculum || curriculum.length === 0) return;
+            
+            let visibleLessonCount = 0;
+            
+            curriculum.forEach(track => {
+                const trackEl = container.querySelector(`[data-track="${track.id}"]`);
+                if (!trackEl) return;
+                
+                // Check if track matches career path
+                const trackNumber = track.id.split('.')[0].trim();
+                const trackMatchesPath = pathConfig.tracks.length === 0 || 
+                                         pathConfig.tracks.some(t => trackNumber.startsWith(t));
+                
+                if (!trackMatchesPath) {
+                    trackEl.classList.add('hidden');
+                    return;
+                }
+                
+                // Filter lessons within track
+                let visibleLessonsInTrack = 0;
+                
+                track.lessons.forEach(lesson => {
+                    const lessonEl = trackEl.querySelector(`[data-lesson-id="${lesson.id}"]`);
+                    if (!lessonEl) return;
+                    
+                    // Search filter
+                    const matchesSearch = !searchQuery || 
+                                        lesson.title.toLowerCase().includes(searchQuery) ||
+                                        track.title.toLowerCase().includes(searchQuery);
+                    
+                    if (matchesSearch) {
+                        lessonEl.classList.remove('hidden');
+                        lessonEl.classList.toggle('search-highlight', searchQuery && 
+                            lesson.title.toLowerCase().includes(searchQuery));
+                        visibleLessonsInTrack++;
+                        visibleLessonCount++;
+                    } else {
+                        lessonEl.classList.add('hidden');
+                        lessonEl.classList.remove('search-highlight');
+                    }
+                });
+                
+                // Hide track if no visible lessons
+                trackEl.classList.toggle('hidden', visibleLessonsInTrack === 0);
+            });
+            
+            // Show "no results" message if needed
+            const existingNoResults = container.querySelector('.no-results');
+            if (existingNoResults) existingNoResults.remove();
+            
+            if (visibleLessonCount === 0) {
+                const noResults = document.createElement('div');
+                noResults.className = 'no-results';
+                noResults.innerHTML = `
+                    <i class="fa-solid fa-search"></i>
+                    <p>No lessons found matching "${searchQuery || 'your criteria'}"</p>
+                    <p style="margin-top: 8px; font-size: 12px;">Try a different search term or career path</p>
+                `;
+                container.appendChild(noResults);
+            }
+        }
+
+        // ========================================
+        // LOAD SAVED PREFERENCES
+        // ========================================
+        function loadSavedPreferences() {
+            const savedPath = localStorage.getItem('devquest_career_path');
+            if (savedPath && CAREER_PATHS[savedPath]) {
+                document.getElementById('career-path-select').value = savedPath;
+                currentCareerPath = savedPath;
+                filterByCareerPath();
             }
         }
 
