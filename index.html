@@ -43,6 +43,72 @@
             overflow: hidden;
         }
 
+        /* ========== LOADING SCREEN ========== */
+        .loading-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--bg-dark);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+            transition: opacity 0.5s ease;
+        }
+        .loading-screen.hidden {
+            opacity: 0;
+            pointer-events: none;
+        }
+        .loading-logo {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, var(--accent), var(--pink));
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 800;
+            font-size: 32px;
+            margin-bottom: 24px;
+            animation: pulse-logo 2s ease-in-out infinite;
+        }
+        @keyframes pulse-logo {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+        .loading-text {
+            font-size: 18px;
+            font-weight: 600;
+            color: var(--text);
+            margin-bottom: 12px;
+        }
+        .loading-subtext {
+            font-size: 14px;
+            color: var(--text-dim);
+            margin-bottom: 24px;
+        }
+        .loading-bar {
+            width: 300px;
+            height: 4px;
+            background: var(--bg-card);
+            border-radius: 2px;
+            overflow: hidden;
+        }
+        .loading-bar-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--accent), var(--pink));
+            border-radius: 2px;
+            animation: loading-fill 2s ease-in-out infinite;
+        }
+        @keyframes loading-fill {
+            0% { width: 0%; }
+            50% { width: 100%; }
+            100% { width: 0%; }
+        }
+
         /* ========== TOP NAV ========== */
         .top-nav {
             height: 56px;
@@ -61,6 +127,10 @@
             align-items: center;
             gap: 10px;
             cursor: pointer;
+            transition: transform 0.2s;
+        }
+        .nav-brand:hover {
+            transform: translateY(-2px);
         }
         .nav-logo {
             width: 32px;
@@ -72,6 +142,7 @@
             justify-content: center;
             font-weight: 800;
             font-size: 14px;
+            box-shadow: 0 4px 12px var(--accent-glow);
         }
         .nav-title {
             font-weight: 700;
@@ -102,6 +173,11 @@
             background: var(--bg-elevated);
             border-color: var(--accent);
             color: var(--text);
+            transform: translateY(-1px);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+        }
+        .syllabus-btn:active {
+            transform: translateY(0);
         }
 
         .nav-progress {
@@ -123,6 +199,7 @@
             background: linear-gradient(90deg, var(--accent), var(--pink));
             border-radius: 3px;
             transition: width 0.5s ease;
+            box-shadow: 0 0 10px var(--accent-glow);
         }
         .progress-text {
             font-size: 12px;
@@ -141,6 +218,10 @@
             gap: 6px;
             font-size: 13px;
             color: var(--text-secondary);
+            transition: transform 0.2s;
+        }
+        .stat-item:hover {
+            transform: scale(1.05);
         }
         .stat-item i {
             font-size: 14px;
@@ -164,10 +245,12 @@
             height: 8px;
             border-radius: 50%;
             background: var(--danger);
+            transition: background 0.3s;
         }
         .status-dot.connected {
             background: var(--success);
             animation: pulse 2s infinite;
+            box-shadow: 0 0 8px var(--success);
         }
         @keyframes pulse {
             0%, 100% { opacity: 1; }
@@ -185,6 +268,10 @@
             font-weight: 700;
             font-size: 14px;
             cursor: pointer;
+            transition: transform 0.2s;
+        }
+        .nav-profile:hover {
+            transform: scale(1.1);
         }
 
         /* ========== MAIN LAYOUT ========== */
@@ -229,11 +316,10 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            background: transparent;
-            border: none;
-            color: var(--text-dim);
-            cursor: pointer;
             border-radius: 6px;
+            cursor: pointer;
+            color: var(--text-dim);
+            transition: all 0.2s;
         }
         .syllabus-close:hover {
             background: var(--bg-card);
@@ -243,681 +329,650 @@
         .syllabus-content {
             flex: 1;
             overflow-y: auto;
-            padding: 12px;
+            padding: 16px;
             min-width: 320px;
         }
-
-        .syllabus-loading {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            padding: 40px;
-            color: var(--text-dim);
-            gap: 12px;
+        .syllabus-content::-webkit-scrollbar { width: 8px; }
+        .syllabus-content::-webkit-scrollbar-track { background: transparent; }
+        .syllabus-content::-webkit-scrollbar-thumb {
+            background: var(--bg-card);
+            border-radius: 4px;
         }
-        .spinner {
-            width: 24px;
-            height: 24px;
-            border: 2px solid var(--border);
-            border-top-color: var(--accent);
-            border-radius: 50%;
-            animation: spin 1s linear infinite;
-        }
-        @keyframes spin {
-            to { transform: rotate(360deg); }
+        .syllabus-content::-webkit-scrollbar-thumb:hover {
+            background: var(--bg-elevated);
         }
 
-        .track-group {
-            margin-bottom: 8px;
+        .track {
+            margin-bottom: 16px;
         }
         .track-header {
             display: flex;
             align-items: center;
             gap: 10px;
             padding: 10px 12px;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
             border-radius: 8px;
             cursor: pointer;
-            transition: background 0.2s;
+            transition: all 0.2s;
         }
         .track-header:hover {
-            background: var(--bg-card);
+            background: var(--bg-elevated);
+            border-color: var(--accent);
+            transform: translateX(2px);
+        }
+        .track-header.expanded {
+            background: var(--bg-elevated);
+            border-bottom-left-radius: 0;
+            border-bottom-right-radius: 0;
         }
         .track-icon {
-            width: 28px;
-            height: 28px;
-            border-radius: 6px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 11px;
-            font-weight: 700;
-            flex-shrink: 0;
-        }
-        .track-info {
-            flex: 1;
-            min-width: 0;
-        }
-        .track-name {
-            font-size: 13px;
-            font-weight: 600;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-        }
-        .track-meta {
-            font-size: 11px;
-            color: var(--text-dim);
-            margin-top: 2px;
-        }
-        .track-chevron {
-            color: var(--text-dim);
-            font-size: 10px;
+            font-size: 16px;
             transition: transform 0.2s;
         }
-        .track-header.expanded .track-chevron {
-            transform: rotate(180deg);
+        .track-header.expanded .track-icon {
+            transform: rotate(90deg);
+        }
+        .track-title {
+            flex: 1;
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--text);
+        }
+        .track-count {
+            font-size: 11px;
+            color: var(--text-dim);
+            background: var(--bg-main);
+            padding: 2px 8px;
+            border-radius: 10px;
         }
 
         .track-lessons {
-            display: none;
-            padding-left: 20px;
-            padding-top: 4px;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-top: none;
+            border-bottom-left-radius: 8px;
+            border-bottom-right-radius: 8px;
         }
         .track-lessons.expanded {
-            display: block;
+            max-height: 2000px;
         }
 
         .lesson-row {
             display: flex;
             align-items: center;
             gap: 10px;
-            padding: 8px 12px;
-            border-radius: 6px;
+            padding: 10px 12px;
+            border-bottom: 1px solid var(--border);
             cursor: pointer;
             transition: all 0.2s;
-            margin: 2px 0;
+        }
+        .lesson-row:last-child {
+            border-bottom: none;
         }
         .lesson-row:hover {
-            background: var(--bg-card);
+            background: var(--bg-elevated);
+            padding-left: 16px;
         }
         .lesson-row.active {
-            background: var(--accent);
-            color: #fff;
+            background: var(--bg-elevated);
+            border-left: 3px solid var(--accent);
+            padding-left: 13px;
         }
         .lesson-row.completed {
-            color: var(--text-dim);
+            opacity: 0.7;
         }
-
-        .lesson-check {
-            width: 18px;
-            height: 18px;
-            border: 2px solid var(--border-light);
-            border-radius: 50%;
+        .lesson-icon {
+            width: 24px;
+            height: 24px;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 10px;
+            border-radius: 6px;
+            font-size: 11px;
             flex-shrink: 0;
         }
-        .lesson-row.completed .lesson-check {
-            background: var(--success);
-            border-color: var(--success);
-            color: #fff;
-        }
-        .lesson-row.active .lesson-check {
-            border-color: #fff;
-        }
+        .lesson-icon.lesson { background: linear-gradient(135deg, #3b82f6, #2563eb); }
+        .lesson-icon.challenge { background: linear-gradient(135deg, var(--warning), #d97706); }
+        .lesson-icon.project { background: linear-gradient(135deg, var(--success), #059669); }
+        .lesson-icon.quiz { background: linear-gradient(135deg, var(--pink), #db2777); }
+        .lesson-icon.lab { background: linear-gradient(135deg, var(--cyan), #0891b2); }
 
-        .lesson-name {
+        .lesson-info {
             flex: 1;
-            font-size: 12px;
-            white-space: nowrap;
+            min-width: 0;
+        }
+        .lesson-title {
+            font-size: 13px;
+            font-weight: 500;
+            color: var(--text);
             overflow: hidden;
             text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+        .lesson-duration {
+            font-size: 11px;
+            color: var(--text-dim);
+            margin-top: 2px;
+        }
+        .lesson-check {
+            font-size: 14px;
+            color: var(--success);
         }
 
-        .lesson-type-dot {
-            width: 6px;
-            height: 6px;
-            border-radius: 50%;
-            flex-shrink: 0;
-        }
-        .type-concept { background: var(--cyan); }
-        .type-lab { background: var(--accent); }
-        .type-challenge { background: var(--warning); }
-        .type-project { background: var(--success); }
-        .type-capstone { background: var(--pink); }
-
-        /* ========== LESSON AREA ========== */
-        .lesson-area {
+        /* ========== WORKSPACE ========== */
+        .workspace {
             flex: 1;
             display: flex;
             flex-direction: column;
             background: var(--bg-dark);
-            overflow: hidden;
         }
 
-        .workspace {
+        .workspace-tabs {
+            height: 40px;
+            background: var(--bg-main);
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            padding: 0 12px;
+            gap: 8px;
+        }
+        .workspace-tab {
+            padding: 6px 12px;
+            font-size: 13px;
+            color: var(--text-dim);
+            cursor: pointer;
+            border-radius: 6px;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .workspace-tab:hover {
+            background: var(--bg-card);
+            color: var(--text);
+        }
+        .workspace-tab.active {
+            background: var(--bg-card);
+            color: var(--text);
+            font-weight: 500;
+        }
+
+        .workspace-content {
             flex: 1;
             display: flex;
             overflow: hidden;
         }
 
-        /* ========== INSTRUCTIONS PANEL ========== */
+        /* Instructions Panel */
         .instructions-panel {
-            width: 45%;
-            min-width: 350px;
-            max-width: 600px;
+            width: 50%;
             background: var(--bg-main);
+            border-right: 1px solid var(--border);
             display: flex;
             flex-direction: column;
-            border-right: 1px solid var(--border);
-            overflow: hidden;
         }
-
-        .instructions-header {
-            padding: 16px 24px;
-            border-bottom: 1px solid var(--border);
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        }
-        .lesson-number {
-            font-size: 12px;
-            color: var(--accent-light);
-            font-weight: 600;
-        }
-        .lesson-type-badge {
-            font-size: 10px;
-            padding: 4px 10px;
-            border-radius: 20px;
-            font-weight: 600;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
-        .badge-concept { background: rgba(6, 182, 212, 0.15); color: var(--cyan); }
-        .badge-lab { background: rgba(124, 58, 237, 0.15); color: var(--accent-light); }
-        .badge-challenge { background: rgba(245, 158, 11, 0.15); color: var(--warning); }
-        .badge-project { background: rgba(16, 185, 129, 0.15); color: var(--success); }
-        .badge-capstone { background: rgba(236, 72, 153, 0.15); color: var(--pink); }
-
         .instructions-content {
             flex: 1;
             overflow-y: auto;
             padding: 24px;
         }
-
-        .lesson-title {
-            font-size: 24px;
-            font-weight: 700;
-            line-height: 1.3;
-            margin-bottom: 20px;
+        .instructions-content::-webkit-scrollbar { width: 8px; }
+        .instructions-content::-webkit-scrollbar-track { background: transparent; }
+        .instructions-content::-webkit-scrollbar-thumb {
+            background: var(--bg-card);
+            border-radius: 4px;
         }
 
-        .concept-box {
-            background: linear-gradient(135deg, rgba(124, 58, 237, 0.1), rgba(6, 182, 212, 0.1));
-            border: 1px solid rgba(124, 58, 237, 0.2);
-            border-radius: 10px;
-            padding: 16px 20px;
+        .task-title {
+            font-size: 28px;
+            font-weight: 700;
+            color: var(--text);
+            margin-bottom: 8px;
+        }
+        .task-meta {
+            display: flex;
+            align-items: center;
+            gap: 16px;
             margin-bottom: 24px;
         }
-        .concept-box-label {
-            font-size: 11px;
-            font-weight: 700;
-            color: var(--accent-light);
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            margin-bottom: 8px;
+        .task-badge {
+            padding: 4px 12px;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+        .task-badge.lesson { background: rgba(59, 130, 246, 0.2); color: #60a5fa; }
+        .task-badge.challenge { background: rgba(245, 158, 11, 0.2); color: var(--warning); }
+        .task-badge.project { background: rgba(16, 185, 129, 0.2); color: var(--success); }
+        .task-badge.quiz { background: rgba(236, 72, 153, 0.2); color: var(--pink); }
+        .task-badge.lab { background: rgba(6, 182, 212, 0.2); color: var(--cyan); }
+
+        .task-duration {
+            font-size: 13px;
+            color: var(--text-dim);
             display: flex;
             align-items: center;
             gap: 6px;
         }
-        .concept-box-text {
-            font-size: 14px;
-            line-height: 1.6;
-            color: var(--text-secondary);
+
+        .task-section {
+            margin-bottom: 24px;
+            animation: fadeIn 0.4s ease;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .task-header {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            color: var(--text);
+            margin-bottom: 12px;
+        }
+        .task-header i {
+            color: var(--accent);
         }
 
         .lesson-content {
             font-size: 14px;
-            line-height: 1.8;
+            line-height: 1.7;
             color: var(--text-secondary);
         }
-        .lesson-content h2 {
-            font-size: 18px;
-            font-weight: 700;
+        .lesson-content h1, .lesson-content h2, .lesson-content h3 {
             color: var(--text);
-            margin: 28px 0 12px;
-        }
-        .lesson-content h3 {
-            font-size: 15px;
-            font-weight: 600;
-            color: var(--text);
-            margin: 20px 0 10px;
-        }
-        .lesson-content p {
-            margin-bottom: 14px;
+            margin-top: 20px;
+            margin-bottom: 12px;
         }
         .lesson-content code {
             background: var(--bg-card);
-            padding: 2px 7px;
+            padding: 2px 6px;
             border-radius: 4px;
             font-family: 'JetBrains Mono', monospace;
             font-size: 13px;
             color: var(--accent-light);
         }
         .lesson-content pre {
-            background: var(--bg-dark);
-            border: 1px solid var(--border);
-            border-radius: 8px;
+            background: var(--bg-card);
             padding: 16px;
+            border-radius: 8px;
             overflow-x: auto;
-            margin: 16px 0;
+            margin: 12px 0;
         }
         .lesson-content pre code {
             background: none;
             padding: 0;
-            color: var(--text);
-            font-size: 13px;
         }
         .lesson-content ul, .lesson-content ol {
-            padding-left: 20px;
-            margin-bottom: 14px;
+            margin-left: 20px;
+            margin: 12px 0;
         }
         .lesson-content li {
-            margin-bottom: 6px;
-        }
-        .lesson-content a {
-            color: var(--accent-light);
-            text-decoration: none;
-        }
-        .lesson-content a:hover {
-            text-decoration: underline;
+            margin: 8px 0;
         }
 
-        /* Task Steps */
-        .task-section {
-            margin-top: 30px;
-            padding-top: 24px;
-            border-top: 1px solid var(--border);
-        }
-        .task-header {
-            font-size: 13px;
-            font-weight: 700;
-            color: var(--warning);
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            margin-bottom: 16px;
+        .hint-header {
             display: flex;
             align-items: center;
             gap: 8px;
-        }
-
-        .task-step {
-            display: flex;
-            gap: 14px;
-            padding: 14px 0;
-            border-bottom: 1px solid var(--border);
-        }
-        .task-step:last-child {
-            border-bottom: none;
-        }
-        .step-number {
-            width: 24px;
-            height: 24px;
+            padding: 12px;
             background: var(--bg-card);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 12px;
-            font-weight: 700;
-            color: var(--text-dim);
-            flex-shrink: 0;
-        }
-        .task-step.completed .step-number {
-            background: var(--success);
-            color: #fff;
-        }
-        .step-content {
-            flex: 1;
-        }
-        .step-text {
-            font-size: 14px;
-            color: var(--text);
-            line-height: 1.5;
-        }
-
-        /* Hint Box */
-        .hint-container {
-            margin-top: 24px;
-            background: var(--bg-card);
-            border: 1px dashed var(--border-light);
-            border-radius: 10px;
-            overflow: hidden;
-        }
-        .hint-toggle {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            padding: 14px 18px;
+            border-radius: 8px;
             cursor: pointer;
-            color: var(--text-secondary);
-            font-size: 13px;
-            transition: background 0.2s;
+            transition: all 0.2s;
+            margin-bottom: 8px;
         }
-        .hint-toggle:hover {
+        .hint-header:hover {
             background: var(--bg-elevated);
         }
-        .hint-toggle i {
+        .hint-icon {
             color: var(--warning);
         }
-        .hint-content {
-            display: none;
-            padding: 0 18px 18px;
-            font-size: 13px;
-            color: var(--text-dim);
-            line-height: 1.6;
-        }
-        .hint-content.visible {
-            display: block;
-        }
-
-        /* ========== RESIZER ========== */
-        .resizer {
-            width: 6px;
-            background: var(--border);
-            cursor: col-resize;
-            transition: background 0.2s;
-            flex-shrink: 0;
-        }
-        .resizer:hover, .resizer.dragging {
-            background: var(--accent);
-        }
-
-        /* ========== CODE PANEL ========== */
-        .code-panel {
+        .hint-title {
             flex: 1;
+            font-weight: 500;
+            color: var(--text);
+        }
+        .hint-toggle {
+            color: var(--text-dim);
+            transition: transform 0.2s;
+        }
+        .hint-header.expanded .hint-toggle {
+            transform: rotate(180deg);
+        }
+        .hint-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+            padding: 0 12px;
+        }
+        .hint-content.expanded {
+            max-height: 500px;
+            padding: 12px;
+        }
+        .hint-content p {
+            margin: 8px 0;
+            color: var(--text-secondary);
+            font-size: 14px;
+        }
+
+        /* IDE Panel */
+        .ide-panel {
+            width: 50%;
             display: flex;
             flex-direction: column;
             background: var(--bg-dark);
-            min-width: 300px;
         }
 
-        .code-header {
-            height: 44px;
+        .ide-header {
+            height: 40px;
             background: var(--bg-main);
             border-bottom: 1px solid var(--border);
             display: flex;
             align-items: center;
             padding: 0 12px;
+            gap: 8px;
         }
+
         .file-tab {
             display: flex;
             align-items: center;
             gap: 8px;
-            padding: 8px 14px;
-            background: var(--bg-dark);
-            border-radius: 6px 6px 0 0;
-            font-size: 12px;
-            color: var(--text-secondary);
-            margin-top: 6px;
+            padding: 6px 12px;
+            background: var(--bg-card);
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .file-tab:hover {
+            background: var(--bg-elevated);
         }
         .file-tab i {
             font-size: 14px;
         }
-        .file-tab.python i { color: #3572A5; }
+        .file-tab.python i { color: #3776ab; }
         .file-tab.javascript i { color: #f7df1e; }
         .file-tab.html i { color: #e34c26; }
+        .file-tab.css i { color: #264de4; }
+        .file-tab.java i { color: #007396; }
+        .file-tab.cpp i { color: #00599c; }
+        .file-tab.go i { color: #00add8; }
+        .file-tab.rust i { color: #ce422b; }
 
-        .code-actions {
+        .file-name {
+            font-size: 13px;
+            font-family: 'JetBrains Mono', monospace;
+            color: var(--text);
+        }
+
+        .ide-actions {
             margin-left: auto;
             display: flex;
+            align-items: center;
             gap: 8px;
         }
-        .code-btn {
-            padding: 6px 12px;
-            border-radius: 6px;
-            font-size: 12px;
-            font-weight: 600;
-            cursor: pointer;
-            border: none;
+        .ide-btn {
             display: flex;
             align-items: center;
             gap: 6px;
+            padding: 6px 10px;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            color: var(--text-secondary);
+            font-size: 12px;
+            cursor: pointer;
             transition: all 0.2s;
         }
-        .code-btn.reset {
-            background: transparent;
-            color: var(--text-dim);
-            border: 1px solid var(--border);
-        }
-        .code-btn.reset:hover {
+        .ide-btn:hover {
+            background: var(--bg-elevated);
+            border-color: var(--accent);
             color: var(--text);
-            border-color: var(--border-light);
+            transform: translateY(-1px);
         }
-        .code-btn.run {
-            background: var(--success);
-            color: #fff;
+        .ide-btn:active {
+            transform: translateY(0);
         }
-        .code-btn.run:hover {
-            background: var(--success-light);
-        }
-        .code-btn.check {
+        .ide-btn.run {
             background: var(--accent);
-            color: #fff;
+            border-color: var(--accent);
+            color: white;
         }
-        .code-btn.check:hover {
+        .ide-btn.run:hover {
             background: var(--accent-light);
+            border-color: var(--accent-light);
+        }
+        .ide-btn.check {
+            background: var(--success);
+            border-color: var(--success);
+            color: white;
+        }
+        .ide-btn.check:hover {
+            background: var(--success-light);
+            border-color: var(--success-light);
         }
 
-        #editor {
+        .editor-container {
             flex: 1;
-            min-height: 200px;
+            position: relative;
+        }
+        #code-editor {
+            width: 100%;
+            height: 100%;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 14px;
         }
 
         .console-container {
-            height: 150px;
-            background: #000;
+            height: 200px;
+            background: var(--bg-main);
             border-top: 1px solid var(--border);
             display: flex;
             flex-direction: column;
         }
         .console-header {
-            height: 32px;
-            background: var(--bg-main);
-            border-bottom: 1px solid var(--border);
+            height: 36px;
             display: flex;
             align-items: center;
             padding: 0 12px;
-            font-size: 11px;
-            color: var(--text-dim);
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
+            border-bottom: 1px solid var(--border);
+            gap: 12px;
+        }
+        .console-title {
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--text);
         }
         .console-clear {
             margin-left: auto;
-            background: none;
-            border: none;
+            padding: 4px 8px;
+            font-size: 11px;
             color: var(--text-dim);
             cursor: pointer;
-            font-size: 11px;
+            border-radius: 4px;
+            transition: all 0.2s;
         }
         .console-clear:hover {
+            background: var(--bg-card);
             color: var(--text);
         }
         #console {
             flex: 1;
             padding: 12px;
             font-family: 'JetBrains Mono', monospace;
-            font-size: 12px;
-            color: var(--success);
+            font-size: 13px;
             overflow-y: auto;
             white-space: pre-wrap;
+            color: var(--text-secondary);
+        }
+        #console::-webkit-scrollbar { width: 8px; }
+        #console::-webkit-scrollbar-track { background: transparent; }
+        #console::-webkit-scrollbar-thumb {
+            background: var(--bg-card);
+            border-radius: 4px;
         }
 
-        /* ========== BOTTOM NAV ========== */
-        .bottom-nav {
-            height: 60px;
+        /* ========== FOOTER ========== */
+        .workspace-footer {
+            height: 48px;
             background: var(--bg-main);
             border-top: 1px solid var(--border);
             display: flex;
             align-items: center;
-            justify-content: space-between;
-            padding: 0 24px;
-        }
-
-        .nav-left, .nav-right {
-            display: flex;
-            align-items: center;
+            padding: 0 20px;
             gap: 12px;
         }
-
-        .btn {
-            padding: 10px 20px;
-            border-radius: 8px;
-            font-size: 13px;
-            font-weight: 600;
-            cursor: pointer;
-            border: none;
+        .footer-btn {
             display: flex;
             align-items: center;
             gap: 8px;
+            padding: 8px 14px;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            color: var(--text-secondary);
+            font-size: 13px;
+            cursor: pointer;
             transition: all 0.2s;
         }
-        .btn-secondary {
-            background: var(--bg-card);
-            color: var(--text-secondary);
-            border: 1px solid var(--border);
-        }
-        .btn-secondary:hover:not(:disabled) {
+        .footer-btn:hover {
             background: var(--bg-elevated);
+            border-color: var(--accent);
             color: var(--text);
+            transform: translateY(-1px);
         }
-        .btn-secondary:disabled {
+        .footer-btn:disabled {
             opacity: 0.4;
             cursor: not-allowed;
         }
-        .btn-primary {
-            background: var(--accent);
-            color: #fff;
+        .footer-btn:disabled:hover {
+            transform: none;
+            background: var(--bg-card);
+            border-color: var(--border);
         }
-        .btn-primary:hover:not(:disabled) {
-            background: var(--accent-light);
+        .footer-btn.complete {
+            background: var(--success);
+            border-color: var(--success);
+            color: white;
         }
-        .btn-primary:disabled {
-            opacity: 0.4;
-            cursor: not-allowed;
-        }
-
-        .lesson-indicator {
-            font-size: 13px;
-            color: var(--text-dim);
-            text-align: center;
-        }
-        .lesson-indicator strong {
-            color: var(--text);
+        .footer-btn.complete:hover {
+            background: var(--success-light);
+            border-color: var(--success-light);
         }
 
-        /* ========== TOAST NOTIFICATION ========== */
+        /* ========== TOAST ========== */
         .toast {
             position: fixed;
-            bottom: 80px;
-            left: 50%;
-            transform: translateX(-50%) translateY(100px);
-            background: var(--bg-elevated);
+            bottom: 30px;
+            right: 30px;
+            background: var(--bg-card);
             border: 1px solid var(--border);
-            border-radius: 10px;
-            padding: 14px 24px;
+            border-radius: 12px;
+            padding: 16px 20px;
             display: flex;
             align-items: center;
             gap: 12px;
-            font-size: 14px;
-            box-shadow: 0 10px 40px rgba(0,0,0,0.5);
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+            transform: translateY(120px);
             opacity: 0;
-            transition: all 0.3s ease;
-            z-index: 200;
+            transition: all 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            z-index: 1000;
         }
         .toast.visible {
-            transform: translateX(-50%) translateY(0);
+            transform: translateY(0);
             opacity: 1;
         }
         .toast.success {
             border-color: var(--success);
-        }
-        .toast.success i {
-            color: var(--success);
+            background: linear-gradient(135deg, rgba(16, 185, 129, 0.1), rgba(16, 185, 129, 0.05));
         }
         .toast.error {
             border-color: var(--danger);
+            background: linear-gradient(135deg, rgba(239, 68, 68, 0.1), rgba(239, 68, 68, 0.05));
         }
-        .toast.error i {
-            color: var(--danger);
+        .toast i {
+            font-size: 20px;
+        }
+        .toast.success i { color: var(--success); }
+        .toast.error i { color: var(--danger); }
+        .toast-message {
+            font-size: 14px;
+            font-weight: 500;
+            color: var(--text);
         }
         .toast-xp {
-            color: var(--warning);
+            margin-left: 8px;
+            padding: 4px 8px;
+            background: var(--warning);
+            border-radius: 8px;
+            font-size: 12px;
             font-weight: 700;
+            color: white;
         }
 
-        /* ========== SCROLLBAR ========== */
-        ::-webkit-scrollbar { width: 6px; height: 6px; }
-        ::-webkit-scrollbar-track { background: transparent; }
-        ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
-        ::-webkit-scrollbar-thumb:hover { background: var(--border-light); }
-
         /* ========== RESPONSIVE ========== */
-        @media (max-width: 900px) {
-            .syllabus-panel {
-                position: fixed;
-                left: 0;
-                top: 56px;
-                bottom: 0;
-                z-index: 100;
-                width: 320px;
+        @media (max-width: 1024px) {
+            .instructions-panel {
+                width: 40%;
             }
-            .syllabus-panel.collapsed {
-                transform: translateX(-100%);
+            .ide-panel {
+                width: 60%;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .workspace-content {
+                flex-direction: column;
+            }
+            .instructions-panel, .ide-panel {
+                width: 100%;
+                border-right: none;
             }
             .instructions-panel {
-                width: 100%;
-                max-width: none;
+                height: 40%;
+                border-bottom: 1px solid var(--border);
             }
-            .code-panel {
-                display: none;
-            }
-            .nav-stats {
-                display: none;
-            }
-            .resizer {
-                display: none;
+            .ide-panel {
+                height: 60%;
             }
         }
     </style>
 </head>
 <body>
-
-    <!-- TOP NAV -->
-    <nav class="top-nav">
-        <div class="nav-brand" onclick="location.reload()">
-            <div class="nav-logo">D</div>
-            <span class="nav-title">DEV//QUEST</span>
+    <!-- Loading Screen -->
+    <div class="loading-screen" id="loading-screen">
+        <div class="loading-logo">D</div>
+        <div class="loading-text">DEV//QUEST Academy</div>
+        <div class="loading-subtext">Initializing learning environment...</div>
+        <div class="loading-bar">
+            <div class="loading-bar-fill"></div>
         </div>
+    </div>
 
+    <!-- Top Navigation -->
+    <div class="top-nav">
+        <div class="nav-brand" onclick="window.location.reload()">
+            <div class="nav-logo">D</div>
+            <div class="nav-title">DEV//QUEST</div>
+        </div>
         <div class="nav-divider"></div>
-
         <button class="syllabus-btn" onclick="toggleSyllabus()">
-            <i class="fa-solid fa-list"></i>
+            <i class="fa-solid fa-bars"></i>
             <span>Syllabus</span>
         </button>
-
         <div class="nav-progress">
             <div class="progress-bar">
-                <div class="progress-fill" id="progress-fill" style="width: 0%"></div>
+                <div class="progress-fill" id="progress-fill"></div>
             </div>
-            <span class="progress-text" id="progress-text">0 / 0</span>
+            <div class="progress-text" id="progress-text">0 / 0</div>
         </div>
-
         <div class="nav-stats">
             <div class="stat-item xp">
                 <i class="fa-solid fa-star"></i>
@@ -926,555 +981,554 @@
             </div>
             <div class="stat-item streak">
                 <i class="fa-solid fa-fire"></i>
-                <span class="stat-value" id="streak-count">1</span>
-                <span>day</span>
+                <span class="stat-value">0</span>
+                <span>Streak</span>
             </div>
         </div>
-
         <div class="nav-status">
             <div class="status-dot" id="status-dot"></div>
-            <span id="status-text">Connecting...</span>
+            <span id="status-text">Disconnected</span>
         </div>
+        <div class="nav-profile">D</div>
+    </div>
 
-        <div class="nav-profile">Z</div>
-    </nav>
-
-    <!-- MAIN CONTAINER -->
+    <!-- Main Container -->
     <div class="main-container">
-
-        <!-- SYLLABUS PANEL -->
-        <aside class="syllabus-panel" id="syllabus-panel">
+        <!-- Syllabus Panel -->
+        <div class="syllabus-panel" id="syllabus-panel">
             <div class="syllabus-header">
-                <span class="syllabus-title">Course Syllabus</span>
-                <button class="syllabus-close" onclick="toggleSyllabus()">
+                <div class="syllabus-title">Course Curriculum</div>
+                <div class="syllabus-close" onclick="toggleSyllabus()">
                     <i class="fa-solid fa-times"></i>
-                </button>
+                </div>
             </div>
             <div class="syllabus-content" id="syllabus-content">
-                <div class="syllabus-loading">
-                    <div class="spinner"></div>
-                    <span>Loading curriculum...</span>
+                <!-- Populated by JS -->
+            </div>
+        </div>
+
+        <!-- Workspace -->
+        <div class="workspace">
+            <!-- Tabs -->
+            <div class="workspace-tabs">
+                <div class="workspace-tab active">
+                    <i class="fa-solid fa-book-open"></i>
+                    <span>Instructions</span>
+                </div>
+                <div class="workspace-tab" style="opacity: 0.3; pointer-events: none;">
+                    <i class="fa-solid fa-lightbulb"></i>
+                    <span>Hints</span>
+                </div>
+                <div class="workspace-tab" style="opacity: 0.3; pointer-events: none;">
+                    <i class="fa-solid fa-graduation-cap"></i>
+                    <span>Solution</span>
                 </div>
             </div>
-        </aside>
 
-        <!-- LESSON AREA -->
-        <div class="lesson-area">
-            <div class="workspace">
-
-                <!-- INSTRUCTIONS PANEL -->
-                <div class="instructions-panel" id="instructions-panel">
-                    <div class="instructions-header">
-                        <span class="lesson-number" id="lesson-number">Loading...</span>
-                        <span class="lesson-type-badge badge-concept" id="type-badge">
-                            <i class="fa-solid fa-book"></i> Concept
-                        </span>
-                    </div>
+            <!-- Content -->
+            <div class="workspace-content">
+                <!-- Instructions Panel -->
+                <div class="instructions-panel">
                     <div class="instructions-content" id="instructions-content">
-                        <h1 class="lesson-title">Welcome to DEV//QUEST</h1>
-                        <div class="concept-box">
-                            <div class="concept-box-label">
-                                <i class="fa-solid fa-lightbulb"></i> Getting Started
-                            </div>
-                            <div class="concept-box-text">
-                                Loading curriculum from server... Click the Syllabus button to browse lessons once loaded.
+                        <div class="task-title">Welcome to DEV//QUEST Academy 🚀</div>
+                        <div class="task-meta">
+                            <div class="task-badge lesson">Interactive Learning</div>
+                            <div class="task-duration">
+                                <i class="fa-solid fa-clock"></i>
+                                Start Learning
                             </div>
                         </div>
-                        <div class="lesson-content">
-                            <p>The AI is generating lessons in the background. New content appears automatically!</p>
+                        <div class="task-section">
+                            <div class="task-header">
+                                <i class="fa-solid fa-rocket"></i>
+                                Getting Started
+                            </div>
+                            <div class="lesson-content">
+                                <p>Welcome to your interactive coding academy! Here's what you can do:</p>
+                                <ul>
+                                    <li><strong>Browse the Syllabus:</strong> Click the "Syllabus" button to explore 1000+ lessons</li>
+                                    <li><strong>Write Code:</strong> Use the built-in IDE on the right to write and test code</li>
+                                    <li><strong>Track Progress:</strong> Earn XP and complete lessons to level up</li>
+                                    <li><strong>Learn Interactively:</strong> Run Python and JavaScript code right in your browser</li>
+                                </ul>
+                                <p>Select a lesson from the syllabus to begin your journey!</p>
+                            </div>
                         </div>
                     </div>
                 </div>
 
-                <!-- RESIZER -->
-                <div class="resizer" id="resizer"></div>
-
-                <!-- CODE PANEL -->
-                <div class="code-panel">
-                    <div class="code-header">
+                <!-- IDE Panel -->
+                <div class="ide-panel">
+                    <!-- IDE Header -->
+                    <div class="ide-header">
                         <div class="file-tab python" id="file-tab">
                             <i class="fa-brands fa-python"></i>
-                            <span id="file-name">script.py</span>
+                            <span class="file-name" id="file-name">main.py</span>
                         </div>
-                        <div class="code-actions">
-                            <button class="code-btn reset" onclick="resetCode()">
-                                <i class="fa-solid fa-rotate-left"></i> Reset
+                        <div class="ide-actions">
+                            <button class="ide-btn" onclick="resetCode()">
+                                <i class="fa-solid fa-rotate-left"></i>
+                                Reset
                             </button>
-                            <button class="code-btn run" onclick="runCode()">
-                                <i class="fa-solid fa-play"></i> Run
+                            <button class="ide-btn check" id="check-btn" onclick="checkAnswer()" style="display: none;">
+                                <i class="fa-solid fa-check"></i>
+                                Check Answer
                             </button>
-                            <button class="code-btn check" id="check-btn" style="display:none" onclick="checkAnswer()">
-                                <i class="fa-solid fa-check"></i> Check
+                            <button class="ide-btn run" onclick="runCode()">
+                                <i class="fa-solid fa-play"></i>
+                                Run Code
                             </button>
                         </div>
                     </div>
-                    <div id="editor"># Welcome to DEV//QUEST!
-# Select a lesson from the syllabus to begin.
 
-print("Hello, World!")
+                    <!-- Code Editor -->
+                    <div class="editor-container">
+                        <div id="code-editor"># Welcome to DEV//QUEST Academy!
+# Select a lesson from the syllabus to start coding
+
+print("Hello, Developer! 🚀")
 </div>
+                    </div>
+
+                    <!-- Console -->
                     <div class="console-container">
                         <div class="console-header">
-                            <span>Output</span>
-                            <button class="console-clear" onclick="clearConsole()">Clear</button>
+                            <div class="console-title">
+                                <i class="fa-solid fa-terminal"></i> Console Output
+                            </div>
+                            <div class="console-clear" onclick="clearConsole()">
+                                <i class="fa-solid fa-times"></i> Clear
+                            </div>
                         </div>
                         <div id="console"></div>
                     </div>
                 </div>
             </div>
 
-            <!-- BOTTOM NAV -->
-            <div class="bottom-nav">
-                <div class="nav-left">
-                    <button class="btn btn-secondary" id="prev-btn" onclick="prevLesson()" disabled>
-                        <i class="fa-solid fa-arrow-left"></i> Back
-                    </button>
-                </div>
-                <div class="lesson-indicator" id="track-indicator">
-                    Select a lesson to begin
-                </div>
-                <div class="nav-right">
-                    <button class="btn btn-primary" id="next-btn" onclick="nextLesson()" disabled>
-                        Next <i class="fa-solid fa-arrow-right"></i>
-                    </button>
-                </div>
+            <!-- Footer -->
+            <div class="workspace-footer">
+                <button class="footer-btn" id="prev-btn" onclick="prevLesson()" disabled>
+                    <i class="fa-solid fa-chevron-left"></i>
+                    Previous
+                </button>
+                <button class="footer-btn complete" id="mark-complete-btn" onclick="markComplete()">
+                    <i class="fa-solid fa-check"></i>
+                    Mark Complete
+                </button>
+                <button class="footer-btn" id="next-btn" onclick="nextLesson()" disabled>
+                    Next
+                    <i class="fa-solid fa-chevron-right"></i>
+                </button>
             </div>
         </div>
     </div>
 
-    <!-- TOAST -->
+    <!-- Toast Notification -->
     <div class="toast" id="toast">
         <i class="fa-solid fa-check-circle"></i>
-        <span id="toast-message">Lesson completed!</span>
+        <span class="toast-message" id="toast-message">Success!</span>
         <span class="toast-xp" id="toast-xp">+10 XP</span>
     </div>
 
-    <!-- JAVASCRIPT -->
     <script>
-        // ========== CONFIGURATION ==========
-        // Auto-detect API URL based on where we're running
+        // ========================================
+        // API URL CONFIGURATION
+        // ========================================
+        // WHY: Detects if we're on local dev or production
+        // WHEN: Called at startup and whenever we need to fetch data
+        // HOW: Checks window.location.hostname to determine environment
         function getApiUrl() {
             const host = window.location.hostname;
-
-            // If running on GitHub Pages or other static hosting, use the production API
-            if (host.includes('github.io') || host === 'devquest.uk') {
-                return 'https://devquest.uk';
+            
+            // If on devquest.uk domain or GitHub Pages
+            if (host.includes('devquest.uk') || host.includes('github.io')) {
+                return 'https://devquest.uk'; // Production tunnel
             }
-
-            // If running locally, try common local ports
-            if (host === 'localhost' || host === '127.0.0.1') {
-                return 'http://localhost:8000';
-            }
-
-            // Default: assume API is on same host
-            return window.location.origin;
+            
+            // Otherwise, use local development server
+            return 'http://localhost:8000';
         }
 
-        const BASE_URL = getApiUrl();
-        console.log('API URL:', BASE_URL);
-
-        // ========== STATE ==========
-        let curriculum = {};
+        // ========================================
+        // GLOBAL STATE
+        // ========================================
+        let curriculum = null;
         let allLessons = [];
-        let currentIndex = -1;
         let currentLesson = null;
-        let originalCode = '';
+        let currentIndex = -1;
+        let completedLessons = [];
+        let xp = 0;
         let totalLessons = 0;
-        let isConnected = false;
-
-        // Persistent state
-        let xp = parseInt(localStorage.getItem('devquest_xp') || '0');
-        let completedLessons = JSON.parse(localStorage.getItem('devquest_completed') || '[]');
-
-        // Pyodide & Editor
-        let pyodide = null;
         let editor = null;
+        let pyodide = null;
+        let originalCode = '';
 
-        // ========== TRACK COLORS ==========
-        const trackColors = {
-            '00': '#06b6d4', '01': '#ec4899', '02': '#f97316', '03': '#3b82f6',
-            '04': '#a855f7', '05': '#3b82f6', '06': '#06b6d4', '07': '#10b981',
-            '08': '#10b981', '09': '#eab308', '10': '#f97316', '11': '#ec4899',
-            '12': '#a855f7', '13': '#ef4444', '14': '#10b981', '15': '#f97316',
-            '16': '#ec4899'
-        };
-
-        const typeInfo = {
-            concept: { badge: 'badge-concept', icon: 'fa-book', label: 'Concept' },
-            lab: { badge: 'badge-lab', icon: 'fa-flask', label: 'Lab' },
-            challenge: { badge: 'badge-challenge', icon: 'fa-bolt', label: 'Challenge' },
-            project: { badge: 'badge-project', icon: 'fa-hammer', label: 'Project' },
-            capstone: { badge: 'badge-capstone', icon: 'fa-trophy', label: 'Capstone' }
-        };
-
+        // Language configuration for syntax highlighting
         const langConfig = {
-            python: { icon: 'fa-python', brand: true, file: 'script.py', mode: 'ace/mode/python' },
-            javascript: { icon: 'fa-js', brand: true, file: 'script.js', mode: 'ace/mode/javascript' },
-            typescript: { icon: 'fa-js', brand: true, file: 'script.ts', mode: 'ace/mode/typescript' },
-            html: { icon: 'fa-html5', brand: true, file: 'index.html', mode: 'ace/mode/html' },
-            css: { icon: 'fa-css3-alt', brand: true, file: 'style.css', mode: 'ace/mode/css' },
-            bash: { icon: 'fa-terminal', brand: false, file: 'script.sh', mode: 'ace/mode/sh' },
-            sql: { icon: 'fa-database', brand: false, file: 'query.sql', mode: 'ace/mode/sql' },
-            c: { icon: 'fa-c', brand: false, file: 'main.c', mode: 'ace/mode/c_cpp' },
-            yaml: { icon: 'fa-file-code', brand: false, file: 'config.yaml', mode: 'ace/mode/yaml' },
-            dockerfile: { icon: 'fa-docker', brand: true, file: 'Dockerfile', mode: 'ace/mode/dockerfile' }
+            python: { mode: 'ace/mode/python', file: 'main.py', icon: 'fa-python', brand: true },
+            javascript: { mode: 'ace/mode/javascript', file: 'index.js', icon: 'fa-js', brand: true },
+            html: { mode: 'ace/mode/html', file: 'index.html', icon: 'fa-html5', brand: true },
+            css: { mode: 'ace/mode/css', file: 'styles.css', icon: 'fa-css3-alt', brand: true },
+            java: { mode: 'ace/mode/java', file: 'Main.java', icon: 'fa-java', brand: true },
+            cpp: { mode: 'ace/mode/c_cpp', file: 'main.cpp', icon: 'fa-code', brand: false },
+            c: { mode: 'ace/mode/c_cpp', file: 'main.c', icon: 'fa-code', brand: false },
+            go: { mode: 'ace/mode/golang', file: 'main.go', icon: 'fa-golang', brand: true },
+            rust: { mode: 'ace/mode/rust', file: 'main.rs', icon: 'fa-rust', brand: true },
+            sql: { mode: 'ace/mode/sql', file: 'query.sql', icon: 'fa-database', brand: false },
+            bash: { mode: 'ace/mode/sh', file: 'script.sh', icon: 'fa-terminal', brand: false },
         };
 
-        // ========== INITIALIZATION ==========
+        // ========================================
+        // INITIALIZATION
+        // ========================================
         async function init() {
-            console.log('Initializing DEV//QUEST...');
+            console.log('🚀 Initializing DEV//QUEST Academy...');
+            
+            // Initialize ACE Editor
+            editor = ace.edit("code-editor");
+            editor.setTheme("ace/theme/tomorrow_night");
+            editor.session.setMode("ace/mode/python");
+            editor.setOptions({
+                fontSize: "14px",
+                showPrintMargin: false,
+                enableBasicAutocompletion: true,
+                enableLiveAutocompletion: true,
+            });
 
-            initEditor();
-            initResizer();
-            updateXPDisplay();
+            // Load saved progress
+            loadProgress();
 
-            // Try to connect to API
-            await fetchCurriculum();
+            // Load curriculum from API
+            await loadCurriculum();
 
-            // Start Pyodide in background
+            // Initialize Python runtime (async, non-blocking)
             initPyodide();
 
-            // Auto-refresh curriculum every 10 seconds
-            setInterval(fetchCurriculum, 10000);
+            // Hide loading screen
+            setTimeout(() => {
+                document.getElementById('loading-screen').classList.add('hidden');
+            }, 1000);
+
+            console.log('✅ Initialization complete!');
         }
 
-        function initEditor() {
-            editor = ace.edit('editor');
-            editor.setTheme('ace/theme/one_dark');
-            editor.session.setMode('ace/mode/python');
-            editor.setShowPrintMargin(false);
-            editor.setFontSize(14);
-            editor.setOptions({
-                fontFamily: 'JetBrains Mono, monospace',
-                tabSize: 4,
-                useSoftTabs: true
-            });
-        }
-
+        // ========================================
+        // PYTHON RUNTIME INITIALIZATION
+        // ========================================
+        // WHY: Loads Pyodide for running Python in the browser
+        // WHEN: Called at startup but doesn't block UI
+        // HOW: Async loads Pyodide WebAssembly module
         async function initPyodide() {
             try {
+                console.log('📦 Loading Python runtime...');
                 pyodide = await loadPyodide();
-                console.log('Pyodide loaded successfully');
+                console.log('✅ Python ready!');
             } catch (e) {
-                console.warn('Pyodide failed to load:', e);
+                console.error('❌ Python failed to load:', e);
             }
         }
 
-        function initResizer() {
-            const resizer = document.getElementById('resizer');
-            const instructions = document.getElementById('instructions-panel');
-            let isResizing = false;
-
-            resizer.addEventListener('mousedown', (e) => {
-                isResizing = true;
-                resizer.classList.add('dragging');
-                document.body.style.cursor = 'col-resize';
-                e.preventDefault();
-            });
-
-            document.addEventListener('mousemove', (e) => {
-                if (!isResizing) return;
-                const containerRect = document.querySelector('.workspace').getBoundingClientRect();
-                const newWidth = e.clientX - containerRect.left;
-                if (newWidth >= 350 && newWidth <= 700) {
-                    instructions.style.width = newWidth + 'px';
-                }
-            });
-
-            document.addEventListener('mouseup', () => {
-                if (isResizing) {
-                    isResizing = false;
-                    resizer.classList.remove('dragging');
-                    document.body.style.cursor = '';
-                }
-            });
-        }
-
-        // ========== API FUNCTIONS ==========
-        async function fetchCurriculum() {
+        // ========================================
+        // LOAD CURRICULUM FROM API
+        // ========================================
+        // WHY: Fetches the complete lesson structure from backend
+        // WHEN: Called once at startup
+        // HOW: Makes GET request to /curriculum endpoint
+        async function loadCurriculum() {
+            const apiUrl = getApiUrl();
+            const statusDot = document.getElementById('status-dot');
+            const statusText = document.getElementById('status-text');
+            
             try {
-                const res = await fetch(`${BASE_URL}/curriculum`);
-                if (!res.ok) throw new Error(`HTTP ${res.status}`);
-
-                curriculum = await res.json();
+                console.log(`📡 Fetching curriculum from ${apiUrl}...`);
+                statusText.textContent = 'Connecting...';
+                
+                const response = await fetch(`${apiUrl}/curriculum`);
+                
+                if (!response.ok) {
+                    throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+                }
+                
+                curriculum = await response.json();
+                console.log('✅ Curriculum loaded:', curriculum.metadata);
+                
+                // Update connection status
+                statusDot.classList.add('connected');
+                statusText.textContent = 'Connected';
+                
+                // Process curriculum
                 buildLessonList();
                 renderSyllabus();
                 updateProgress();
-                setConnected(true);
-
-                console.log(`Loaded ${allLessons.length} lessons`);
-            } catch (e) {
-                console.error('Failed to fetch curriculum:', e);
-                setConnected(false);
-
-                document.getElementById('syllabus-content').innerHTML = `
-                    <div class="syllabus-loading">
-                        <i class="fa-solid fa-exclamation-triangle" style="color: var(--danger); font-size: 24px;"></i>
-                        <span>Cannot connect to server</span>
-                        <span style="font-size: 11px; color: var(--text-dim);">${BASE_URL}</span>
-                        <button onclick="fetchCurriculum()" style="margin-top: 10px; padding: 8px 16px; background: var(--accent); border: none; border-radius: 6px; color: white; cursor: pointer;">
-                            Retry
-                        </button>
+                
+                // Auto-load first lesson
+                if (allLessons.length > 0) {
+                    loadLesson(allLessons[0].id);
+                }
+                
+            } catch (error) {
+                console.error('❌ Failed to load curriculum:', error);
+                statusDot.classList.remove('connected');
+                statusText.textContent = 'Connection Failed';
+                
+                // Show error in UI
+                document.getElementById('instructions-content').innerHTML = `
+                    <div class="task-title">⚠️ Connection Error</div>
+                    <div class="task-section">
+                        <div class="lesson-content">
+                            <p style="color: var(--danger);">Failed to connect to the backend server.</p>
+                            <p><strong>Error:</strong> ${escapeHtml(error.message)}</p>
+                            <p><strong>Attempted URL:</strong> ${apiUrl}/curriculum</p>
+                            <hr style="margin: 20px 0; border: 1px solid var(--border);">
+                            <p><strong>Troubleshooting:</strong></p>
+                            <ul>
+                                <li>Make sure your FastAPI server is running</li>
+                                <li>For local dev: <code>uvicorn curriculum:app --reload</code></li>
+                                <li>Check that the server is accessible at: <code>${apiUrl}</code></li>
+                                <li>Look for CORS errors in the browser console (F12)</li>
+                            </ul>
+                        </div>
                     </div>
                 `;
             }
         }
 
-        async function fetchLesson(id) {
-            try {
-                const res = await fetch(`${BASE_URL}/lesson/${id}`);
-                if (!res.ok) throw new Error(`HTTP ${res.status}`);
-                return await res.json();
-            } catch (e) {
-                console.error('Failed to fetch lesson:', e);
-                showToast('Failed to load lesson', 0, 'error');
-                return null;
-            }
-        }
-
-        function setConnected(connected) {
-            isConnected = connected;
-            const dot = document.getElementById('status-dot');
-            const text = document.getElementById('status-text');
-
-            if (connected) {
-                dot.classList.add('connected');
-                text.textContent = 'Connected';
-            } else {
-                dot.classList.remove('connected');
-                text.textContent = 'Disconnected';
-            }
-        }
-
-        // ========== DATA PROCESSING ==========
+        // ========================================
+        // BUILD FLAT LESSON LIST
+        // ========================================
+        // WHY: Creates a linear array for navigation (prev/next)
+        // WHEN: After curriculum loads
+        // HOW: Recursively traverses track structure
         function buildLessonList() {
             allLessons = [];
-
-            // Sort tracks by their number
-            const sortedTracks = Object.entries(curriculum).sort((a, b) => {
-                const numA = parseInt(a[0].match(/\d+/)?.[0] || '99');
-                const numB = parseInt(b[0].match(/\d+/)?.[0] || '99');
-                if (numA !== numB) return numA - numB;
-                // Secondary sort by letter (A, B, C, D)
-                const letterA = a[0].match(/\d+([A-Z])/)?.[1] || '';
-                const letterB = b[0].match(/\d+([A-Z])/)?.[1] || '';
-                return letterA.localeCompare(letterB);
-            });
-
-            sortedTracks.forEach(([trackName, modules]) => {
-                // modules is an object with module IDs as keys
-                Object.values(modules).forEach(mod => {
-                    if (mod.lessons && Array.isArray(mod.lessons)) {
-                        mod.lessons.forEach(lesson => {
-                            allLessons.push({
-                                id: lesson.id,
-                                title: lesson.title,
-                                type: lesson.type || 'concept',
-                                trackName: trackName
-                            });
-                        });
-                    }
-                });
-            });
-
-            totalLessons = allLessons.length;
+            let lessonCount = 0;
+            
+            if (!curriculum || !curriculum.tracks) return;
+            
+            for (const track of curriculum.tracks) {
+                for (const item of track.lessons) {
+                    allLessons.push({
+                        ...item,
+                        trackId: track.id,
+                        trackTitle: track.title
+                    });
+                    lessonCount++;
+                }
+            }
+            
+            totalLessons = lessonCount;
+            console.log(`📚 Built lesson list: ${totalLessons} total lessons`);
         }
 
-        // ========== SYLLABUS RENDERING ==========
+        // ========================================
+        // RENDER SYLLABUS UI
+        // ========================================
+        // WHY: Displays all tracks and lessons in sidebar
+        // WHEN: After curriculum loads and when progress updates
+        // HOW: Builds HTML from curriculum structure
         function renderSyllabus() {
             const container = document.getElementById('syllabus-content');
-
-            if (allLessons.length === 0) {
-                container.innerHTML = `
-                    <div class="syllabus-loading">
-                        <div class="spinner"></div>
-                        <span>AI is generating lessons...</span>
-                        <span style="font-size: 11px; color: var(--text-dim);">Check back soon!</span>
-                    </div>
-                `;
+            if (!curriculum || !curriculum.tracks) {
+                container.innerHTML = '<p style="color: var(--text-dim); padding: 20px;">Loading curriculum...</p>';
                 return;
             }
-
-            container.innerHTML = '';
-
-            const sortedTracks = Object.entries(curriculum).sort((a, b) => {
-                const numA = parseInt(a[0].match(/\d+/)?.[0] || '99');
-                const numB = parseInt(b[0].match(/\d+/)?.[0] || '99');
-                if (numA !== numB) return numA - numB;
-                const letterA = a[0].match(/\d+([A-Z])/)?.[1] || '';
-                const letterB = b[0].match(/\d+([A-Z])/)?.[1] || '';
-                return letterA.localeCompare(letterB);
-            });
-
-            sortedTracks.forEach(([trackName, modules]) => {
-                // Collect all lessons for this track
-                const trackLessons = [];
-                Object.values(modules).forEach(mod => {
-                    if (mod.lessons) trackLessons.push(...mod.lessons);
-                });
-
-                if (trackLessons.length === 0) return;
-
-                const trackKey = trackName.match(/\d+/)?.[0] || '00';
-                const color = trackColors[trackKey] || '#7c3aed';
-                const completedCount = trackLessons.filter(l => completedLessons.includes(l.id)).length;
-                const displayName = trackName.replace(/^\d+[A-Z]?\.\s*/, '');
-
-                const group = document.createElement('div');
-                group.className = 'track-group';
-                group.innerHTML = `
-                    <div class="track-header" onclick="toggleTrack(this)">
-                        <div class="track-icon" style="background: ${color}20; color: ${color}">
-                            ${trackKey}
-                        </div>
-                        <div class="track-info">
-                            <div class="track-name">${displayName}</div>
-                            <div class="track-meta">${completedCount}/${trackLessons.length} complete</div>
-                        </div>
-                        <i class="fa-solid fa-chevron-down track-chevron"></i>
-                    </div>
-                    <div class="track-lessons">
-                        ${trackLessons.map(lesson => {
-                            const isCompleted = completedLessons.includes(lesson.id);
-                            const isActive = currentLesson && currentLesson.id === lesson.id;
-                            const type = lesson.type || 'concept';
-                            return `
-                                <div class="lesson-row ${isCompleted ? 'completed' : ''} ${isActive ? 'active' : ''}"
-                                     data-id="${lesson.id}"
-                                     onclick="loadLesson(${lesson.id})">
-                                    <div class="lesson-check">
-                                        ${isCompleted ? '<i class="fa-solid fa-check"></i>' : ''}
-                                    </div>
-                                    <span class="lesson-name">${lesson.title}</span>
-                                    <div class="lesson-type-dot type-${type}"></div>
-                                </div>
-                            `;
-                        }).join('')}
-                    </div>
-                `;
-                container.appendChild(group);
-            });
-
-            // Auto-expand first track with lessons
-            const firstHeader = container.querySelector('.track-header');
-            if (firstHeader) {
-                firstHeader.classList.add('expanded');
-                firstHeader.nextElementSibling.classList.add('expanded');
-            }
-        }
-
-        function toggleTrack(header) {
-            const wasExpanded = header.classList.contains('expanded');
-            header.classList.toggle('expanded');
-            header.nextElementSibling.classList.toggle('expanded');
-        }
-
-        function toggleSyllabus() {
-            document.getElementById('syllabus-panel').classList.toggle('collapsed');
-        }
-
-        // ========== LESSON LOADING ==========
-        async function loadLesson(id) {
-            console.log('Loading lesson:', id);
-
-            // Find index in allLessons
-            currentIndex = allLessons.findIndex(l => l.id === id);
-
-            const data = await fetchLesson(id);
-            if (!data) return;
-
-            currentLesson = { ...data, id: id };
-
-            // Update UI
-            renderLesson(data);
-            updateNavButtons();
-            highlightCurrentLesson();
-
-            // Close syllabus on mobile
-            if (window.innerWidth < 900) {
-                document.getElementById('syllabus-panel').classList.add('collapsed');
-            }
-        }
-
-        function renderLesson(data) {
-            const type = data.lesson_type || 'concept';
-            const info = typeInfo[type] || typeInfo.concept;
-
-            // Update header
-            document.getElementById('lesson-number').textContent =
-                `Lesson ${currentIndex + 1} of ${totalLessons}`;
-
-            const badge = document.getElementById('type-badge');
-            badge.className = `lesson-type-badge ${info.badge}`;
-            badge.innerHTML = `<i class="fa-solid ${info.icon}"></i> ${info.label}`;
-
-            // Update track indicator
-            const trackName = allLessons[currentIndex]?.trackName || 'DEV//QUEST';
-            document.getElementById('track-indicator').innerHTML = `<strong>${trackName}</strong>`;
-
-            // Build content HTML
-            let html = `<h1 class="lesson-title">${escapeHtml(data.title)}</h1>`;
-
-            // Key concept/analogy box
-            if (data.analogy) {
-                const boxLabel = type === 'challenge' ? 'Scenario' : 'Key Concept';
+            
+            let html = '';
+            
+            for (const track of curriculum.tracks) {
+                // Calculate completion for this track
+                const trackLessonIds = track.lessons.map(l => l.id);
+                const completed = trackLessonIds.filter(id => completedLessons.includes(id)).length;
+                const total = trackLessonIds.length;
+                
                 html += `
-                    <div class="concept-box">
-                        <div class="concept-box-label">
-                            <i class="fa-solid fa-lightbulb"></i> ${boxLabel}
-                        </div>
-                        <div class="concept-box-text">${escapeHtml(data.analogy)}</div>
-                    </div>
-                `;
-            }
-
-            // Main content (markdown)
-            if (data.content) {
-                html += `<div class="lesson-content">${marked.parse(data.content)}</div>`;
-            }
-
-            // Tasks for challenges
-            if (type === 'challenge') {
-                const config = data.challenge_config || {};
-                const requirements = config.requirements || [];
-
-                if (requirements.length > 0) {
-                    html += `
-                        <div class="task-section">
-                            <div class="task-header">
-                                <i class="fa-solid fa-list-check"></i> Tasks
+                    <div class="track">
+                        <div class="track-header" onclick="toggleTrack('${track.id}')">
+                            <div class="track-icon">
+                                <i class="fa-solid fa-chevron-right"></i>
                             </div>
-                            ${requirements.map((req, i) => `
-                                <div class="task-step" id="task-${i}">
-                                    <div class="step-number">${i + 1}</div>
-                                    <div class="step-content">
-                                        <div class="step-text">${escapeHtml(req)}</div>
-                                    </div>
-                                </div>
-                            `).join('')}
+                            <div class="track-title">${track.id} - ${escapeHtml(track.title)}</div>
+                            <div class="track-count">${completed}/${total}</div>
+                        </div>
+                        <div class="track-lessons" id="track-${track.id}">
+                `;
+                
+                for (const lesson of track.lessons) {
+                    const isCompleted = completedLessons.includes(lesson.id);
+                    const typeClass = lesson.type || 'lesson';
+                    
+                    html += `
+                        <div class="lesson-row ${isCompleted ? 'completed' : ''}" 
+                             data-id="${lesson.id}"
+                             onclick="loadLesson('${lesson.id}')">
+                            <div class="lesson-icon ${typeClass}">
+                                <i class="fa-solid fa-${getTypeIcon(lesson.type)}"></i>
+                            </div>
+                            <div class="lesson-info">
+                                <div class="lesson-title">${escapeHtml(lesson.title)}</div>
+                                <div class="lesson-duration">${lesson.duration || '10 min'}</div>
+                            </div>
+                            ${isCompleted ? '<i class="fa-solid fa-check lesson-check"></i>' : ''}
                         </div>
                     `;
                 }
-            }
-
-            // Hints section
-            const hints = data.challenge_config?.hints || data.lab_config?.hints || [];
-            if (hints.length > 0) {
+                
                 html += `
-                    <div class="hint-container">
-                        <div class="hint-toggle" onclick="this.nextElementSibling.classList.toggle('visible')">
-                            <i class="fa-solid fa-lightbulb"></i>
-                            <span>Stuck? Get a hint</span>
-                            <i class="fa-solid fa-chevron-down" style="margin-left:auto"></i>
                         </div>
-                        <div class="hint-content">
+                    </div>
+                `;
+            }
+            
+            container.innerHTML = html;
+            highlightCurrentLesson();
+        }
+
+        // Helper: Get icon for lesson type
+        function getTypeIcon(type) {
+            const icons = {
+                'lesson': 'book',
+                'challenge': 'code',
+                'project': 'rocket',
+                'quiz': 'question-circle',
+                'lab': 'flask'
+            };
+            return icons[type] || 'book';
+        }
+
+        // ========================================
+        // TOGGLE TRACK EXPAND/COLLAPSE
+        // ========================================
+        function toggleTrack(trackId) {
+            const lessons = document.getElementById(`track-${trackId}`);
+            const header = lessons.previousElementSibling;
+            
+            lessons.classList.toggle('expanded');
+            header.classList.toggle('expanded');
+        }
+
+        // ========================================
+        // TOGGLE SYLLABUS PANEL
+        // ========================================
+        function toggleSyllabus() {
+            const panel = document.getElementById('syllabus-panel');
+            panel.classList.toggle('collapsed');
+        }
+
+        // ========================================
+        // LOAD LESSON
+        // ========================================
+        // WHY: Loads a specific lesson into the workspace
+        // WHEN: User clicks a lesson or uses prev/next
+        // HOW: Fetches from API and updates UI
+        async function loadLesson(lessonId) {
+            const apiUrl = getApiUrl();
+            
+            try {
+                console.log(`📖 Loading lesson: ${lessonId}`);
+                
+                const response = await fetch(`${apiUrl}/lesson/${lessonId}`);
+                if (!response.ok) {
+                    throw new Error(`HTTP ${response.status}`);
+                }
+                
+                const data = await response.json();
+                currentLesson = data;
+                
+                // Find index in lesson list
+                currentIndex = allLessons.findIndex(l => l.id === lessonId);
+                
+                // Update UI
+                renderLesson(data);
+                highlightCurrentLesson();
+                updateNavButtons();
+                
+                console.log('✅ Lesson loaded successfully');
+                
+            } catch (error) {
+                console.error('❌ Failed to load lesson:', error);
+                showToast('Failed to load lesson', 0, 'error');
+            }
+        }
+
+        // ========================================
+        // RENDER LESSON IN WORKSPACE
+        // ========================================
+        // WHY: Displays lesson content and sets up code editor
+        // WHEN: After a lesson is loaded
+        // HOW: Builds HTML and configures ACE editor
+        function renderLesson(data) {
+            const type = data.type || 'lesson';
+            
+            // Build instructions HTML
+            let html = `
+                <div class="task-title">${escapeHtml(data.title)}</div>
+                <div class="task-meta">
+                    <div class="task-badge ${type}">${type.toUpperCase()}</div>
+                    <div class="task-duration">
+                        <i class="fa-solid fa-clock"></i>
+                        ${data.duration || '10 min'}
+                    </div>
+                </div>
+            `;
+            
+            // Main content
+            if (data.description) {
+                html += `
+                    <div class="task-section">
+                        <div class="task-header">
+                            <i class="fa-solid fa-info-circle"></i> Overview
+                        </div>
+                        <div class="lesson-content">${marked.parse(data.description)}</div>
+                    </div>
+                `;
+            }
+            
+            // Objectives
+            if (data.objectives && data.objectives.length > 0) {
+                html += `
+                    <div class="task-section">
+                        <div class="task-header">
+                            <i class="fa-solid fa-bullseye"></i> Learning Objectives
+                        </div>
+                        <div class="lesson-content">
+                            <ul>
+                                ${data.objectives.map(obj => `<li>${escapeHtml(obj)}</li>`).join('')}
+                            </ul>
+                        </div>
+                    </div>
+                `;
+            }
+            
+            // Instructions
+            if (data.instructions) {
+                html += `
+                    <div class="task-section">
+                        <div class="task-header">
+                            <i class="fa-solid fa-list-check"></i> Instructions
+                        </div>
+                        <div class="lesson-content">${marked.parse(data.instructions)}</div>
+                    </div>
+                `;
+            }
+            
+            // Hints (collapsible)
+            if (data.hints && data.hints.length > 0) {
+                const hints = data.hints;
+                html += `
+                    <div class="task-section">
+                        <div class="hint-header" onclick="toggleHints()">
+                            <i class="fa-solid fa-lightbulb hint-icon"></i>
+                            <div class="hint-title">Need a hint? (${hints.length} available)</div>
+                            <i class="fa-solid fa-chevron-down hint-toggle"></i>
+                        </div>
+                        <div class="hint-content" id="hint-content">
                             ${hints.map((h, i) => `<p><strong>Hint ${i + 1}:</strong> ${escapeHtml(h)}</p>`).join('')}
                         </div>
                     </div>
                 `;
             }
-
-            // Reference/docs section
+            
+            // Reference/docs
             if (data.docs) {
                 html += `
                     <div class="task-section">
@@ -1485,51 +1539,281 @@ print("Hello, World!")
                     </div>
                 `;
             }
-
+            
             document.getElementById('instructions-content').innerHTML = html;
-
-            // Update code editor
+            
+            // ========================================
+            // CONFIGURE CODE EDITOR
+            // ========================================
+            // WHY: Sets language-specific highlighting and starter code
+            // WHEN: After lesson content is rendered
+            // HOW: Uses langConfig based on ide_mode
             const lang = data.ide_mode || 'python';
             const config = langConfig[lang] || langConfig.python;
-
+            
+            // Set editor mode and file name
             editor.session.setMode(config.mode);
             document.getElementById('file-name').textContent = config.file;
-
+            
+            // Update file tab styling
             const tab = document.getElementById('file-tab');
             tab.className = `file-tab ${lang}`;
             const iconClass = config.brand ? 'fa-brands' : 'fa-solid';
             tab.querySelector('i').className = `${iconClass} ${config.icon}`;
-
+            
             // Set starter code
             originalCode = data.starter_code || `# ${data.title}\n# Write your code here\n\n`;
             editor.setValue(originalCode, -1);
-
+            
             // Show/hide check button
-            document.getElementById('check-btn').style.display =
+            document.getElementById('check-btn').style.display = 
                 (type === 'challenge' || type === 'lab') ? 'flex' : 'none';
         }
 
+        // ========================================
+        // TOGGLE HINTS
+        // ========================================
+        function toggleHints() {
+            const content = document.getElementById('hint-content');
+            const header = content.previousElementSibling;
+            
+            content.classList.toggle('expanded');
+            header.classList.toggle('expanded');
+        }
+
+        // ========================================
+        // HIGHLIGHT CURRENT LESSON
+        // ========================================
+        // WHY: Shows which lesson is currently active
+        // WHEN: After loading a lesson
+        // HOW: Adds 'active' class and expands parent track
         function highlightCurrentLesson() {
             // Remove all active states
             document.querySelectorAll('.lesson-row').forEach(row => {
                 row.classList.remove('active');
             });
-
+            
             // Add active to current
             if (currentLesson) {
                 const activeRow = document.querySelector(`.lesson-row[data-id="${currentLesson.id}"]`);
                 if (activeRow) {
                     activeRow.classList.add('active');
-                    // Expand parent track if collapsed
+                    
+                    // Expand parent track
                     const trackLessons = activeRow.closest('.track-lessons');
                     if (trackLessons && !trackLessons.classList.contains('expanded')) {
                         trackLessons.classList.add('expanded');
                         trackLessons.previousElementSibling.classList.add('expanded');
                     }
+                    
+                    // Scroll into view
+                    activeRow.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
                 }
             }
         }
 
+        // ========================================
+        // NAVIGATION
+        // ========================================
+        function updateNavButtons() {
+            const prevBtn = document.getElementById('prev-btn');
+            const nextBtn = document.getElementById('next-btn');
+            
+            prevBtn.disabled = currentIndex <= 0;
+            nextBtn.disabled = currentIndex < 0 || currentIndex >= allLessons.length - 1;
+        }
+        
+        function prevLesson() {
+            if (currentIndex > 0) {
+                const prevId = allLessons[currentIndex - 1].id;
+                loadLesson(prevId);
+            }
+        }
+        
+        function nextLesson() {
+            if (currentIndex >= 0 && currentIndex < allLessons.length - 1) {
+                markComplete(); // Auto-complete current lesson
+                const nextId = allLessons[currentIndex + 1].id;
+                loadLesson(nextId);
+            }
+        }
+
+        // ========================================
+        // CODE EXECUTION
+        // ========================================
+        // WHY: Runs user code in browser (Python/JS)
+        // WHEN: User clicks "Run Code" button
+        // HOW: Uses Pyodide for Python, eval() for JavaScript
+        async function runCode() {
+            const code = editor.getValue();
+            const consoleEl = document.getElementById('console');
+            consoleEl.innerHTML = '<span style="color: var(--text-dim)">Running...</span>';
+            
+            const lang = currentLesson?.ide_mode || 'python';
+            
+            if (lang === 'python') {
+                // Python execution via Pyodide
+                if (!pyodide) {
+                    consoleEl.innerHTML = '<span style="color: var(--warning)">⏳ Python is still loading. Please wait...</span>';
+                    return;
+                }
+                
+                try {
+                    let output = [];
+                    pyodide.setStdout({ batched: (text) => output.push(text) });
+                    pyodide.setStderr({ batched: (text) => output.push(`<span style="color:var(--danger)">${text}</span>`) });
+                    
+                    await pyodide.runPythonAsync(code);
+                    
+                    consoleEl.innerHTML = output.join('\n') || '<span style="color: var(--text-dim)">No output</span>';
+                } catch (e) {
+                    consoleEl.innerHTML = `<span style="color: var(--danger)">${escapeHtml(e.toString())}</span>`;
+                }
+                
+            } else if (lang === 'javascript') {
+                // JavaScript execution
+                try {
+                    const logs = [];
+                    const originalLog = console.log;
+                    const originalError = console.error;
+                    
+                    console.log = (...args) => logs.push(args.map(String).join(' '));
+                    console.error = (...args) => logs.push(`<span style="color:var(--danger)">${args.map(String).join(' ')}</span>`);
+                    
+                    eval(code);
+                    
+                    console.log = originalLog;
+                    console.error = originalError;
+                    
+                    consoleEl.innerHTML = logs.join('\n') || '<span style="color: var(--text-dim)">No output</span>';
+                } catch (e) {
+                    consoleEl.innerHTML = `<span style="color: var(--danger)">${escapeHtml(e.toString())}</span>`;
+                }
+                
+            } else {
+                // Other languages - show instructions
+                consoleEl.innerHTML = `<span style="color: var(--warning)">💡 ${lang.toUpperCase()} - Copy this code and run it in your terminal or IDE</span>`;
+            }
+        }
+
+        // ========================================
+        // CHECK ANSWER (for challenges)
+        // ========================================
+        function checkAnswer() {
+            const consoleEl = document.getElementById('console');
+            consoleEl.innerHTML = '<span style="color: var(--warning)">⏳ Running tests...</span>';
+            
+            // TODO: Implement actual test validation
+            // For now, simulate test execution
+            setTimeout(() => {
+                const passed = true; // Placeholder
+                
+                if (passed) {
+                    consoleEl.innerHTML = '<span style="color: var(--success)">✅ All tests passed! Great work!</span>';
+                    markComplete();
+                    showToast('Challenge completed!', 25, 'success');
+                } else {
+                    consoleEl.innerHTML = '<span style="color: var(--danger)">❌ Some tests failed. Keep trying!</span>';
+                    showToast('Not quite right. Try again!', 0, 'error');
+                }
+            }, 800);
+        }
+
+        // ========================================
+        // RESET CODE
+        // ========================================
+        function resetCode() {
+            editor.setValue(originalCode, -1);
+            document.getElementById('console').innerHTML = '';
+        }
+
+        // ========================================
+        // CLEAR CONSOLE
+        // ========================================
+        function clearConsole() {
+            document.getElementById('console').innerHTML = '';
+        }
+
+        // ========================================
+        // PROGRESS & XP SYSTEM
+        // ========================================
+        // WHY: Tracks user progress and motivation
+        // WHEN: On lesson completion
+        // HOW: Stores in localStorage
+        function markComplete() {
+            if (currentLesson && !completedLessons.includes(currentLesson.id)) {
+                completedLessons.push(currentLesson.id);
+                localStorage.setItem('devquest_completed', JSON.stringify(completedLessons));
+                
+                addXP(10);
+                updateProgress();
+                renderSyllabus();
+                highlightCurrentLesson();
+                
+                showToast('Lesson completed!', 10, 'success');
+            }
+        }
+        
+        function addXP(amount) {
+            xp += amount;
+            localStorage.setItem('devquest_xp', xp.toString());
+            updateXPDisplay();
+        }
+        
+        function updateXPDisplay() {
+            document.getElementById('xp-count').textContent = xp;
+        }
+        
+        function updateProgress() {
+            const total = totalLessons || 0;
+            const completed = completedLessons.length;
+            const percent = total > 0 ? Math.round((completed / total) * 100) : 0;
+            
+            document.getElementById('progress-fill').style.width = `${percent}%`;
+            document.getElementById('progress-text').textContent = `${completed} / ${total}`;
+        }
+
+        // ========================================
+        // LOAD PROGRESS FROM LOCALSTORAGE
+        // ========================================
+        function loadProgress() {
+            const savedCompleted = localStorage.getItem('devquest_completed');
+            const savedXP = localStorage.getItem('devquest_xp');
+            
+            if (savedCompleted) {
+                completedLessons = JSON.parse(savedCompleted);
+            }
+            
+            if (savedXP) {
+                xp = parseInt(savedXP, 10);
+                updateXPDisplay();
+            }
+        }
+
+        // ========================================
+        // TOAST NOTIFICATION
+        // ========================================
+        function showToast(message, xpGain, type = 'success') {
+            const toast = document.getElementById('toast');
+            const toastMsg = document.getElementById('toast-message');
+            const toastXP = document.getElementById('toast-xp');
+            
+            toast.className = `toast ${type}`;
+            toast.querySelector('i').className = type === 'success' 
+                ? 'fa-solid fa-check-circle' 
+                : 'fa-solid fa-times-circle';
+            
+            toastMsg.textContent = message;
+            toastXP.textContent = xpGain > 0 ? `+${xpGain} XP` : '';
+            toastXP.style.display = xpGain > 0 ? 'inline' : 'none';
+            
+            toast.classList.add('visible');
+            setTimeout(() => toast.classList.remove('visible'), 3000);
+        }
+
+        // ========================================
+        // UTILITY FUNCTIONS
+        // ========================================
         function escapeHtml(text) {
             if (!text) return '';
             const div = document.createElement('div');
@@ -1537,158 +1821,9 @@ print("Hello, World!")
             return div.innerHTML;
         }
 
-        // ========== NAVIGATION ==========
-        function updateNavButtons() {
-            const prevBtn = document.getElementById('prev-btn');
-            const nextBtn = document.getElementById('next-btn');
-
-            prevBtn.disabled = currentIndex <= 0;
-            nextBtn.disabled = currentIndex < 0 || currentIndex >= allLessons.length - 1;
-        }
-
-        function prevLesson() {
-            if (currentIndex > 0) {
-                const prevId = allLessons[currentIndex - 1].id;
-                loadLesson(prevId);
-            }
-        }
-
-        function nextLesson() {
-            if (currentIndex >= 0 && currentIndex < allLessons.length - 1) {
-                // Mark current as complete before moving
-                markComplete();
-                const nextId = allLessons[currentIndex + 1].id;
-                loadLesson(nextId);
-            }
-        }
-
-        // ========== CODE EXECUTION ==========
-        async function runCode() {
-            const code = editor.getValue();
-            const consoleEl = document.getElementById('console');
-            consoleEl.innerHTML = '<span style="color: var(--text-dim)">Running...</span>';
-
-            const lang = currentLesson?.ide_mode || 'python';
-
-            if (lang === 'python') {
-                if (!pyodide) {
-                    consoleEl.innerHTML = '<span style="color: var(--warning)">Python is still loading. Please wait...</span>';
-                    return;
-                }
-
-                try {
-                    let output = [];
-                    pyodide.setStdout({ batched: (text) => output.push(text) });
-                    pyodide.setStderr({ batched: (text) => output.push(`<span style="color:var(--danger)">${text}</span>`) });
-
-                    await pyodide.runPythonAsync(code);
-
-                    consoleEl.innerHTML = output.join('\n') || '<span style="color: var(--text-dim)">No output</span>';
-                } catch (e) {
-                    consoleEl.innerHTML = `<span style="color: var(--danger)">${escapeHtml(e.toString())}</span>`;
-                }
-            } else if (lang === 'javascript') {
-                try {
-                    const logs = [];
-                    const originalLog = console.log;
-                    const originalError = console.error;
-
-                    console.log = (...args) => logs.push(args.map(String).join(' '));
-                    console.error = (...args) => logs.push(`<span style="color:var(--danger)">${args.map(String).join(' ')}</span>`);
-
-                    eval(code);
-
-                    console.log = originalLog;
-                    console.error = originalError;
-
-                    consoleEl.innerHTML = logs.join('\n') || '<span style="color: var(--text-dim)">No output</span>';
-                } catch (e) {
-                    consoleEl.innerHTML = `<span style="color: var(--danger)">${escapeHtml(e.toString())}</span>`;
-                }
-            } else {
-                consoleEl.innerHTML = `<span style="color: var(--warning)">// ${lang.toUpperCase()} - Copy this code and run it in your terminal or IDE</span>`;
-            }
-        }
-
-        function checkAnswer() {
-            const consoleEl = document.getElementById('console');
-            consoleEl.innerHTML = '<span style="color: var(--warning)">Running tests...</span>';
-
-            // Simulate test execution
-            setTimeout(() => {
-                // For now, just mark as complete - in a real app you'd run actual tests
-                const passed = true;
-
-                if (passed) {
-                    consoleEl.innerHTML = '<span style="color: var(--success)">✓ All tests passed! Great work!</span>';
-                    markComplete();
-                    showToast('Challenge completed!', 25, 'success');
-                } else {
-                    consoleEl.innerHTML = '<span style="color: var(--danger)">✗ Some tests failed. Keep trying!</span>';
-                    showToast('Not quite right. Try again!', 0, 'error');
-                }
-            }, 800);
-        }
-
-        function resetCode() {
-            editor.setValue(originalCode, -1);
-            document.getElementById('console').innerHTML = '';
-        }
-
-        function clearConsole() {
-            document.getElementById('console').innerHTML = '';
-        }
-
-        // ========== PROGRESS & XP ==========
-        function markComplete() {
-            if (currentLesson && !completedLessons.includes(currentLesson.id)) {
-                completedLessons.push(currentLesson.id);
-                localStorage.setItem('devquest_completed', JSON.stringify(completedLessons));
-                addXP(10);
-                updateProgress();
-                renderSyllabus(); // Re-render to show checkmark
-                highlightCurrentLesson();
-            }
-        }
-
-        function addXP(amount) {
-            xp += amount;
-            localStorage.setItem('devquest_xp', xp.toString());
-            updateXPDisplay();
-        }
-
-        function updateXPDisplay() {
-            document.getElementById('xp-count').textContent = xp;
-        }
-
-        function updateProgress() {
-            const total = totalLessons || 574;
-            const completed = completedLessons.length;
-            const percent = total > 0 ? Math.round((completed / total) * 100) : 0;
-
-            document.getElementById('progress-fill').style.width = `${percent}%`;
-            document.getElementById('progress-text').textContent = `${completed} / ${total}`;
-        }
-
-        function showToast(message, xpGain, type = 'success') {
-            const toast = document.getElementById('toast');
-            const toastMsg = document.getElementById('toast-message');
-            const toastXP = document.getElementById('toast-xp');
-
-            toast.className = `toast ${type}`;
-            toast.querySelector('i').className = type === 'success'
-                ? 'fa-solid fa-check-circle'
-                : 'fa-solid fa-times-circle';
-
-            toastMsg.textContent = message;
-            toastXP.textContent = xpGain > 0 ? `+${xpGain} XP` : '';
-            toastXP.style.display = xpGain > 0 ? 'inline' : 'none';
-
-            toast.classList.add('visible');
-            setTimeout(() => toast.classList.remove('visible'), 3000);
-        }
-
-        // ========== START APPLICATION ==========
+        // ========================================
+        // START APPLICATION
+        // ========================================
         document.addEventListener('DOMContentLoaded', init);
     </script>
 </body>
