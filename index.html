@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <title>DEV//QUEST Academy</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Literata:ital,wght@0,400;0,600;0,700;1,400&family=JetBrains+Mono:wght@400;500;600&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/marked/9.1.2/marked.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.32.7/ace.js"></script>
@@ -12,1603 +12,920 @@
 
     <style>
         :root {
-            --bg-dark: #0a0a0b;
-            --bg-main: #10111a;
-            --bg-card: #1a1b26;
-            --bg-elevated: #1f2133;
-            --bg-input: #252736;
-            --accent: #7c3aed;
-            --accent-light: #a78bfa;
-            --accent-glow: rgba(124, 58, 237, 0.3);
-            --success: #10b981;
-            --success-light: #34d399;
-            --warning: #f59e0b;
-            --danger: #ef4444;
-            --cyan: #06b6d4;
-            --pink: #ec4899;
-            --text: #e4e4e7;
-            --text-secondary: #a1a1aa;
-            --text-dim: #71717a;
-            --border: #27272a;
-            --border-light: #3f3f46;
+            /* Sophisticated dark theme optimized for learning */
+            --bg-deep: #0d0d0f;
+            --bg-primary: #16161a;
+            --bg-secondary: #1e1e24;
+            --bg-elevated: #26262e;
+            --bg-code: #1a1a20;
+            
+            --text-primary: #e8e8ec;
+            --text-secondary: #b8b8c0;
+            --text-tertiary: #7d7d88;
+            
+            --accent: #ff6b35;
+            --accent-soft: #ff8c5f;
+            --accent-dim: #4a2618;
+            --accent-glow: rgba(255, 107, 53, 0.2);
+            
+            --success: #00d9a3;
+            --success-dim: #00473a;
+            --warning: #ffa726;
+            --danger: #ff5252;
+            
+            --border: #2a2a32;
+            --border-light: #38383f;
+            
+            --shadow: rgba(0, 0, 0, 0.3);
+            --shadow-strong: rgba(0, 0, 0, 0.6);
+            
+            --highlight: rgba(255, 107, 53, 0.1);
         }
 
         * { box-sizing: border-box; margin: 0; padding: 0; }
 
         body {
-            font-family: 'Inter', -apple-system, sans-serif;
-            background: var(--bg-dark);
-            color: var(--text);
-            height: 100vh;
+            font-family: 'Literata', Georgia, serif;
+            background: var(--bg-deep);
+            color: var(--text-primary);
+            line-height: 1.7;
             overflow: hidden;
         }
 
         /* ========== LOADING SCREEN ========== */
         .loading-screen {
             position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: var(--bg-dark);
+            inset: 0;
+            background: var(--bg-deep);
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
             z-index: 9999;
-            transition: opacity 0.5s ease;
+            transition: opacity 0.6s ease, visibility 0.6s;
         }
         .loading-screen.hidden {
             opacity: 0;
-            pointer-events: none;
+            visibility: hidden;
         }
         .loading-logo {
-            width: 80px;
-            height: 80px;
-            background: linear-gradient(135deg, var(--accent), var(--pink));
-            border-radius: 20px;
+            width: 72px;
+            height: 72px;
+            background: linear-gradient(135deg, var(--accent), var(--accent-soft));
+            border-radius: 12px;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-weight: 800;
-            font-size: 32px;
-            margin-bottom: 24px;
-            animation: pulse-logo 2s ease-in-out infinite;
+            font-family: 'Space Mono', monospace;
+            font-weight: 700;
+            font-size: 24px;
+            color: var(--bg-deep);
+            margin-bottom: 20px;
+            animation: float 3s ease-in-out infinite;
+            box-shadow: 0 8px 24px var(--accent-glow);
         }
-        @keyframes pulse-logo {
-            0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.05); }
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-8px); }
         }
         .loading-text {
-            font-size: 18px;
+            font-size: 16px;
             font-weight: 600;
-            color: var(--text);
-            margin-bottom: 12px;
+            color: var(--text-primary);
+            letter-spacing: 0.5px;
         }
-        .loading-subtext {
-            font-size: 14px;
-            color: var(--text-dim);
-            margin-bottom: 24px;
+
+        /* ========== LAYOUT ========== */
+        .app-container {
+            display: flex;
+            height: 100vh;
         }
-        .loading-bar {
-            width: 300px;
-            height: 4px;
-            background: var(--bg-card);
-            border-radius: 2px;
+
+        /* ========== SIDEBAR ========== */
+        .sidebar {
+            width: 320px;
+            background: var(--bg-primary);
+            border-right: 1px solid var(--border);
+            display: flex;
+            flex-direction: column;
             overflow: hidden;
         }
-        .loading-bar-fill {
-            height: 100%;
-            background: linear-gradient(90deg, var(--accent), var(--pink));
-            border-radius: 2px;
-            animation: loading-fill 2s ease-in-out infinite;
-        }
-        @keyframes loading-fill {
-            0% { width: 0%; }
-            50% { width: 100%; }
-            100% { width: 0%; }
-        }
 
-        /* ========== TOP NAV ========== */
-        .top-nav {
-            height: 56px;
-            background: var(--bg-main);
+        .sidebar-header {
+            padding: 24px 20px;
             border-bottom: 1px solid var(--border);
-            display: flex;
-            align-items: center;
-            padding: 0 20px;
-            gap: 20px;
-            position: relative;
-            z-index: 100;
+            background: var(--bg-secondary);
         }
 
-        .nav-brand {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            cursor: pointer;
-            transition: transform 0.2s;
-        }
-        .nav-brand:hover {
-            transform: translateY(-2px);
-        }
-        .nav-logo {
-            width: 32px;
-            height: 32px;
-            background: linear-gradient(135deg, var(--accent), var(--pink));
-            border-radius: 8px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: 800;
-            font-size: 14px;
-            box-shadow: 0 4px 12px var(--accent-glow);
-        }
-        .nav-title {
-            font-weight: 700;
-            font-size: 16px;
-            color: var(--text);
-        }
-
-        .nav-divider {
-            width: 1px;
-            height: 24px;
-            background: var(--border);
-        }
-
-        .syllabus-btn {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            padding: 8px 14px;
-            background: var(--bg-card);
-            border: 1px solid var(--border);
-            border-radius: 8px;
-            color: var(--text-secondary);
-            font-size: 13px;
-            cursor: pointer;
-            transition: all 0.2s;
-        }
-        .syllabus-btn:hover {
-            background: var(--bg-elevated);
-            border-color: var(--accent);
-            color: var(--text);
-            transform: translateY(-1px);
-            box-shadow: 0 2px 8px rgba(0,0,0,0.2);
-        }
-        .syllabus-btn:active {
-            transform: translateY(0);
-        }
-
-        .nav-progress {
-            flex: 1;
+        .brand {
             display: flex;
             align-items: center;
             gap: 12px;
-            max-width: 400px;
-        }
-        .progress-bar {
-            flex: 1;
-            height: 6px;
-            background: var(--bg-card);
-            border-radius: 3px;
-            overflow: hidden;
-        }
-        .progress-fill {
-            height: 100%;
-            background: linear-gradient(90deg, var(--accent), var(--pink));
-            border-radius: 3px;
-            transition: width 0.5s ease;
-            box-shadow: 0 0 10px var(--accent-glow);
-        }
-        .progress-text {
-            font-size: 12px;
-            color: var(--text-dim);
-            white-space: nowrap;
+            margin-bottom: 16px;
         }
 
-        .nav-stats {
+        .brand-icon {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, var(--accent), var(--accent-soft));
+            border-radius: 8px;
             display: flex;
             align-items: center;
-            gap: 16px;
+            justify-content: center;
+            font-family: 'Space Mono', monospace;
+            font-weight: 700;
+            font-size: 16px;
+            color: var(--bg-deep);
+            box-shadow: 0 4px 12px var(--accent-glow);
         }
-        .stat-item {
+
+        .brand-text h1 {
+            font-size: 18px;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+            margin-bottom: 2px;
+            color: var(--text-primary);
+        }
+
+        .brand-text p {
+            font-size: 12px;
+            color: var(--text-tertiary);
+            font-style: italic;
+        }
+
+        .progress-widget {
+            background: var(--accent-dim);
+            border: 1px solid var(--border-light);
+            border-radius: 6px;
+            padding: 12px;
+        }
+
+        .progress-stats {
             display: flex;
-            align-items: center;
-            gap: 6px;
+            justify-content: space-between;
+            margin-bottom: 8px;
             font-size: 13px;
             color: var(--text-secondary);
-            transition: transform 0.2s;
-        }
-        .stat-item:hover {
-            transform: scale(1.05);
-        }
-        .stat-item i {
-            font-size: 14px;
-        }
-        .stat-item.xp i { color: var(--warning); }
-        .stat-item.streak i { color: var(--danger); }
-        .stat-value {
-            font-weight: 700;
-            color: var(--text);
         }
 
-        .nav-status {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            font-size: 12px;
-            color: var(--text-dim);
-        }
-        .status-dot {
-            width: 8px;
-            height: 8px;
-            border-radius: 50%;
-            background: var(--danger);
-            transition: background 0.3s;
-        }
-        .status-dot.connected {
-            background: var(--success);
-            animation: pulse 2s infinite;
-            box-shadow: 0 0 8px var(--success);
-        }
-        @keyframes pulse {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.5; }
-        }
-
-        .nav-profile {
-            width: 36px;
-            height: 36px;
-            background: linear-gradient(135deg, var(--cyan), var(--accent));
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: 700;
-            font-size: 14px;
-            cursor: pointer;
-            transition: transform 0.2s;
-        }
-        .nav-profile:hover {
-            transform: scale(1.1);
-        }
-
-        /* ========== MAIN LAYOUT ========== */
-        .main-container {
-            display: flex;
-            height: calc(100vh - 56px);
-        }
-
-        /* ========== SYLLABUS PANEL ========== */
-        .syllabus-panel {
-            width: 320px;
-            background: var(--bg-main);
-            border-right: 1px solid var(--border);
-            display: flex;
-            flex-direction: column;
-            transition: width 0.3s ease, margin-left 0.3s ease;
-            position: relative;
-            z-index: 50;
+        .progress-bar {
+            height: 6px;
+            background: var(--bg-deep);
+            border-radius: 3px;
             overflow: hidden;
         }
-        .syllabus-panel.collapsed {
-            width: 0;
-            min-width: 0;
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--accent), var(--accent-soft));
+            transition: width 0.5s ease;
+            box-shadow: 0 0 8px var(--accent-glow);
         }
 
-        .syllabus-header {
-            padding: 16px 20px;
-            border-bottom: 1px solid var(--border);
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            min-width: 320px;
-        }
-        .syllabus-title {
-            font-size: 14px;
-            font-weight: 600;
-            color: var(--text);
-        }
-        .syllabus-close {
-            width: 28px;
-            height: 28px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border-radius: 6px;
-            cursor: pointer;
-            color: var(--text-dim);
-            transition: all 0.2s;
-        }
-        .syllabus-close:hover {
-            background: var(--bg-card);
-            color: var(--text);
-        }
-
-        .syllabus-content {
+        .sidebar-content {
             flex: 1;
             overflow-y: auto;
             padding: 16px;
-            min-width: 320px;
-        }
-        .syllabus-content::-webkit-scrollbar { width: 8px; }
-        .syllabus-content::-webkit-scrollbar-track { background: transparent; }
-        .syllabus-content::-webkit-scrollbar-thumb {
-            background: var(--bg-card);
-            border-radius: 4px;
-        }
-        .syllabus-content::-webkit-scrollbar-thumb:hover {
-            background: var(--bg-elevated);
         }
 
-        .track {
-            margin-bottom: 16px;
+        .track-group {
+            margin-bottom: 24px;
         }
+
         .track-header {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            padding: 10px 12px;
-            background: var(--bg-card);
-            border: 1px solid var(--border);
-            border-radius: 8px;
-            cursor: pointer;
-            transition: all 0.2s;
-        }
-        .track-header:hover {
-            background: var(--bg-elevated);
-            border-color: var(--accent);
-            transform: translateX(2px);
-        }
-        .track-header.expanded {
-            background: var(--bg-elevated);
-            border-bottom-left-radius: 0;
-            border-bottom-right-radius: 0;
-        }
-        .track-icon {
-            font-size: 16px;
-            transition: transform 0.2s;
-        }
-        .track-header.expanded .track-icon {
-            transform: rotate(90deg);
-        }
-        .track-title {
-            flex: 1;
-            font-size: 13px;
-            font-weight: 600;
-            color: var(--text);
-        }
-        .track-count {
             font-size: 11px;
-            color: var(--text-dim);
-            background: var(--bg-main);
-            padding: 2px 8px;
-            border-radius: 10px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            color: var(--text-tertiary);
+            margin-bottom: 12px;
+            padding: 0 4px;
         }
 
-        .track-lessons {
-            max-height: 0;
-            overflow: hidden;
-            transition: max-height 0.3s ease;
-            background: var(--bg-card);
-            border: 1px solid var(--border);
-            border-top: none;
-            border-bottom-left-radius: 8px;
-            border-bottom-right-radius: 8px;
-        }
-        .track-lessons.expanded {
-            max-height: 2000px;
-        }
-
-        .lesson-row {
+        .lesson-item {
+            padding: 10px 12px;
+            margin-bottom: 4px;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.2s;
             display: flex;
             align-items: center;
             gap: 10px;
-            padding: 10px 12px;
-            border-bottom: 1px solid var(--border);
-            cursor: pointer;
-            transition: all 0.2s;
+            border-left: 3px solid transparent;
         }
-        .lesson-row:last-child {
-            border-bottom: none;
-        }
-        .lesson-row:hover {
+
+        .lesson-item:hover {
             background: var(--bg-elevated);
-            padding-left: 16px;
+            border-left-color: var(--accent-soft);
         }
-        .lesson-row.active {
-            background: var(--bg-elevated);
-            border-left: 3px solid var(--accent);
-            padding-left: 13px;
+
+        .lesson-item.active {
+            background: var(--highlight);
+            border-left-color: var(--accent);
         }
-        .lesson-row.completed {
-            opacity: 0.7;
+
+        .lesson-item.completed .lesson-icon {
+            background: var(--success);
+            color: var(--bg-deep);
         }
+
         .lesson-icon {
             width: 24px;
             height: 24px;
+            background: var(--bg-elevated);
+            border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            border-radius: 6px;
             font-size: 11px;
+            color: var(--text-tertiary);
             flex-shrink: 0;
         }
-        .lesson-icon.lesson { background: linear-gradient(135deg, #3b82f6, #2563eb); }
-        .lesson-icon.challenge { background: linear-gradient(135deg, var(--warning), #d97706); }
-        .lesson-icon.project { background: linear-gradient(135deg, var(--success), #059669); }
-        .lesson-icon.quiz { background: linear-gradient(135deg, var(--pink), #db2777); }
-        .lesson-icon.lab { background: linear-gradient(135deg, var(--cyan), #0891b2); }
 
-        .lesson-info {
-            flex: 1;
-            min-width: 0;
-        }
         .lesson-title {
-            font-size: 13px;
-            font-weight: 500;
-            color: var(--text);
-            overflow: hidden;
-            text-overflow: ellipsis;
-            white-space: nowrap;
-        }
-        .lesson-duration {
-            font-size: 11px;
-            color: var(--text-dim);
-            margin-top: 2px;
-        }
-        .lesson-check {
+            flex: 1;
             font-size: 14px;
-            color: var(--success);
+            line-height: 1.4;
+            color: var(--text-secondary);
         }
 
-        /* ========== WORKSPACE ========== */
-        .workspace {
+        .lesson-item.active .lesson-title {
+            color: var(--text-primary);
+        }
+
+        /* ========== MAIN CONTENT ========== */
+        .main-content {
             flex: 1;
             display: flex;
             flex-direction: column;
-            background: var(--bg-dark);
-        }
-
-        .workspace-tabs {
-            height: 40px;
-            background: var(--bg-main);
-            border-bottom: 1px solid var(--border);
-            display: flex;
-            align-items: center;
-            padding: 0 12px;
-            gap: 8px;
-        }
-        .workspace-tab {
-            padding: 6px 12px;
-            font-size: 13px;
-            color: var(--text-dim);
-            cursor: pointer;
-            border-radius: 6px;
-            transition: all 0.2s;
-            display: flex;
-            align-items: center;
-            gap: 6px;
-        }
-        .workspace-tab:hover {
-            background: var(--bg-card);
-            color: var(--text);
-        }
-        .workspace-tab.active {
-            background: var(--bg-card);
-            color: var(--text);
-            font-weight: 500;
-        }
-
-        .workspace-content {
-            flex: 1;
-            display: flex;
             overflow: hidden;
         }
 
-        /* Instructions Panel */
-        .instructions-panel {
-            width: 50%;
-            background: var(--bg-main);
-            border-right: 1px solid var(--border);
-            display: flex;
-            flex-direction: column;
-        }
-        .instructions-content {
-            flex: 1;
-            overflow-y: auto;
-            padding: 24px;
-        }
-        .instructions-content::-webkit-scrollbar { width: 8px; }
-        .instructions-content::-webkit-scrollbar-track { background: transparent; }
-        .instructions-content::-webkit-scrollbar-thumb {
-            background: var(--bg-card);
-            border-radius: 4px;
+        .content-header {
+            padding: 20px 32px;
+            border-bottom: 1px solid var(--border);
+            background: var(--bg-secondary);
         }
 
-        .task-title {
-            font-size: 28px;
+        .lesson-badge {
+            display: inline-block;
+            padding: 4px 10px;
+            background: var(--accent);
+            color: var(--bg-deep);
+            font-size: 11px;
             font-weight: 700;
-            color: var(--text);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            border-radius: 4px;
             margin-bottom: 8px;
-        }
-        .task-meta {
-            display: flex;
-            align-items: center;
-            gap: 16px;
-            margin-bottom: 24px;
-        }
-        .task-badge {
-            padding: 4px 12px;
-            border-radius: 12px;
-            font-size: 12px;
-            font-weight: 600;
-        }
-        .task-badge.lesson { background: rgba(59, 130, 246, 0.2); color: #60a5fa; }
-        .task-badge.challenge { background: rgba(245, 158, 11, 0.2); color: var(--warning); }
-        .task-badge.project { background: rgba(16, 185, 129, 0.2); color: var(--success); }
-        .task-badge.quiz { background: rgba(236, 72, 153, 0.2); color: var(--pink); }
-        .task-badge.lab { background: rgba(6, 182, 212, 0.2); color: var(--cyan); }
-
-        .task-duration {
-            font-size: 13px;
-            color: var(--text-dim);
-            display: flex;
-            align-items: center;
-            gap: 6px;
+            font-family: 'Space Mono', monospace;
         }
 
-        .task-section {
-            margin-bottom: 24px;
-            animation: fadeIn 0.4s ease;
-        }
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        .task-header {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            font-size: 16px;
-            font-weight: 600;
-            color: var(--text);
+        .lesson-header h2 {
+            font-size: 32px;
+            font-weight: 700;
+            line-height: 1.2;
             margin-bottom: 12px;
+            letter-spacing: -0.5px;
+            color: var(--text-primary);
         }
-        .task-header i {
+
+        .lesson-meta {
+            display: flex;
+            gap: 20px;
+            font-size: 14px;
+            color: var(--text-tertiary);
+        }
+
+        .lesson-meta i {
+            margin-right: 6px;
             color: var(--accent);
         }
 
+        .content-body {
+            flex: 1;
+            display: flex;
+            overflow: hidden;
+        }
+
+        /* ========== LESSON CONTENT (Left Panel) ========== */
+        .lesson-panel {
+            flex: 1;
+            overflow-y: auto;
+            padding: 32px 40px 80px;
+            background: var(--bg-primary);
+        }
+
         .lesson-content {
-            font-size: 14px;
+            max-width: 720px;
+            margin: 0 auto;
+        }
+
+        /* Typography */
+        .lesson-content h1 {
+            font-size: 36px;
+            font-weight: 700;
+            line-height: 1.2;
+            margin: 40px 0 20px;
+            letter-spacing: -0.5px;
+            color: var(--text-primary);
+        }
+
+        .lesson-content h2 {
+            font-size: 28px;
+            font-weight: 700;
+            line-height: 1.3;
+            margin: 32px 0 16px;
+            letter-spacing: -0.3px;
+            color: var(--text-primary);
+        }
+
+        .lesson-content h3 {
+            font-size: 22px;
+            font-weight: 600;
+            line-height: 1.4;
+            margin: 24px 0 12px;
+            color: var(--text-primary);
+        }
+
+        .lesson-content p {
+            margin-bottom: 20px;
+            font-size: 17px;
             line-height: 1.7;
             color: var(--text-secondary);
         }
-        .lesson-content h1, .lesson-content h2, .lesson-content h3 {
-            color: var(--text);
-            margin-top: 20px;
-            margin-bottom: 12px;
+
+        .lesson-content strong {
+            font-weight: 600;
+            color: var(--text-primary);
         }
+
+        .lesson-content em {
+            font-style: italic;
+        }
+
+        .lesson-content ul, .lesson-content ol {
+            margin: 16px 0;
+            padding-left: 28px;
+        }
+
+        .lesson-content li {
+            margin-bottom: 8px;
+            font-size: 17px;
+            line-height: 1.7;
+            color: var(--text-secondary);
+        }
+
         .lesson-content code {
-            background: var(--bg-card);
-            padding: 2px 6px;
-            border-radius: 4px;
             font-family: 'JetBrains Mono', monospace;
-            font-size: 13px;
-            color: var(--accent-light);
+            font-size: 15px;
+            background: var(--bg-code);
+            padding: 3px 8px;
+            border-radius: 4px;
+            color: var(--accent-soft);
+            border: 1px solid var(--border);
         }
+
         .lesson-content pre {
-            background: var(--bg-card);
+            background: var(--bg-code);
             padding: 16px;
             border-radius: 8px;
             overflow-x: auto;
-            margin: 12px 0;
+            margin: 20px 0;
+            border-left: 3px solid var(--accent);
+            border: 1px solid var(--border);
         }
+
         .lesson-content pre code {
             background: none;
             padding: 0;
-        }
-        .lesson-content ul, .lesson-content ol {
-            margin-left: 20px;
-            margin: 12px 0;
-        }
-        .lesson-content li {
-            margin: 8px 0;
-        }
-
-        .hint-header {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            padding: 12px;
-            background: var(--bg-card);
-            border-radius: 8px;
-            cursor: pointer;
-            transition: all 0.2s;
-            margin-bottom: 8px;
-        }
-        .hint-header:hover {
-            background: var(--bg-elevated);
-        }
-        .hint-icon {
-            color: var(--warning);
-        }
-        .hint-title {
-            flex: 1;
-            font-weight: 500;
-            color: var(--text);
-        }
-        .hint-toggle {
-            color: var(--text-dim);
-            transition: transform 0.2s;
-        }
-        .hint-header.expanded .hint-toggle {
-            transform: rotate(180deg);
-        }
-        .hint-content {
-            max-height: 0;
-            overflow: hidden;
-            transition: max-height 0.3s ease;
-            padding: 0 12px;
-        }
-        .hint-content.expanded {
-            max-height: 500px;
-            padding: 12px;
-        }
-        .hint-content p {
-            margin: 8px 0;
             color: var(--text-secondary);
-            font-size: 14px;
+            border: none;
         }
 
-        /* IDE Panel */
-        .ide-panel {
+        .lesson-content blockquote {
+            border-left: 4px solid var(--accent);
+            padding-left: 20px;
+            margin: 20px 0;
+            font-style: italic;
+            color: var(--text-tertiary);
+        }
+
+        .lesson-content a {
+            color: var(--accent-soft);
+            text-decoration: underline;
+            text-decoration-thickness: 1px;
+            text-underline-offset: 2px;
+            transition: color 0.2s;
+        }
+
+        .lesson-content a:hover {
+            color: var(--accent);
+        }
+
+        .lesson-content img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+            margin: 24px 0;
+            border: 1px solid var(--border);
+        }
+
+        .lesson-content hr {
+            border: none;
+            border-top: 1px solid var(--border);
+            margin: 32px 0;
+        }
+
+        /* ========== CODE EDITOR (Right Panel) ========== */
+        .code-panel {
             width: 50%;
             display: flex;
             flex-direction: column;
-            background: var(--bg-dark);
+            border-left: 2px solid var(--border);
+            background: #1e1e1e;
         }
 
-        .ide-header {
-            height: 40px;
-            background: var(--bg-main);
-            border-bottom: 1px solid var(--border);
+        .code-header {
             display: flex;
             align-items: center;
-            padding: 0 12px;
-            gap: 8px;
+            justify-content: space-between;
+            padding: 12px 16px;
+            background: #2d2d2d;
+            border-bottom: 1px solid #3d3d3d;
         }
 
         .file-tab {
             display: flex;
             align-items: center;
             gap: 8px;
-            padding: 6px 12px;
-            background: var(--bg-card);
-            border-radius: 6px;
-            cursor: pointer;
-            transition: all 0.2s;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 13px;
+            color: #d4d4d4;
         }
-        .file-tab:hover {
-            background: var(--bg-elevated);
-        }
+
         .file-tab i {
             font-size: 14px;
         }
-        .file-tab.python i { color: #3776ab; }
-        .file-tab.javascript i { color: #f7df1e; }
-        .file-tab.html i { color: #e34c26; }
-        .file-tab.css i { color: #264de4; }
-        .file-tab.java i { color: #007396; }
-        .file-tab.cpp i { color: #00599c; }
-        .file-tab.go i { color: #00add8; }
-        .file-tab.rust i { color: #ce422b; }
 
-        .file-name {
-            font-size: 13px;
-            font-family: 'JetBrains Mono', monospace;
-            color: var(--text);
-        }
-
-        .ide-actions {
-            margin-left: auto;
+        .code-actions {
             display: flex;
-            align-items: center;
             gap: 8px;
         }
-        .ide-btn {
-            display: flex;
-            align-items: center;
-            gap: 6px;
-            padding: 6px 10px;
-            background: var(--bg-card);
-            border: 1px solid var(--border);
-            border-radius: 6px;
-            color: var(--text-secondary);
+
+        .code-btn {
+            padding: 6px 12px;
+            background: #3c3c3c;
+            border: none;
+            border-radius: 4px;
+            color: #d4d4d4;
             font-size: 12px;
             cursor: pointer;
-            transition: all 0.2s;
+            transition: background 0.2s;
+            font-family: 'JetBrains Mono', monospace;
         }
-        .ide-btn:hover {
-            background: var(--bg-elevated);
-            border-color: var(--accent);
-            color: var(--text);
-            transform: translateY(-1px);
+
+        .code-btn:hover {
+            background: #4c4c4c;
         }
-        .ide-btn:active {
-            transform: translateY(0);
-        }
-        .ide-btn.run {
+
+        .code-btn.primary {
             background: var(--accent);
-            border-color: var(--accent);
-            color: white;
-        }
-        .ide-btn.run:hover {
-            background: var(--accent-light);
-            border-color: var(--accent-light);
-        }
-        .ide-btn.check {
-            background: var(--success);
-            border-color: var(--success);
-            color: white;
-        }
-        .ide-btn.check:hover {
-            background: var(--success-light);
-            border-color: var(--success-light);
+            color: #fff;
         }
 
-        .editor-container {
-            flex: 1;
-            position: relative;
+        .code-btn.primary:hover {
+            background: var(--accent-soft);
         }
+
         #code-editor {
-            width: 100%;
-            height: 100%;
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 14px;
+            flex: 1;
         }
 
-        .console-container {
-            height: 200px;
-            background: var(--bg-main);
-            border-top: 1px solid var(--border);
-            display: flex;
-            flex-direction: column;
-        }
-        .console-header {
-            height: 36px;
-            display: flex;
-            align-items: center;
-            padding: 0 12px;
-            border-bottom: 1px solid var(--border);
-            gap: 12px;
-        }
-        .console-title {
-            font-size: 12px;
-            font-weight: 600;
-            color: var(--text);
-        }
-        .console-clear {
-            margin-left: auto;
-            padding: 4px 8px;
-            font-size: 11px;
-            color: var(--text-dim);
-            cursor: pointer;
-            border-radius: 4px;
-            transition: all 0.2s;
-        }
-        .console-clear:hover {
-            background: var(--bg-card);
-            color: var(--text);
-        }
         #console {
-            flex: 1;
+            height: 150px;
+            background: #1e1e1e;
+            border-top: 1px solid #3d3d3d;
             padding: 12px;
+            overflow-y: auto;
             font-family: 'JetBrains Mono', monospace;
             font-size: 13px;
-            overflow-y: auto;
-            white-space: pre-wrap;
-            color: var(--text-secondary);
-        }
-        #console::-webkit-scrollbar { width: 8px; }
-        #console::-webkit-scrollbar-track { background: transparent; }
-        #console::-webkit-scrollbar-thumb {
-            background: var(--bg-card);
-            border-radius: 4px;
+            color: #d4d4d4;
+            line-height: 1.6;
         }
 
-        /* ========== FOOTER ========== */
-        .workspace-footer {
-            height: 48px;
-            background: var(--bg-main);
+        /* ========== NAVIGATION FOOTER ========== */
+        .nav-footer {
+            padding: 16px 32px;
             border-top: 1px solid var(--border);
+            background: var(--bg-secondary);
             display: flex;
+            justify-content: space-between;
             align-items: center;
-            padding: 0 20px;
-            gap: 12px;
         }
-        .footer-btn {
+
+        .nav-btn {
+            padding: 10px 20px;
+            background: var(--bg-elevated);
+            color: var(--text-primary);
+            border: 1px solid var(--border-light);
+            border-radius: 6px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
             display: flex;
             align-items: center;
             gap: 8px;
-            padding: 8px 14px;
-            background: var(--bg-card);
-            border: 1px solid var(--border);
-            border-radius: 8px;
-            color: var(--text-secondary);
-            font-size: 13px;
-            cursor: pointer;
-            transition: all 0.2s;
         }
-        .footer-btn:hover {
+
+        .nav-btn:hover:not(:disabled) {
             background: var(--bg-elevated);
             border-color: var(--accent);
-            color: var(--text);
             transform: translateY(-1px);
+            box-shadow: 0 4px 12px var(--shadow-strong);
         }
-        .footer-btn:disabled {
-            opacity: 0.4;
+
+        .nav-btn:disabled {
+            background: var(--bg-secondary);
+            color: var(--text-tertiary);
+            border-color: var(--border);
             cursor: not-allowed;
         }
-        .footer-btn:disabled:hover {
-            transform: none;
-            background: var(--bg-card);
-            border-color: var(--border);
-        }
-        .footer-btn.complete {
+
+        .complete-btn {
             background: var(--success);
             border-color: var(--success);
-            color: white;
+            color: var(--bg-deep);
         }
-        .footer-btn.complete:hover {
-            background: var(--success-light);
-            border-color: var(--success-light);
+
+        .complete-btn:hover {
+            background: #00f5b8;
+            border-color: #00f5b8;
         }
 
         /* ========== TOAST ========== */
         .toast {
             position: fixed;
-            bottom: 30px;
-            right: 30px;
-            background: var(--bg-card);
-            border: 1px solid var(--border);
-            border-radius: 12px;
+            bottom: 24px;
+            right: 24px;
+            background: var(--bg-elevated);
+            color: var(--text-primary);
             padding: 16px 20px;
+            border-radius: 8px;
+            border: 1px solid var(--border-light);
+            box-shadow: 0 8px 24px var(--shadow-strong);
             display: flex;
             align-items: center;
             gap: 12px;
-            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
-            transform: translateY(120px);
+            transform: translateY(100px);
             opacity: 0;
-            transition: all 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            transition: all 0.3s ease;
             z-index: 1000;
         }
+
         .toast.visible {
             transform: translateY(0);
             opacity: 1;
         }
+
         .toast.success {
+            background: var(--success-dim);
             border-color: var(--success);
-            background: linear-gradient(135deg, rgba(16, 185, 129, 0.1), rgba(16, 185, 129, 0.05));
         }
-        .toast.error {
-            border-color: var(--danger);
-            background: linear-gradient(135deg, rgba(239, 68, 68, 0.1), rgba(239, 68, 68, 0.05));
-        }
+
         .toast i {
-            font-size: 20px;
+            font-size: 18px;
+            color: var(--success);
         }
-        .toast.success i { color: var(--success); }
-        .toast.error i { color: var(--danger); }
-        .toast-message {
-            font-size: 14px;
-            font-weight: 500;
-            color: var(--text);
-        }
+
         .toast-xp {
-            margin-left: 8px;
-            padding: 4px 8px;
-            background: var(--warning);
-            border-radius: 8px;
-            font-size: 12px;
             font-weight: 700;
-            color: white;
+            color: var(--warning);
+        }
+
+        /* ========== SCROLLBAR ========== */
+        ::-webkit-scrollbar {
+            width: 10px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: var(--bg-primary);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: var(--bg-elevated);
+            border-radius: 5px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--border-light);
         }
 
         /* ========== RESPONSIVE ========== */
         @media (max-width: 1024px) {
-            .instructions-panel {
-                width: 40%;
+            .sidebar {
+                width: 280px;
             }
-            .ide-panel {
-                width: 60%;
+            
+            .code-panel {
+                width: 45%;
             }
         }
 
         @media (max-width: 768px) {
-            .workspace-content {
+            .content-body {
                 flex-direction: column;
             }
-            .instructions-panel, .ide-panel {
+            
+            .code-panel {
                 width: 100%;
-                border-right: none;
-            }
-            .instructions-panel {
-                height: 40%;
-                border-bottom: 1px solid var(--border);
-            }
-            .ide-panel {
-                height: 60%;
+                height: 50%;
+                border-left: none;
+                border-top: 2px solid var(--border);
             }
         }
     </style>
 </head>
 <body>
     <!-- Loading Screen -->
-    <div class="loading-screen" id="loading-screen">
-        <div class="loading-logo">D</div>
-        <div class="loading-text">DEV//QUEST Academy</div>
-        <div class="loading-subtext">Initializing learning environment...</div>
-        <div class="loading-bar">
-            <div class="loading-bar-fill"></div>
-        </div>
+    <div class="loading-screen" id="loading">
+        <div class="loading-logo">D/Q</div>
+        <div class="loading-text">Loading Academy...</div>
     </div>
 
-    <!-- Top Navigation -->
-    <div class="top-nav">
-        <div class="nav-brand" onclick="window.location.reload()">
-            <div class="nav-logo">D</div>
-            <div class="nav-title">DEV//QUEST</div>
-        </div>
-        <div class="nav-divider"></div>
-        <button class="syllabus-btn" onclick="toggleSyllabus()">
-            <i class="fa-solid fa-bars"></i>
-            <span>Syllabus</span>
-        </button>
-        <div class="nav-progress">
-            <div class="progress-bar">
-                <div class="progress-fill" id="progress-fill"></div>
+    <!-- Main App -->
+    <div class="app-container">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <div class="brand">
+                    <div class="brand-icon">D/Q</div>
+                    <div class="brand-text">
+                        <h1>DEV//QUEST</h1>
+                        <p>Your coding journey starts here</p>
+                    </div>
+                </div>
+                <div class="progress-widget">
+                    <div class="progress-stats">
+                        <span id="progress-text">0 / 0 Complete</span>
+                        <span id="xp-display"><i class="fa-solid fa-star"></i> <span id="xp-count">0</span> XP</span>
+                    </div>
+                    <div class="progress-bar">
+                        <div class="progress-fill" id="progress-fill"></div>
+                    </div>
+                </div>
             </div>
-            <div class="progress-text" id="progress-text">0 / 0</div>
-        </div>
-        <div class="nav-stats">
-            <div class="stat-item xp">
-                <i class="fa-solid fa-star"></i>
-                <span class="stat-value" id="xp-count">0</span>
-                <span>XP</span>
-            </div>
-            <div class="stat-item streak">
-                <i class="fa-solid fa-fire"></i>
-                <span class="stat-value">0</span>
-                <span>Streak</span>
-            </div>
-        </div>
-        <div class="nav-status">
-            <div class="status-dot" id="status-dot"></div>
-            <span id="status-text">Disconnected</span>
-        </div>
-        <div class="nav-profile">D</div>
-    </div>
+            <div class="sidebar-content" id="syllabus"></div>
+        </aside>
 
-    <!-- Main Container -->
-    <div class="main-container">
-        <!-- Syllabus Panel -->
-        <div class="syllabus-panel" id="syllabus-panel">
-            <div class="syllabus-header">
-                <div class="syllabus-title">Course Curriculum</div>
-                <div class="syllabus-close" onclick="toggleSyllabus()">
-                    <i class="fa-solid fa-times"></i>
+        <!-- Main Content Area -->
+        <main class="main-content">
+            <header class="content-header">
+                <div class="lesson-badge" id="lesson-badge">CONCEPT</div>
+                <div class="lesson-header">
+                    <h2 id="lesson-title">Loading...</h2>
+                    <div class="lesson-meta">
+                        <span><i class="fa-solid fa-clock"></i> <span id="lesson-duration">10 min</span></span>
+                        <span><i class="fa-solid fa-code"></i> <span id="lesson-lang">Python</span></span>
+                    </div>
                 </div>
-            </div>
-            <div class="syllabus-content" id="syllabus-content">
-                <!-- Populated by JS -->
-            </div>
-        </div>
+            </header>
 
-        <!-- Workspace -->
-        <div class="workspace">
-            <!-- Tabs -->
-            <div class="workspace-tabs">
-                <div class="workspace-tab active">
-                    <i class="fa-solid fa-book-open"></i>
-                    <span>Instructions</span>
-                </div>
-                <div class="workspace-tab" style="opacity: 0.3; pointer-events: none;">
-                    <i class="fa-solid fa-lightbulb"></i>
-                    <span>Hints</span>
-                </div>
-                <div class="workspace-tab" style="opacity: 0.3; pointer-events: none;">
-                    <i class="fa-solid fa-graduation-cap"></i>
-                    <span>Solution</span>
-                </div>
-            </div>
-
-            <!-- Content -->
-            <div class="workspace-content">
-                <!-- Instructions Panel -->
-                <div class="instructions-panel">
-                    <div class="instructions-content" id="instructions-content">
-                        <div class="task-title">Welcome to DEV//QUEST Academy 🚀</div>
-                        <div class="task-meta">
-                            <div class="task-badge lesson">Interactive Learning</div>
-                            <div class="task-duration">
-                                <i class="fa-solid fa-clock"></i>
-                                Start Learning
-                            </div>
-                        </div>
-                        <div class="task-section">
-                            <div class="task-header">
-                                <i class="fa-solid fa-rocket"></i>
-                                Getting Started
-                            </div>
-                            <div class="lesson-content">
-                                <p>Welcome to your interactive coding academy! Here's what you can do:</p>
-                                <ul>
-                                    <li><strong>Browse the Syllabus:</strong> Click the "Syllabus" button to explore 1000+ lessons</li>
-                                    <li><strong>Write Code:</strong> Use the built-in IDE on the right to write and test code</li>
-                                    <li><strong>Track Progress:</strong> Earn XP and complete lessons to level up</li>
-                                    <li><strong>Learn Interactively:</strong> Run Python and JavaScript code right in your browser</li>
-                                </ul>
-                                <p>Select a lesson from the syllabus to begin your journey!</p>
-                            </div>
-                        </div>
+            <div class="content-body">
+                <!-- Lesson Content Panel -->
+                <div class="lesson-panel">
+                    <div class="lesson-content" id="lesson-content">
+                        <p>Select a lesson from the sidebar to begin your journey.</p>
                     </div>
                 </div>
 
-                <!-- IDE Panel -->
-                <div class="ide-panel">
-                    <!-- IDE Header -->
-                    <div class="ide-header">
-                        <div class="file-tab python" id="file-tab">
+                <!-- Code Editor Panel -->
+                <div class="code-panel">
+                    <div class="code-header">
+                        <div class="file-tab">
                             <i class="fa-brands fa-python"></i>
-                            <span class="file-name" id="file-name">main.py</span>
+                            <span id="file-name">main.py</span>
                         </div>
-                        <div class="ide-actions">
-                            <button class="ide-btn" onclick="resetCode()">
-                                <i class="fa-solid fa-rotate-left"></i>
-                                Reset
+                        <div class="code-actions">
+                            <button class="code-btn" onclick="resetCode()">
+                                <i class="fa-solid fa-rotate-left"></i> Reset
                             </button>
-                            <button class="ide-btn check" id="check-btn" onclick="checkAnswer()" style="display: none;">
-                                <i class="fa-solid fa-check"></i>
-                                Check Answer
+                            <button class="code-btn" onclick="clearConsole()">
+                                <i class="fa-solid fa-trash"></i> Clear
                             </button>
-                            <button class="ide-btn run" onclick="runCode()">
-                                <i class="fa-solid fa-play"></i>
-                                Run Code
+                            <button class="code-btn primary" onclick="runCode()">
+                                <i class="fa-solid fa-play"></i> Run
                             </button>
                         </div>
                     </div>
-
-                    <!-- Code Editor -->
-                    <div class="editor-container">
-                        <div id="code-editor"># Welcome to DEV//QUEST Academy!
-# Select a lesson from the syllabus to start coding
-
-print("Hello, Developer! 🚀")
-</div>
-                    </div>
-
-                    <!-- Console -->
-                    <div class="console-container">
-                        <div class="console-header">
-                            <div class="console-title">
-                                <i class="fa-solid fa-terminal"></i> Console Output
-                            </div>
-                            <div class="console-clear" onclick="clearConsole()">
-                                <i class="fa-solid fa-times"></i> Clear
-                            </div>
-                        </div>
-                        <div id="console"></div>
-                    </div>
+                    <div id="code-editor"></div>
+                    <div id="console"></div>
                 </div>
             </div>
 
-            <!-- Footer -->
-            <div class="workspace-footer">
-                <button class="footer-btn" id="prev-btn" onclick="prevLesson()" disabled>
-                    <i class="fa-solid fa-chevron-left"></i>
-                    Previous
+            <!-- Navigation Footer -->
+            <footer class="nav-footer">
+                <button class="nav-btn" id="prev-btn" onclick="prevLesson()" disabled>
+                    <i class="fa-solid fa-chevron-left"></i> Previous
                 </button>
-                <button class="footer-btn complete" id="mark-complete-btn" onclick="markComplete()">
-                    <i class="fa-solid fa-check"></i>
-                    Mark Complete
+                <button class="complete-btn nav-btn" onclick="markComplete()">
+                    <i class="fa-solid fa-check"></i> Mark Complete
                 </button>
-                <button class="footer-btn" id="next-btn" onclick="nextLesson()" disabled>
-                    Next
-                    <i class="fa-solid fa-chevron-right"></i>
+                <button class="nav-btn" id="next-btn" onclick="nextLesson()" disabled>
+                    Next <i class="fa-solid fa-chevron-right"></i>
                 </button>
-            </div>
-        </div>
+            </footer>
+        </main>
     </div>
 
     <!-- Toast Notification -->
     <div class="toast" id="toast">
         <i class="fa-solid fa-check-circle"></i>
-        <span class="toast-message" id="toast-message">Success!</span>
+        <span id="toast-message">Great work!</span>
         <span class="toast-xp" id="toast-xp">+10 XP</span>
     </div>
 
     <script>
         // ========================================
-        // API URL CONFIGURATION
-        // ========================================
-        // WHY: Detects if we're on local dev or production
-        // WHEN: Called at startup and whenever we need to fetch data
-        // HOW: Checks window.location.hostname to determine environment
-        function getApiUrl() {
-            const host = window.location.hostname;
-            
-            // If on devquest.uk domain or GitHub Pages
-            if (host.includes('devquest.uk') || host.includes('github.io')) {
-                return 'https://devquest.uk'; // Production tunnel
-            }
-            
-            // Otherwise, use local development server
-            return 'http://localhost:8000';
-        }
-
-        // ========================================
         // GLOBAL STATE
         // ========================================
-        let curriculum = null;
+        let curriculum = [];
         let allLessons = [];
         let currentLesson = null;
         let currentIndex = -1;
         let completedLessons = [];
         let xp = 0;
         let totalLessons = 0;
-        let editor = null;
-        let pyodide = null;
+        let editor;
+        let pyodide;
         let originalCode = '';
 
-        // Language configuration for syntax highlighting
+        // Language configurations
         const langConfig = {
             python: { mode: 'ace/mode/python', file: 'main.py', icon: 'fa-python', brand: true },
-            javascript: { mode: 'ace/mode/javascript', file: 'index.js', icon: 'fa-js', brand: true },
+            javascript: { mode: 'ace/mode/javascript', file: 'script.js', icon: 'fa-js', brand: true },
             html: { mode: 'ace/mode/html', file: 'index.html', icon: 'fa-html5', brand: true },
             css: { mode: 'ace/mode/css', file: 'styles.css', icon: 'fa-css3-alt', brand: true },
-            java: { mode: 'ace/mode/java', file: 'Main.java', icon: 'fa-java', brand: true },
-            cpp: { mode: 'ace/mode/c_cpp', file: 'main.cpp', icon: 'fa-code', brand: false },
-            c: { mode: 'ace/mode/c_cpp', file: 'main.c', icon: 'fa-code', brand: false },
-            go: { mode: 'ace/mode/golang', file: 'main.go', icon: 'fa-golang', brand: true },
-            rust: { mode: 'ace/mode/rust', file: 'main.rs', icon: 'fa-rust', brand: true },
             sql: { mode: 'ace/mode/sql', file: 'query.sql', icon: 'fa-database', brand: false },
-            bash: { mode: 'ace/mode/sh', file: 'script.sh', icon: 'fa-terminal', brand: false },
+            bash: { mode: 'ace/mode/sh', file: 'script.sh', icon: 'fa-terminal', brand: false }
         };
 
         // ========================================
         // INITIALIZATION
         // ========================================
         async function init() {
-            console.log('🚀 Initializing DEV//QUEST Academy...');
+            console.log('Initializing DEV//QUEST Academy...');
             
-            // Initialize ACE Editor
-            editor = ace.edit("code-editor");
-            editor.setTheme("ace/theme/tomorrow_night");
-            editor.session.setMode("ace/mode/python");
+            // Initialize Ace Editor
+            editor = ace.edit('code-editor');
+            editor.setTheme('ace/theme/monokai');
+            editor.session.setMode('ace/mode/python');
+            editor.setFontSize(14);
             editor.setOptions({
-                fontSize: "14px",
-                showPrintMargin: false,
                 enableBasicAutocompletion: true,
                 enableLiveAutocompletion: true,
+                showPrintMargin: false,
             });
-
-            // Load saved progress
+            
+            // Load progress from localStorage
             loadProgress();
-
-            // Load curriculum from API
+            
+            // Fetch curriculum
             await loadCurriculum();
-
-            // Initialize Python runtime (async, non-blocking)
+            
+            // Initialize Pyodide (Python in browser)
             initPyodide();
-
+            
             // Hide loading screen
             setTimeout(() => {
-                document.getElementById('loading-screen').classList.add('hidden');
-            }, 1000);
-
-            console.log('✅ Initialization complete!');
+                document.getElementById('loading').classList.add('hidden');
+            }, 800);
         }
 
         // ========================================
-        // PYTHON RUNTIME INITIALIZATION
+        // LOAD CURRICULUM
         // ========================================
-        // WHY: Loads Pyodide for running Python in the browser
-        // WHEN: Called at startup but doesn't block UI
-        // HOW: Async loads Pyodide WebAssembly module
-        async function initPyodide() {
-            try {
-                console.log('📦 Loading Python runtime...');
-                pyodide = await loadPyodide();
-                console.log('✅ Python ready!');
-            } catch (e) {
-                console.error('❌ Python failed to load:', e);
-            }
-        }
-
-        // ========================================
-        // LOAD CURRICULUM FROM API
-        // ========================================
-        // WHY: Fetches the complete lesson structure from backend
-        // WHEN: Called once at startup
-        // HOW: Makes GET request to /curriculum endpoint
         async function loadCurriculum() {
-            const apiUrl = getApiUrl();
-            const statusDot = document.getElementById('status-dot');
-            const statusText = document.getElementById('status-text');
-            
             try {
-                console.log(`📡 Fetching curriculum from ${apiUrl}...`);
-                statusText.textContent = 'Connecting...';
+                const response = await fetch('/curriculum');
+                const data = await response.json();
+                curriculum = data.tracks || [];
                 
-                const response = await fetch(`${apiUrl}/curriculum`);
+                // Flatten all lessons
+                allLessons = [];
+                curriculum.forEach(track => {
+                    if (track.lessons) {
+                        track.lessons.forEach(lesson => {
+                            allLessons.push({ ...lesson, track: track.title });
+                        });
+                    }
+                });
                 
-                if (!response.ok) {
-                    throw new Error(`HTTP ${response.status}: ${response.statusText}`);
-                }
+                totalLessons = allLessons.length;
                 
-                curriculum = await response.json();
-                console.log('✅ Curriculum loaded:', curriculum.metadata);
-                
-                // Update connection status
-                statusDot.classList.add('connected');
-                statusText.textContent = 'Connected';
-                
-                // Process curriculum
-                buildLessonList();
                 renderSyllabus();
                 updateProgress();
                 
-                // Auto-load first lesson
+                // Load first lesson
                 if (allLessons.length > 0) {
                     loadLesson(allLessons[0].id);
                 }
-                
             } catch (error) {
-                console.error('❌ Failed to load curriculum:', error);
-                statusDot.classList.remove('connected');
-                statusText.textContent = 'Connection Failed';
-                
-                // Show error in UI
-                document.getElementById('instructions-content').innerHTML = `
-                    <div class="task-title">⚠️ Connection Error</div>
-                    <div class="task-section">
-                        <div class="lesson-content">
-                            <p style="color: var(--danger);">Failed to connect to the backend server.</p>
-                            <p><strong>Error:</strong> ${escapeHtml(error.message)}</p>
-                            <p><strong>Attempted URL:</strong> ${apiUrl}/curriculum</p>
-                            <hr style="margin: 20px 0; border: 1px solid var(--border);">
-                            <p><strong>Troubleshooting:</strong></p>
-                            <ul>
-                                <li>Make sure your FastAPI server is running</li>
-                                <li>For local dev: <code>uvicorn curriculum:app --reload</code></li>
-                                <li>Check that the server is accessible at: <code>${apiUrl}</code></li>
-                                <li>Look for CORS errors in the browser console (F12)</li>
-                            </ul>
-                        </div>
-                    </div>
-                `;
+                console.error('Failed to load curriculum:', error);
             }
         }
 
         // ========================================
-        // BUILD FLAT LESSON LIST
+        // RENDER SYLLABUS
         // ========================================
-        // WHY: Creates a linear array for navigation (prev/next)
-        // WHEN: After curriculum loads
-        // HOW: Recursively traverses track structure
-        function buildLessonList() {
-            allLessons = [];
-            let lessonCount = 0;
-            
-            if (!curriculum || !curriculum.tracks) return;
-            
-            for (const track of curriculum.tracks) {
-                for (const item of track.lessons) {
-                    allLessons.push({
-                        ...item,
-                        trackId: track.id,
-                        trackTitle: track.title
-                    });
-                    lessonCount++;
-                }
-            }
-            
-            totalLessons = lessonCount;
-            console.log(`📚 Built lesson list: ${totalLessons} total lessons`);
-        }
-
-        // ========================================
-        // RENDER SYLLABUS UI
-        // ========================================
-        // WHY: Displays all tracks and lessons in sidebar
-        // WHEN: After curriculum loads and when progress updates
-        // HOW: Builds HTML from curriculum structure
         function renderSyllabus() {
-            const container = document.getElementById('syllabus-content');
-            if (!curriculum || !curriculum.tracks) {
-                container.innerHTML = '<p style="color: var(--text-dim); padding: 20px;">Loading curriculum...</p>';
-                return;
-            }
+            const container = document.getElementById('syllabus');
             
             let html = '';
-            
-            for (const track of curriculum.tracks) {
-                // Calculate completion for this track
-                const trackLessonIds = track.lessons.map(l => l.id);
-                const completed = trackLessonIds.filter(id => completedLessons.includes(id)).length;
-                const total = trackLessonIds.length;
+            curriculum.forEach(track => {
+                if (!track.lessons || track.lessons.length === 0) return;
                 
                 html += `
-                    <div class="track">
-                        <div class="track-header" onclick="toggleTrack('${track.id}')">
-                            <div class="track-icon">
-                                <i class="fa-solid fa-chevron-right"></i>
-                            </div>
-                            <div class="track-title">${track.id} - ${escapeHtml(track.title)}</div>
-                            <div class="track-count">${completed}/${total}</div>
-                        </div>
-                        <div class="track-lessons" id="track-${track.id}">
+                    <div class="track-group">
+                        <div class="track-header">${escapeHtml(track.title)}</div>
                 `;
                 
-                for (const lesson of track.lessons) {
-                    const isCompleted = completedLessons.includes(lesson.id);
-                    const typeClass = lesson.type || 'lesson';
+                track.lessons.forEach(lesson => {
+                    const completed = completedLessons.includes(lesson.id);
+                    const active = currentLesson && currentLesson.id === lesson.id;
                     
                     html += `
-                        <div class="lesson-row ${isCompleted ? 'completed' : ''}" 
-                             data-id="${lesson.id}"
-                             onclick="loadLesson('${lesson.id}')">
-                            <div class="lesson-icon ${typeClass}">
-                                <i class="fa-solid fa-${getTypeIcon(lesson.type)}"></i>
+                        <div class="lesson-item ${active ? 'active' : ''} ${completed ? 'completed' : ''}" 
+                             onclick="loadLesson(${lesson.id})">
+                            <div class="lesson-icon">
+                                ${completed ? '<i class="fa-solid fa-check"></i>' : lesson.id}
                             </div>
-                            <div class="lesson-info">
-                                <div class="lesson-title">${escapeHtml(lesson.title)}</div>
-                                <div class="lesson-duration">${lesson.duration || '10 min'}</div>
-                            </div>
-                            ${isCompleted ? '<i class="fa-solid fa-check lesson-check"></i>' : ''}
+                            <div class="lesson-title">${escapeHtml(lesson.title)}</div>
                         </div>
                     `;
-                }
+                });
                 
-                html += `
-                        </div>
-                    </div>
-                `;
-            }
+                html += `</div>`;
+            });
             
             container.innerHTML = html;
-            highlightCurrentLesson();
-        }
-
-        // Helper: Get icon for lesson type
-        function getTypeIcon(type) {
-            const icons = {
-                'lesson': 'book',
-                'challenge': 'code',
-                'project': 'rocket',
-                'quiz': 'question-circle',
-                'lab': 'flask'
-            };
-            return icons[type] || 'book';
-        }
-
-        // ========================================
-        // TOGGLE TRACK EXPAND/COLLAPSE
-        // ========================================
-        function toggleTrack(trackId) {
-            const lessons = document.getElementById(`track-${trackId}`);
-            const header = lessons.previousElementSibling;
-            
-            lessons.classList.toggle('expanded');
-            header.classList.toggle('expanded');
-        }
-
-        // ========================================
-        // TOGGLE SYLLABUS PANEL
-        // ========================================
-        function toggleSyllabus() {
-            const panel = document.getElementById('syllabus-panel');
-            panel.classList.toggle('collapsed');
         }
 
         // ========================================
         // LOAD LESSON
         // ========================================
-        // WHY: Loads a specific lesson into the workspace
-        // WHEN: User clicks a lesson or uses prev/next
-        // HOW: Fetches from API and updates UI
-        async function loadLesson(lessonId) {
-            const apiUrl = getApiUrl();
-            
+        async function loadLesson(id) {
             try {
-                console.log(`📖 Loading lesson: ${lessonId}`);
+                const response = await fetch(`/lesson/${id}`);
+                const data = await response.json();
                 
-                const response = await fetch(`${apiUrl}/lesson/${lessonId}`);
-                if (!response.ok) {
-                    throw new Error(`HTTP ${response.status}`);
+                if (data.error) {
+                    console.error('Lesson not found');
+                    return;
                 }
                 
-                const data = await response.json();
                 currentLesson = data;
+                currentIndex = allLessons.findIndex(l => l.id === id);
                 
-                // Find index in lesson list
-                currentIndex = allLessons.findIndex(l => l.id === lessonId);
+                // Update header
+                document.getElementById('lesson-badge').textContent = (data.lesson_type || 'concept').toUpperCase();
+                document.getElementById('lesson-title').textContent = data.title || 'Untitled Lesson';
+                document.getElementById('lesson-duration').textContent = data.duration || '10 min';
+                document.getElementById('lesson-lang').textContent = (data.ide_mode || 'Python').toUpperCase();
                 
-                // Update UI
-                renderLesson(data);
-                highlightCurrentLesson();
+                // ⭐ CRITICAL FIX: Display data.content (NOT data.description)
+                const contentEl = document.getElementById('lesson-content');
+                if (data.content) {
+                    contentEl.innerHTML = marked.parse(data.content);
+                } else {
+                    contentEl.innerHTML = '<p>No content available for this lesson yet.</p>';
+                }
+                
+                // Configure code editor
+                const lang = data.ide_mode || 'python';
+                const config = langConfig[lang] || langConfig.python;
+                
+                editor.session.setMode(config.mode);
+                document.getElementById('file-name').textContent = config.file;
+                
+                // Update file tab icon
+                const iconClass = config.brand ? 'fa-brands' : 'fa-solid';
+                document.querySelector('.file-tab i').className = `${iconClass} ${config.icon}`;
+                
+                // Set starter code
+                originalCode = data.starter_code || `# ${data.title}\n# Write your code here\n\n`;
+                editor.setValue(originalCode, -1);
+                
+                // Update navigation
+                renderSyllabus();
                 updateNavButtons();
                 
-                console.log('✅ Lesson loaded successfully');
+                // Clear console
+                document.getElementById('console').innerHTML = '';
                 
             } catch (error) {
-                console.error('❌ Failed to load lesson:', error);
-                showToast('Failed to load lesson', 0, 'error');
-            }
-        }
-
-        // ========================================
-        // RENDER LESSON IN WORKSPACE
-        // ========================================
-        // WHY: Displays lesson content and sets up code editor
-        // WHEN: After a lesson is loaded
-        // HOW: Builds HTML and configures ACE editor
-        function renderLesson(data) {
-            const type = data.type || 'lesson';
-            
-            // Build instructions HTML
-            let html = `
-                <div class="task-title">${escapeHtml(data.title)}</div>
-                <div class="task-meta">
-                    <div class="task-badge ${type}">${type.toUpperCase()}</div>
-                    <div class="task-duration">
-                        <i class="fa-solid fa-clock"></i>
-                        ${data.duration || '10 min'}
-                    </div>
-                </div>
-            `;
-            
-            // Main content
-            if (data.description) {
-                html += `
-                    <div class="task-section">
-                        <div class="task-header">
-                            <i class="fa-solid fa-info-circle"></i> Overview
-                        </div>
-                        <div class="lesson-content">${marked.parse(data.description)}</div>
-                    </div>
-                `;
-            }
-            
-            // Objectives
-            if (data.objectives && data.objectives.length > 0) {
-                html += `
-                    <div class="task-section">
-                        <div class="task-header">
-                            <i class="fa-solid fa-bullseye"></i> Learning Objectives
-                        </div>
-                        <div class="lesson-content">
-                            <ul>
-                                ${data.objectives.map(obj => `<li>${escapeHtml(obj)}</li>`).join('')}
-                            </ul>
-                        </div>
-                    </div>
-                `;
-            }
-            
-            // Instructions
-            if (data.instructions) {
-                html += `
-                    <div class="task-section">
-                        <div class="task-header">
-                            <i class="fa-solid fa-list-check"></i> Instructions
-                        </div>
-                        <div class="lesson-content">${marked.parse(data.instructions)}</div>
-                    </div>
-                `;
-            }
-            
-            // Hints (collapsible)
-            if (data.hints && data.hints.length > 0) {
-                const hints = data.hints;
-                html += `
-                    <div class="task-section">
-                        <div class="hint-header" onclick="toggleHints()">
-                            <i class="fa-solid fa-lightbulb hint-icon"></i>
-                            <div class="hint-title">Need a hint? (${hints.length} available)</div>
-                            <i class="fa-solid fa-chevron-down hint-toggle"></i>
-                        </div>
-                        <div class="hint-content" id="hint-content">
-                            ${hints.map((h, i) => `<p><strong>Hint ${i + 1}:</strong> ${escapeHtml(h)}</p>`).join('')}
-                        </div>
-                    </div>
-                `;
-            }
-            
-            // Reference/docs
-            if (data.docs) {
-                html += `
-                    <div class="task-section">
-                        <div class="task-header">
-                            <i class="fa-solid fa-book"></i> Reference
-                        </div>
-                        <div class="lesson-content">${marked.parse(data.docs)}</div>
-                    </div>
-                `;
-            }
-            
-            document.getElementById('instructions-content').innerHTML = html;
-            
-            // ========================================
-            // CONFIGURE CODE EDITOR
-            // ========================================
-            // WHY: Sets language-specific highlighting and starter code
-            // WHEN: After lesson content is rendered
-            // HOW: Uses langConfig based on ide_mode
-            const lang = data.ide_mode || 'python';
-            const config = langConfig[lang] || langConfig.python;
-            
-            // Set editor mode and file name
-            editor.session.setMode(config.mode);
-            document.getElementById('file-name').textContent = config.file;
-            
-            // Update file tab styling
-            const tab = document.getElementById('file-tab');
-            tab.className = `file-tab ${lang}`;
-            const iconClass = config.brand ? 'fa-brands' : 'fa-solid';
-            tab.querySelector('i').className = `${iconClass} ${config.icon}`;
-            
-            // Set starter code
-            originalCode = data.starter_code || `# ${data.title}\n# Write your code here\n\n`;
-            editor.setValue(originalCode, -1);
-            
-            // Show/hide check button
-            document.getElementById('check-btn').style.display = 
-                (type === 'challenge' || type === 'lab') ? 'flex' : 'none';
-        }
-
-        // ========================================
-        // TOGGLE HINTS
-        // ========================================
-        function toggleHints() {
-            const content = document.getElementById('hint-content');
-            const header = content.previousElementSibling;
-            
-            content.classList.toggle('expanded');
-            header.classList.toggle('expanded');
-        }
-
-        // ========================================
-        // HIGHLIGHT CURRENT LESSON
-        // ========================================
-        // WHY: Shows which lesson is currently active
-        // WHEN: After loading a lesson
-        // HOW: Adds 'active' class and expands parent track
-        function highlightCurrentLesson() {
-            // Remove all active states
-            document.querySelectorAll('.lesson-row').forEach(row => {
-                row.classList.remove('active');
-            });
-            
-            // Add active to current
-            if (currentLesson) {
-                const activeRow = document.querySelector(`.lesson-row[data-id="${currentLesson.id}"]`);
-                if (activeRow) {
-                    activeRow.classList.add('active');
-                    
-                    // Expand parent track
-                    const trackLessons = activeRow.closest('.track-lessons');
-                    if (trackLessons && !trackLessons.classList.contains('expanded')) {
-                        trackLessons.classList.add('expanded');
-                        trackLessons.previousElementSibling.classList.add('expanded');
-                    }
-                    
-                    // Scroll into view
-                    activeRow.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-                }
+                console.error('Failed to load lesson:', error);
             }
         }
 
@@ -1616,130 +933,93 @@ print("Hello, Developer! 🚀")
         // NAVIGATION
         // ========================================
         function updateNavButtons() {
-            const prevBtn = document.getElementById('prev-btn');
-            const nextBtn = document.getElementById('next-btn');
-            
-            prevBtn.disabled = currentIndex <= 0;
-            nextBtn.disabled = currentIndex < 0 || currentIndex >= allLessons.length - 1;
+            document.getElementById('prev-btn').disabled = currentIndex <= 0;
+            document.getElementById('next-btn').disabled = currentIndex < 0 || currentIndex >= allLessons.length - 1;
         }
         
         function prevLesson() {
             if (currentIndex > 0) {
-                const prevId = allLessons[currentIndex - 1].id;
-                loadLesson(prevId);
+                loadLesson(allLessons[currentIndex - 1].id);
             }
         }
         
         function nextLesson() {
             if (currentIndex >= 0 && currentIndex < allLessons.length - 1) {
-                markComplete(); // Auto-complete current lesson
-                const nextId = allLessons[currentIndex + 1].id;
-                loadLesson(nextId);
+                loadLesson(allLessons[currentIndex + 1].id);
             }
         }
 
         // ========================================
         // CODE EXECUTION
         // ========================================
-        // WHY: Runs user code in browser (Python/JS)
-        // WHEN: User clicks "Run Code" button
-        // HOW: Uses Pyodide for Python, eval() for JavaScript
+        async function initPyodide() {
+            try {
+                pyodide = await loadPyodide();
+                console.log('Pyodide loaded successfully');
+            } catch (error) {
+                console.error('Failed to load Pyodide:', error);
+            }
+        }
+
         async function runCode() {
             const code = editor.getValue();
             const consoleEl = document.getElementById('console');
-            consoleEl.innerHTML = '<span style="color: var(--text-dim)">Running...</span>';
+            consoleEl.innerHTML = '<span style="color: #888">Running...</span>';
             
             const lang = currentLesson?.ide_mode || 'python';
             
             if (lang === 'python') {
-                // Python execution via Pyodide
                 if (!pyodide) {
-                    consoleEl.innerHTML = '<span style="color: var(--warning)">⏳ Python is still loading. Please wait...</span>';
+                    consoleEl.innerHTML = '<span style="color: #f59e0b">⏳ Python is still loading...</span>';
                     return;
                 }
                 
                 try {
                     let output = [];
                     pyodide.setStdout({ batched: (text) => output.push(text) });
-                    pyodide.setStderr({ batched: (text) => output.push(`<span style="color:var(--danger)">${text}</span>`) });
+                    pyodide.setStderr({ batched: (text) => output.push(`<span style="color:#ef4444">${text}</span>`) });
                     
                     await pyodide.runPythonAsync(code);
                     
-                    consoleEl.innerHTML = output.join('\n') || '<span style="color: var(--text-dim)">No output</span>';
+                    consoleEl.innerHTML = output.join('\n') || '<span style="color: #888">No output</span>';
                 } catch (e) {
-                    consoleEl.innerHTML = `<span style="color: var(--danger)">${escapeHtml(e.toString())}</span>`;
+                    consoleEl.innerHTML = `<span style="color: #ef4444">${escapeHtml(e.toString())}</span>`;
                 }
-                
             } else if (lang === 'javascript') {
-                // JavaScript execution
                 try {
                     const logs = [];
                     const originalLog = console.log;
                     const originalError = console.error;
                     
                     console.log = (...args) => logs.push(args.map(String).join(' '));
-                    console.error = (...args) => logs.push(`<span style="color:var(--danger)">${args.map(String).join(' ')}</span>`);
+                    console.error = (...args) => logs.push(`<span style="color:#ef4444">${args.map(String).join(' ')}</span>`);
                     
                     eval(code);
                     
                     console.log = originalLog;
                     console.error = originalError;
                     
-                    consoleEl.innerHTML = logs.join('\n') || '<span style="color: var(--text-dim)">No output</span>';
+                    consoleEl.innerHTML = logs.join('\n') || '<span style="color: #888">No output</span>';
                 } catch (e) {
-                    consoleEl.innerHTML = `<span style="color: var(--danger)">${escapeHtml(e.toString())}</span>`;
+                    consoleEl.innerHTML = `<span style="color: #ef4444">${escapeHtml(e.toString())}</span>`;
                 }
-                
             } else {
-                // Other languages - show instructions
-                consoleEl.innerHTML = `<span style="color: var(--warning)">💡 ${lang.toUpperCase()} - Copy this code and run it in your terminal or IDE</span>`;
+                consoleEl.innerHTML = `<span style="color: #f59e0b">💡 ${lang.toUpperCase()} - Copy this code and run it in your terminal or IDE</span>`;
             }
         }
 
-        // ========================================
-        // CHECK ANSWER (for challenges)
-        // ========================================
-        function checkAnswer() {
-            const consoleEl = document.getElementById('console');
-            consoleEl.innerHTML = '<span style="color: var(--warning)">⏳ Running tests...</span>';
-            
-            // TODO: Implement actual test validation
-            // For now, simulate test execution
-            setTimeout(() => {
-                const passed = true; // Placeholder
-                
-                if (passed) {
-                    consoleEl.innerHTML = '<span style="color: var(--success)">✅ All tests passed! Great work!</span>';
-                    markComplete();
-                    showToast('Challenge completed!', 25, 'success');
-                } else {
-                    consoleEl.innerHTML = '<span style="color: var(--danger)">❌ Some tests failed. Keep trying!</span>';
-                    showToast('Not quite right. Try again!', 0, 'error');
-                }
-            }, 800);
-        }
-
-        // ========================================
-        // RESET CODE
-        // ========================================
         function resetCode() {
             editor.setValue(originalCode, -1);
             document.getElementById('console').innerHTML = '';
         }
 
-        // ========================================
-        // CLEAR CONSOLE
-        // ========================================
         function clearConsole() {
             document.getElementById('console').innerHTML = '';
         }
 
         // ========================================
-        // PROGRESS & XP SYSTEM
+        // PROGRESS SYSTEM
         // ========================================
-        // WHY: Tracks user progress and motivation
-        // WHEN: On lesson completion
-        // HOW: Stores in localStorage
         function markComplete() {
             if (currentLesson && !completedLessons.includes(currentLesson.id)) {
                 completedLessons.push(currentLesson.id);
@@ -1748,34 +1028,25 @@ print("Hello, Developer! 🚀")
                 addXP(10);
                 updateProgress();
                 renderSyllabus();
-                highlightCurrentLesson();
                 
-                showToast('Lesson completed!', 10, 'success');
+                showToast('Lesson completed!', 10);
             }
         }
         
         function addXP(amount) {
             xp += amount;
             localStorage.setItem('devquest_xp', xp.toString());
-            updateXPDisplay();
-        }
-        
-        function updateXPDisplay() {
             document.getElementById('xp-count').textContent = xp;
         }
         
         function updateProgress() {
-            const total = totalLessons || 0;
             const completed = completedLessons.length;
-            const percent = total > 0 ? Math.round((completed / total) * 100) : 0;
+            const percent = totalLessons > 0 ? Math.round((completed / totalLessons) * 100) : 0;
             
             document.getElementById('progress-fill').style.width = `${percent}%`;
-            document.getElementById('progress-text').textContent = `${completed} / ${total}`;
+            document.getElementById('progress-text').textContent = `${completed} / ${totalLessons} Complete`;
         }
-
-        // ========================================
-        // LOAD PROGRESS FROM LOCALSTORAGE
-        // ========================================
+        
         function loadProgress() {
             const savedCompleted = localStorage.getItem('devquest_completed');
             const savedXP = localStorage.getItem('devquest_xp');
@@ -1786,43 +1057,34 @@ print("Hello, Developer! 🚀")
             
             if (savedXP) {
                 xp = parseInt(savedXP, 10);
-                updateXPDisplay();
+                document.getElementById('xp-count').textContent = xp;
             }
         }
 
         // ========================================
-        // TOAST NOTIFICATION
+        // TOAST
         // ========================================
-        function showToast(message, xpGain, type = 'success') {
+        function showToast(message, xpGain) {
             const toast = document.getElementById('toast');
-            const toastMsg = document.getElementById('toast-message');
-            const toastXP = document.getElementById('toast-xp');
-            
-            toast.className = `toast ${type}`;
-            toast.querySelector('i').className = type === 'success' 
-                ? 'fa-solid fa-check-circle' 
-                : 'fa-solid fa-times-circle';
-            
-            toastMsg.textContent = message;
-            toastXP.textContent = xpGain > 0 ? `+${xpGain} XP` : '';
-            toastXP.style.display = xpGain > 0 ? 'inline' : 'none';
+            document.getElementById('toast-message').textContent = message;
+            document.getElementById('toast-xp').textContent = xpGain > 0 ? `+${xpGain} XP` : '';
+            document.getElementById('toast-xp').style.display = xpGain > 0 ? 'inline' : 'none';
             
             toast.classList.add('visible');
             setTimeout(() => toast.classList.remove('visible'), 3000);
         }
 
         // ========================================
-        // UTILITY FUNCTIONS
+        // UTILITY
         // ========================================
         function escapeHtml(text) {
-            if (!text) return '';
             const div = document.createElement('div');
             div.textContent = text;
             return div.innerHTML;
         }
 
         // ========================================
-        // START APPLICATION
+        // START
         // ========================================
         document.addEventListener('DOMContentLoaded', init);
     </script>
