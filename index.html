@@ -748,6 +748,16 @@
 
     <script>
         // ========================================
+        // API CONFIGURATION
+        // ========================================
+        // IMPORTANT: Update this to your API endpoint
+        // For local development: '' (empty string for same origin)
+        // For production with separate API: 'https://your-api-domain.com'
+        const API_BASE_URL = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1' 
+            ? '' 
+            : 'https://devquest.uk';  // Change this to your actual API URL
+        
+        // ========================================
         // GLOBAL STATE
         // ========================================
         let curriculum = [];
@@ -808,7 +818,7 @@
         // ========================================
         async function loadCurriculum() {
             try {
-                const response = await fetch('/curriculum');
+                const response = await fetch(`${API_BASE_URL}/curriculum`);
                 const data = await response.json();
                 curriculum = data.tracks || [];
                 
@@ -877,7 +887,7 @@
         // ========================================
         async function loadLesson(id) {
             try {
-                const response = await fetch(`/lesson/${id}`);
+                const response = await fetch(`${API_BASE_URL}/lesson/${id}`);
                 const data = await response.json();
                 
                 if (data.error) {
