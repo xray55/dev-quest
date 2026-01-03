@@ -1153,7 +1153,6 @@
     </style>
 </head>
 <body>
-    <!-- Loading Screen -->
     <div class="loading-screen">
         <div class="loading-logo">DQ</div>
         <div class="loading-text">Initializing DEV//QUEST Academy...</div>
@@ -1163,7 +1162,6 @@
         </div>
     </div>
 
-    <!-- Debug Modal -->
     <div class="debug-modal" id="debug-modal">
         <div class="debug-content">
             <div class="debug-header">
@@ -1183,7 +1181,6 @@
         </div>
     </div>
 
-    <!-- Toast Notification -->
     <div class="toast" id="toast">
         <div class="toast-icon">
             <i class="fa-solid fa-check"></i>
@@ -1193,11 +1190,8 @@
         </div>
     </div>
 
-    <!-- Main App -->
     <div class="app-container">
-        <!-- Sidebar -->
         <div class="sidebar">
-            <!-- AI Generation Banner -->
             <div class="ai-generation-banner" id="ai-banner">
                 <div class="spinner"></div>
                 <div class="text">
@@ -1206,7 +1200,6 @@
                 </div>
             </div>
 
-            <!-- Career Path Selector -->
             <div class="path-selector">
                 <div class="path-selector-header">
                     <i class="fa-solid fa-compass"></i>
@@ -1241,7 +1234,6 @@
                 </div>
             </div>
 
-            <!-- Search -->
             <div class="search-container">
                 <i class="fa-solid fa-search"></i>
                 <input type="text" id="lesson-search" placeholder="Search lessons...">
@@ -1250,7 +1242,6 @@
                 </button>
             </div>
 
-            <!-- Skill Tree Progress Section -->
             <div class="skill-tree-section">
                 <div class="skill-tree-header" onclick="toggleSkillTree()">
                     <div class="skill-tree-label">
@@ -1262,28 +1253,21 @@
                 </div>
 
                 <div class="skill-tree-body" id="skill-tree-body">
-                    <!-- Overall Progress Bar -->
                     <div class="overall-progress-bar">
                         <div class="overall-progress-fill" id="overall-progress-fill" style="width: 0%;"></div>
                     </div>
                     <div class="overall-progress-text" id="overall-progress-text">Get started by viewing your first lesson</div>
 
-                    <!-- Track-by-Track Progress -->
                     <div class="skill-tree-visual" id="skill-tree-tracks">
-                        <!-- Dynamically populated -->
-                    </div>
+                        </div>
                 </div>
             </div>
 
-            <!-- Lesson List -->
             <div class="lesson-list" id="lesson-list">
-                <!-- Dynamically populated -->
-            </div>
+                </div>
         </div>
 
-        <!-- Main Content -->
         <div class="main-content">
-            <!-- Header -->
             <div class="header">
                 <div class="logo">
                     <div class="logo-icon">DQ</div>
@@ -1300,9 +1284,7 @@
                 </div>
             </div>
 
-            <!-- Content Wrapper -->
             <div class="content-wrapper">
-                <!-- Lesson Content -->
                 <div class="lesson-content">
                     <div class="lesson-header">
                         <h1 id="lesson-title">Welcome to DEV//QUEST Academy</h1>
@@ -1318,7 +1300,6 @@
                         </div>
                     </div>
 
-                    <!-- Analogy Section -->
                     <div class="analogy-section" id="analogy-section" style="display: none;">
                         <div class="icon">💡</div>
                         <h3>Think of it this way...</h3>
@@ -1341,7 +1322,6 @@
                     </div>
                 </div>
 
-                <!-- IDE Panel -->
                 <div class="ide-panel">
                     <div class="ide-toolbar">
                         <div class="ide-title">
@@ -1369,7 +1349,6 @@ print("Hello, DEV//QUEST!")</div>
                 </div>
             </div>
 
-            <!-- Navigation Footer -->
             <div class="nav-footer">
                 <button class="nav-btn" id="prev-btn" onclick="prevLesson()" disabled>
                     <i class="fa-solid fa-arrow-left"></i> Previous
@@ -1388,8 +1367,8 @@ print("Hello, DEV//QUEST!")</div>
         // ========================================
         // API CONFIGURATION
         // ========================================
-        const API_BASE_URL = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1' 
-            ? '' 
+        const API_BASE_URL = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1'
+            ? ''
             : 'https://devquest.uk';
 
         // ========================================
@@ -1498,7 +1477,7 @@ print("Hello, DEV//QUEST!")</div>
         // ========================================
         async function init() {
             console.log('🚀 Initializing DEV//QUEST Academy...');
-            
+
             // Initialize Ace Editor
             editor = ace.edit("editor");
             editor.setTheme("ace/theme/monokai");
@@ -1509,25 +1488,25 @@ print("Hello, DEV//QUEST!")</div>
                 enableBasicAutocompletion: true,
                 enableLiveAutocompletion: true
             });
-            
+
             // Load progress
             loadProgress();
-            
+
             // Load curriculum
             await loadCurriculum();
-            
+
             // Load saved preferences
             loadSavedPreferences();
-            
+
             // Initialize Pyodide in background
             initPyodide();
-            
+
             // Set up event listeners
             setupEventListeners();
-            
+
             // Start AI status polling
             startAIStatusPolling();
-            
+
             // Hide loading screen
             setTimeout(() => {
                 document.querySelector('.loading-screen').classList.add('hidden');
@@ -1547,13 +1526,13 @@ print("Hello, DEV//QUEST!")</div>
             // Search
             const searchInput = document.getElementById('lesson-search');
             const searchClear = document.getElementById('search-clear');
-            
+
             searchInput.addEventListener('input', (e) => {
                 const query = e.target.value.toLowerCase();
                 searchClear.classList.toggle('visible', query.length > 0);
                 filterLessons(query);
             });
-            
+
             searchClear.addEventListener('click', () => {
                 searchInput.value = '';
                 searchClear.classList.remove('visible');
@@ -1576,24 +1555,24 @@ print("Hello, DEV//QUEST!")</div>
             try {
                 const response = await fetch(`${API_BASE_URL}/ai-status`);
                 const logs = await response.json();
-                
-                const isGenerating = logs.some(log => 
-                    log.message.includes('Generating') || 
+
+                const isGenerating = logs.some(log =>
+                    log.message.includes('Generating') ||
                     log.message.includes('Publishing')
                 );
-                
+
                 const banner = document.getElementById('ai-banner');
                 if (isGenerating) {
                     banner.classList.add('visible');
-                    
+
                     const curriculum = await fetch(`${API_BASE_URL}/curriculum`).then(r => r.json());
-                    const allLessonsCount = curriculum.tracks.reduce((sum, track) => 
+                    const allLessonsCount = curriculum.tracks.reduce((sum, track) =>
                         sum + track.lessons.length, 0);
-                    
-                    const pendingCount = curriculum.tracks.reduce((sum, track) => 
+
+                    const pendingCount = curriculum.tracks.reduce((sum, track) =>
                         sum + track.lessons.filter(l => l.status === 'pending').length, 0);
-                    
-                    document.getElementById('ai-progress').textContent = 
+
+                    document.getElementById('ai-progress').textContent =
                         `${allLessonsCount - pendingCount} / ${allLessonsCount}`;
                 } else {
                     banner.classList.remove('visible');
@@ -1615,11 +1594,11 @@ print("Hello, DEV//QUEST!")</div>
         async function loadDebugInfo() {
             const debugBody = document.getElementById('debug-body');
             debugBody.innerHTML = '<div class="debug-status-item"><span class="message">Loading...</span></div>';
-            
+
             try {
                 const response = await fetch(`${API_BASE_URL}/ai-status`);
                 const logs = await response.json();
-                
+
                 let html = '';
                 logs.forEach(log => {
                     const time = new Date(log.created_at).toLocaleTimeString();
@@ -1630,13 +1609,13 @@ print("Hello, DEV//QUEST!")</div>
                         </div>
                     `;
                 });
-                
+
                 html += `
                     <button class="debug-refresh" onclick="loadDebugInfo()">
                         <i class="fa-solid fa-refresh"></i> Refresh Status
                     </button>
                 `;
-                
+
                 debugBody.innerHTML = html;
             } catch (error) {
                 debugBody.innerHTML = `
@@ -1656,7 +1635,7 @@ print("Hello, DEV//QUEST!")</div>
             const pathInfo = document.getElementById('path-info');
             const pathInfoDesc = pathInfo.querySelector('.path-info-desc');
             const pathInfoSalary = pathInfo.querySelector('.path-info-salary');
-            
+
             const path = CAREER_PATHS[currentCareerPath];
             if (path && currentCareerPath !== 'all') {
                 pathInfoDesc.textContent = path.desc;
@@ -1674,7 +1653,7 @@ print("Hello, DEV//QUEST!")</div>
             try {
                 const response = await fetch(`${API_BASE_URL}/curriculum`);
                 const data = await response.json();
-                
+
                 allTracks = data.tracks;
                 allLessons = [];
                 allTracks.forEach(track => {
@@ -1685,17 +1664,17 @@ print("Hello, DEV//QUEST!")</div>
                         });
                     });
                 });
-                
+
                 totalLessons = allLessons.length;
                 calculateTrackProgress();
                 renderSyllabus();
                 updateSkillTree();
-                
+
                 const pendingCount = allLessons.filter(l => l.status === 'pending').length;
                 pendingLessonsCount = pendingCount;
-                document.getElementById('ai-progress').textContent = 
+                document.getElementById('ai-progress').textContent =
                     `${totalLessons - pendingCount} / ${totalLessons}`;
-                
+
                 console.log('✅ Curriculum loaded:', totalLessons, 'lessons');
             } catch (error) {
                 console.error('❌ Failed to load curriculum:', error);
@@ -1707,11 +1686,11 @@ print("Hello, DEV//QUEST!")</div>
         // ========================================
         function calculateTrackProgress() {
             trackProgress = {};
-            
+
             allTracks.forEach(track => {
                 const totalInTrack = track.lessons.length;
                 const viewedInTrack = track.lessons.filter(l => viewedLessons.includes(l.id)).length;
-                
+
                 trackProgress[track.id] = {
                     viewed: viewedInTrack,
                     total: totalInTrack,
@@ -1722,15 +1701,15 @@ print("Hello, DEV//QUEST!")</div>
 
         function updateSkillTree() {
             calculateTrackProgress();
-            
+
             // Update overall progress
             const viewed = viewedLessons.length;
             const total = totalLessons;
             const overallPercent = total > 0 ? Math.round((viewed / total) * 100) : 0;
-            
+
             document.getElementById('overall-progress-fill').style.width = `${overallPercent}%`;
             document.getElementById('overall-stats').textContent = `${viewed} / ${total}`;
-            
+
             if (viewed === 0) {
                 document.getElementById('overall-progress-text').textContent = 'Get started by viewing your first lesson';
             } else if (viewed === total) {
@@ -1738,21 +1717,21 @@ print("Hello, DEV//QUEST!")</div>
             } else {
                 document.getElementById('overall-progress-text').textContent = `${overallPercent}% complete - Keep going!`;
             }
-            
+
             // Filter tracks based on career path
             let tracksToShow = allTracks;
             const path = CAREER_PATHS[currentCareerPath];
             if (path && path.tracks.length > 0) {
                 tracksToShow = allTracks.filter(track => path.tracks.includes(track.id));
             }
-            
+
             // Update track-by-track progress
             const container = document.getElementById('skill-tree-tracks');
             container.innerHTML = '';
-            
+
             tracksToShow.forEach(track => {
                 const progress = trackProgress[track.id] || { viewed: 0, total: 0, percentage: 0 };
-                
+
                 const trackEl = document.createElement('div');
                 trackEl.className = 'skill-tree-track';
                 trackEl.innerHTML = `
@@ -1767,13 +1746,13 @@ print("Hello, DEV//QUEST!")</div>
                 container.appendChild(trackEl);
             });
         }
-        
+
         function toggleSkillTree() {
             const body = document.getElementById('skill-tree-body');
             const icon = document.getElementById('skill-tree-icon');
-            
+
             body.classList.toggle('collapsed');
-            
+
             if (body.classList.contains('collapsed')) {
                 icon.style.transform = 'rotate(-90deg)';
             } else {
@@ -1786,15 +1765,21 @@ print("Hello, DEV//QUEST!")</div>
         // ========================================
         function renderSyllabus() {
             const container = document.getElementById('lesson-list');
-            container.innerHTML = '';
-            
+
+            // Check if we already have content to avoid full re-render flickering
+            const existingTracks = container.children.length > 0;
+            if (existingTracks) {
+                // Just update badges if needed, or clear if you want full re-render
+                container.innerHTML = '';
+            }
+
             allTracks.forEach(track => {
                 const progress = trackProgress[track.id] || { viewed: 0, total: 0 };
-                
+
                 const trackEl = document.createElement('div');
                 trackEl.className = 'lesson-track';
                 trackEl.dataset.trackId = track.id;
-                
+
                 const headerEl = document.createElement('div');
                 headerEl.className = 'track-header';
                 headerEl.innerHTML = `
@@ -1804,34 +1789,36 @@ print("Hello, DEV//QUEST!")</div>
                     </div>
                     <i class="fa-solid fa-chevron-down track-icon"></i>
                 `;
+
+                // Toggle Logic
                 headerEl.addEventListener('click', () => {
                     headerEl.classList.toggle('expanded');
                     itemsEl.classList.toggle('expanded');
                 });
-                
+
                 const itemsEl = document.createElement('div');
                 itemsEl.className = 'lesson-items';
-                
+
                 track.lessons.forEach(lesson => {
                     const lessonEl = document.createElement('div');
                     lessonEl.className = 'lesson-item';
                     lessonEl.dataset.lessonId = lesson.id;
-                    
+
                     const isViewed = viewedLessons.includes(lesson.id);
                     if (isViewed) {
                         lessonEl.classList.add('viewed');
                     }
-                    
+
                     const isGenerating = lesson.status === 'pending';
                     if (isGenerating) {
                         lessonEl.classList.add('generating');
                     }
-                    
+
                     let icon = '📄';
                     if (lesson.type === 'lab') icon = '🧪';
                     else if (lesson.type === 'challenge') icon = '🏆';
                     else if (lesson.type === 'project') icon = '🚀';
-                    
+
                     lessonEl.innerHTML = `
                         <div class="lesson-icon">
                             ${isViewed ? '<i class="fa-solid fa-check"></i>' : icon}
@@ -1845,26 +1832,29 @@ print("Hello, DEV//QUEST!")</div>
                             </div>
                         </div>
                     `;
-                    
+
                     if (!isGenerating) {
                         lessonEl.addEventListener('click', () => loadLesson(lesson.id));
                     }
-                    
+
                     itemsEl.appendChild(lessonEl);
                 });
-                
+
                 trackEl.appendChild(headerEl);
                 trackEl.appendChild(itemsEl);
                 container.appendChild(trackEl);
             });
-            
-            const firstHeader = container.querySelector('.track-header');
-            const firstItems = container.querySelector('.lesson-items');
-            if (firstHeader && firstItems) {
-                firstHeader.classList.add('expanded');
-                firstItems.classList.add('expanded');
+
+            // Expand the first track by default only on initial load
+            if (!existingTracks) {
+                const firstHeader = container.querySelector('.track-header');
+                const firstItems = container.querySelector('.lesson-items');
+                if (firstHeader && firstItems) {
+                    firstHeader.classList.add('expanded');
+                    firstItems.classList.add('expanded');
+                }
             }
-            
+
             filterByCareerPath();
         }
 
@@ -1875,28 +1865,35 @@ print("Hello, DEV//QUEST!")</div>
             try {
                 const response = await fetch(`${API_BASE_URL}/lesson/${lessonId}`);
                 const lesson = await response.json();
-                
+
                 if (lesson.error) {
                     console.error('Lesson not found:', lessonId);
                     return;
                 }
-                
+
                 currentLesson = lesson;
                 currentIndex = allLessons.findIndex(l => l.id === lessonId);
-                
+
                 // Auto-mark as viewed
                 if (!viewedLessons.includes(lessonId)) {
                     viewedLessons.push(lessonId);
                     localStorage.setItem('devquest_viewed', JSON.stringify(viewedLessons));
                     updateSkillTree();
-                    renderSyllabus();
+                    // NOTE: Removed renderSyllabus here to prevent sidebar reset!
+                    // Instead, update just the visual state of the lesson item
+                    const lessonEl = document.querySelector(`[data-lesson-id="${lessonId}"]`);
+                    if (lessonEl) {
+                        lessonEl.classList.add('viewed');
+                        const icon = lessonEl.querySelector('.lesson-icon');
+                        icon.innerHTML = '<i class="fa-solid fa-check"></i>';
+                    }
                     showToast('Progress saved!');
                 }
-                
+
                 document.getElementById('lesson-title').textContent = lesson.title;
                 document.getElementById('lesson-type').textContent = lesson.lesson_type || 'concept';
                 document.getElementById('lesson-duration').textContent = '15 min';
-                
+
                 const analogySection = document.getElementById('analogy-section');
                 const analogyText = document.getElementById('analogy-text');
                 if (lesson.analogy) {
@@ -1905,31 +1902,50 @@ print("Hello, DEV//QUEST!")</div>
                 } else {
                     analogySection.style.display = 'none';
                 }
-                
+
                 const markdown = marked.parse(lesson.content || lesson.content_markdown || '# Loading...');
                 document.getElementById('markdown-content').innerHTML = markdown;
-                
+
                 const code = lesson.starter_code || '# No starter code provided';
                 originalCode = code;
                 editor.setValue(code, -1);
-                
+
                 const mode = lesson.ide_mode || 'python';
                 editor.session.setMode(`ace/mode/${mode}`);
-                
+
                 document.getElementById('console').innerHTML = '';
-                
+
+                // --- UI FIX: Highlight Active & Keep Sidebar Open ---
                 document.querySelectorAll('.lesson-item').forEach(el => {
                     el.classList.remove('active');
                 });
+
                 const activeLesson = document.querySelector(`[data-lesson-id="${lessonId}"]`);
                 if (activeLesson) {
                     activeLesson.classList.add('active');
+
+                    // Force Sidebar Track Open
+                    const trackEl = activeLesson.closest('.lesson-track');
+                    if (trackEl) {
+                        const header = trackEl.querySelector('.track-header');
+                        const items = trackEl.querySelector('.lesson-items');
+
+                        // Add class if missing
+                        if (header && !header.classList.contains('expanded')) {
+                            header.classList.add('expanded');
+                        }
+                        if (items && !items.classList.contains('expanded')) {
+                            items.classList.add('expanded');
+                        }
+                    }
+
+                    // Scroll to it
                     activeLesson.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
                 }
-                
+
                 updateNavButtons();
                 updateLessonPosition();
-                
+
                 console.log('📖 Loaded lesson:', lesson.title);
             } catch (error) {
                 console.error('Failed to load lesson:', error);
@@ -1957,7 +1973,7 @@ print("Hello, DEV//QUEST!")</div>
                 });
                 return;
             }
-            
+
             document.querySelectorAll('.lesson-track').forEach(trackEl => {
                 const trackId = trackEl.dataset.trackId;
                 const shouldShow = path.tracks.includes(trackId);
@@ -1968,26 +1984,26 @@ print("Hello, DEV//QUEST!")</div>
         function filterLessons(searchQuery) {
             const container = document.getElementById('lesson-list');
             let visibleLessonCount = 0;
-            
+
             allTracks.forEach(track => {
                 const trackEl = container.querySelector(`[data-track-id="${track.id}"]`);
                 if (!trackEl) {
                     return;
                 }
-                
+
                 let visibleLessonsInTrack = 0;
-                
+
                 track.lessons.forEach(lesson => {
                     const lessonEl = trackEl.querySelector(`[data-lesson-id="${lesson.id}"]`);
                     if (!lessonEl) return;
-                    
-                    const matchesSearch = !searchQuery || 
+
+                    const matchesSearch = !searchQuery ||
                                         lesson.title.toLowerCase().includes(searchQuery) ||
                                         track.title.toLowerCase().includes(searchQuery);
-                    
+
                     if (matchesSearch) {
                         lessonEl.classList.remove('hidden');
-                        lessonEl.classList.toggle('search-highlight', searchQuery && 
+                        lessonEl.classList.toggle('search-highlight', searchQuery &&
                             lesson.title.toLowerCase().includes(searchQuery));
                         visibleLessonsInTrack++;
                         visibleLessonCount++;
@@ -1996,13 +2012,13 @@ print("Hello, DEV//QUEST!")</div>
                         lessonEl.classList.remove('search-highlight');
                     }
                 });
-                
+
                 trackEl.classList.toggle('hidden', visibleLessonsInTrack === 0);
             });
-            
+
             const existingNoResults = container.querySelector('.no-results');
             if (existingNoResults) existingNoResults.remove();
-            
+
             if (visibleLessonCount === 0) {
                 const noResults = document.createElement('div');
                 noResults.className = 'no-results';
@@ -2031,13 +2047,13 @@ print("Hello, DEV//QUEST!")</div>
             document.getElementById('prev-btn').disabled = currentIndex <= 0;
             document.getElementById('next-btn').disabled = currentIndex < 0 || currentIndex >= allLessons.length - 1;
         }
-        
+
         function prevLesson() {
             if (currentIndex > 0) {
                 loadLesson(allLessons[currentIndex - 1].id);
             }
         }
-        
+
         function nextLesson() {
             if (currentIndex >= 0 && currentIndex < allLessons.length - 1) {
                 loadLesson(allLessons[currentIndex + 1].id);
@@ -2060,22 +2076,22 @@ print("Hello, DEV//QUEST!")</div>
             const code = editor.getValue();
             const consoleEl = document.getElementById('console');
             consoleEl.innerHTML = '<span style="color: #888">Running...</span>';
-            
+
             const lang = currentLesson?.ide_mode || 'python';
-            
+
             if (lang === 'python') {
                 if (!pyodide) {
                     consoleEl.innerHTML = '<span style="color: #f59e0b">⏳ Python is still loading...</span>';
                     return;
                 }
-                
+
                 try {
                     let output = [];
                     pyodide.setStdout({ batched: (text) => output.push(text) });
                     pyodide.setStderr({ batched: (text) => output.push(`<span style="color:#ef4444">${text}</span>`) });
-                    
+
                     await pyodide.runPythonAsync(code);
-                    
+
                     consoleEl.innerHTML = output.join('\n') || '<span style="color: #888">No output</span>';
                 } catch (e) {
                     consoleEl.innerHTML = `<span style="color: #ef4444">${escapeHtml(e.toString())}</span>`;
@@ -2085,15 +2101,15 @@ print("Hello, DEV//QUEST!")</div>
                     const logs = [];
                     const originalLog = console.log;
                     const originalError = console.error;
-                    
+
                     console.log = (...args) => logs.push(args.map(String).join(' '));
                     console.error = (...args) => logs.push(`<span style="color:#ef4444">${args.map(String).join(' ')}</span>`);
-                    
+
                     eval(code);
-                    
+
                     console.log = originalLog;
                     console.error = originalError;
-                    
+
                     consoleEl.innerHTML = logs.join('\n') || '<span style="color: #888">No output</span>';
                 } catch (e) {
                     consoleEl.innerHTML = `<span style="color: #ef4444">${escapeHtml(e.toString())}</span>`;
@@ -2117,7 +2133,7 @@ print("Hello, DEV//QUEST!")</div>
         // ========================================
         function loadProgress() {
             const savedViewed = localStorage.getItem('devquest_viewed');
-            
+
             if (savedViewed) {
                 viewedLessons = JSON.parse(savedViewed);
             }
@@ -2129,7 +2145,7 @@ print("Hello, DEV//QUEST!")</div>
         function showToast(message) {
             const toast = document.getElementById('toast');
             document.getElementById('toast-message').textContent = message;
-            
+
             toast.classList.add('visible');
             setTimeout(() => toast.classList.remove('visible'), 2000);
         }
