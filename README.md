@@ -1,20 +1,17 @@
-# 🛡️ DEV//QUEST: The Architect's Forge
+# 🛡️ DEV//QUEST Academy
 
 <div align="center">
 
-![DEV//QUEST Status](https://img.shields.io/badge/Status-Production_Ready-00ff88?style=for-the-badge&logo=cpu)
-![AI Core](https://img.shields.io/badge/AI_Core-Qwen_2.5_Coder_32B-ff6b35?style=for-the-badge&logo=ollama)
-![Infrastructure](https://img.shields.io/badge/Infra-Docker_Native-blue?style=for-the-badge&logo=docker)
+![DEV//QUEST Status](https://img.shields.io/badge/Status-Live-00ff88?style=for-the-badge&logo=cpu)
+![AI Powered](https://img.shields.io/badge/AI_Powered-Advanced_LLMs-ff6b35?style=for-the-badge&logo=openai)
+![Lessons](https://img.shields.io/badge/Lessons-700+-blue?style=for-the-badge&logo=bookstack)
 
-### 🚀 A Self-Hostable, AI-Powered Learning Platform
-**Autonomous lesson generation powered by local LLMs. Zero cloud dependency.**
+### 🚀 AI-Powered Learning Platform
+**Master programming, cybersecurity, and data science with AI-generated lessons**
 
-<https://xray55.github.io/dev-quest/>
+## **[🎯 Start Learning →](https://xray55.github.io/dev-quest/)**
 
-[![License](https://img.shields.io/badge/License-MIT-green?style=flat-square)](LICENSE)
-[![Python](https://img.shields.io/badge/Python-3.11+-blue?style=flat-square&logo=python)](https://python.org)
-[![FastAPI](https://img.shields.io/badge/FastAPI-High_Performance-teal?style=flat-square&logo=fastapi)](https://fastapi.tiangolo.com)
-[![AutoGen](https://img.shields.io/badge/AutoGen-0.2.27-purple?style=flat-square)](https://github.com/microsoft/autogen)
+[![Discord](https://img.shields.io/badge/Discord-Join_Community-5865F2?style=flat-square&logo=discord)](https://discord.gg/hD4PEWKMpx)
 
 </div>
 
@@ -22,154 +19,203 @@
 
 ## 🎯 What Is DEV//QUEST?
 
-**DEV//QUEST** is a fully autonomous educational content generator that runs entirely on your local hardware. It's not a static course platform—it's a **living curriculum engine** that uses AI to write comprehensive programming lessons on demand.
+**DEV//QUEST Academy** is an AI-powered learning platform that generates comprehensive, personalized programming lessons in real-time. Unlike traditional courses with pre-recorded content, our AI creates fresh, detailed lessons tailored to modern development practices.
 
-### Key Features
+### 🌟 Why DEV//QUEST?
 
-✨ **Autonomous Content Generation** - Uses Microsoft AutoGen to orchestrate AI agents that write detailed lessons  
-🏠 **100% Self-Hosted** - Runs on your hardware using Ollama (no cloud APIs, no data sharing)  
-📚 **Comprehensive Curriculum** - From foundational programming to advanced systems topics  
-🎨 **Modern Learning Interface** - Dark-themed, distraction-free reading experience  
-💻 **Interactive Code Editor** - Built-in Python/JavaScript execution with Ace Editor + Pyodide  
-📊 **Progress Tracking** - XP system and lesson completion tracking  
-🐳 **One-Command Deploy** - Fully containerized with Docker Compose  
-
----
-
-## 🧠 The AI Architecture
-
-### Multi-Agent System
-
-DEV//QUEST uses **Microsoft AutoGen** to create a multi-agent conversation between:
-
-- **Professor Agent**: Expert content writer generating comprehensive lessons (1500+ words)
-- **Admin Agent**: Quality controller ensuring valid JSON output and adherence to standards
-
-### Local LLM Configuration
-
-```yaml
-Model: qwen2.5-coder:32b
-Engine: Ollama
-Endpoint: http://localhost:11434/v1 (OpenAI-compatible)
-Context: Internal knowledge synthesis (no web search)
-Hardware: Optimized for ~24GB VRAM (single GPU or split across dual GPUs)
-```
-
-**Why Qwen 2.5 Coder?**
-- Specialized for code generation and technical documentation
-- 32B parameters provide deep reasoning capabilities
-- Excellent instruction-following for structured JSON output
-- Uncensored local deployment (no content filtering)
-
-### How Lesson Generation Works
-
-```
-1. User starts platform → Curriculum seeded from roadmap
-2. Background engine polls for pending lessons
-3. AutoGen Professor writes comprehensive lesson in markdown
-4. Content sanitized and stored in SQLite database
-5. Frontend fetches and renders markdown with syntax highlighting
-```
+✨ **AI-Generated Content** - Every lesson is created by advanced language models trained on cutting-edge knowledge  
+📚 **Massive Curriculum** - 700+ lessons across 50+ technologies and specializations  
+🎯 **Career-Focused Paths** - Follow guided tracks for specific roles (Full-Stack, DevOps, Security, etc.)  
+💻 **Interactive Learning** - Built-in code editor with live Python/JavaScript execution  
+📊 **Visual Progress Tracking** - Skill tree system shows your growth across all technologies  
+🌙 **Beautiful Dark Interface** - Distraction-free, eye-friendly design for extended learning  
+🆓 **Completely Free** - No paywalls, no premium tiers, no credit card required  
 
 ---
 
-## 🗺️ The Omni-Curriculum
+## 🗺️ Learning Paths
 
-The platform generates lessons across **10 progressive learning tracks**:
+Choose your career destination and let our AI guide you:
 
-| Track | Focus Area | Technologies |
-|-------|-----------|-------------|
-| **00. Foundations** | Internet basics, networking, computer architecture | DNS, IP, TCP/UDP, CPU/RAM/SSD |
-| **01A. HTML** | Web structure and semantics | HTML5, semantic markup, accessibility |
-| **01B. CSS** | Styling and layout | CSS3, Flexbox, Grid, animations |
-| **02A. JavaScript Basics** | Programming fundamentals | Variables, functions, DOM manipulation |
-| **02B. JS Data Structures** | Advanced programming | Arrays, objects, algorithms |
-| **02C. JS DOM** | Interactive web development | Event handling, async/await |
-| **02D. JS Advanced** | Modern JavaScript | ES6+, modules, promises, fetch API |
-| **03. Git** | Version control | Git workflow, branching, collaboration |
-| **04A. CS Math** | Computer science fundamentals | Binary, algorithms, Big O notation |
-| **04B. Data Structures** | Core CS concepts | Linked lists, trees, graphs, sorting |
+### 💻 **Software Development**
+- **Full-Stack Developer** - Master frontend and backend (React, Node.js, databases)
+- **Frontend Developer** - Build beautiful UIs (HTML, CSS, JavaScript, React, TypeScript)
+- **Backend Engineer** - Server-side architecture (APIs, databases, Python, Node.js)
+- **Mobile Developer** - iOS/Android apps with React Native
 
-### Expandable Curriculum
+### ☁️ **Cloud & Infrastructure**
+- **DevOps Engineer** - Automate everything (Docker, Kubernetes, CI/CD, AWS)
+- **Cloud Architect** - Design cloud solutions (AWS, Terraform, microservices)
+- **Site Reliability Engineer** - Build resilient systems (monitoring, SRE practices)
 
-The roadmap in `curriculum.py` can be extended to include:
-- Backend frameworks (Node.js, FastAPI, Django)
-- Databases (SQL, NoSQL, ORMs)
-- DevOps (Docker, K8s, CI/CD)
-- Systems programming (C, C++, Rust)
-- Cybersecurity topics
-- And much more...
+### 🤖 **Data & AI**
+- **Data Scientist** - Analyze data and build models (Python, SQL, ML, statistics)
+- **Machine Learning Engineer** - Production ML systems (PyTorch, TensorFlow, MLOps)
+
+### 🛡️ **Cybersecurity**
+- **Red Team / Penetration Tester** - Offensive security (web/network pentesting, exploit development)
+- **Blue Team / SOC Analyst** - Defensive security (SIEM, DFIR, threat hunting)
+- **Security Engineer** - Full-spectrum security (both red and blue team skills)
 
 ---
 
-## 🛠️ Technical Stack
+## 📚 What You'll Learn
 
-### Backend
+Our AI-generated curriculum covers **50+ technologies**:
 
-- **FastAPI** - Asynchronous Python web framework for API
-- **AutoGen 0.2.27** - Multi-agent orchestration framework
-- **Ollama** - Local LLM inference server
-- **SQLite** - Embedded database for lessons and progress
-- **Python 3.11** - Runtime environment
-
-### Frontend
-
-- **Vanilla JavaScript** - No framework bloat, pure performance
-- **Ace Editor** - Professional code editor (Monaco alternative)
-- **Pyodide** - Python runtime in the browser (WASM)
-- **Marked.js** - Markdown parsing and rendering
-- **Custom CSS** - Dark theme optimized for extended reading
-
-### Infrastructure
-
-- **Docker Compose** - Multi-container orchestration
-- **Cloudflare Tunnel** - Secure external access (optional)
-- **Volume Mounts** - Persistent database storage
-
-
-## 🎓 Educational Philosophy
-
-Unlike traditional coding bootcamps, DEV//QUEST:
-
-✅ **Teaches fundamentals first** - Deep understanding before frameworks  
-✅ **No hand-holding** - Expects active learning and experimentation  
-✅ **Comprehensive explanations** - 1500+ word lessons with analogies and examples  
-✅ **Official documentation links** - Encourages reading primary sources  
-✅ **Practical code examples** - Every lesson includes runnable starter code  
-✅ **Progressive difficulty** - Builds knowledge incrementally  
-
-
-
-## 📜 License
-
-MIT License - See [LICENSE](LICENSE) for details
+**Programming Languages**: Python, JavaScript, TypeScript, Java, C++, Go, Rust  
+**Web Development**: HTML, CSS, React, Next.js, Node.js, Express, FastAPI  
+**Databases**: PostgreSQL, MongoDB, Redis, SQL fundamentals  
+**DevOps & Cloud**: Docker, Kubernetes, AWS, Terraform, CI/CD, Linux  
+**Data Science & AI**: Pandas, NumPy, PyTorch, TensorFlow, Scikit-learn  
+**Security**: Penetration testing, SIEM, malware analysis, threat intel, EDR  
+**Computer Science**: Algorithms, data structures, system design, math foundations  
 
 ---
 
-## 🙏 Acknowledgments
+## 🎓 How It Works
 
-**Powered by:**
-- [Microsoft AutoGen](https://github.com/microsoft/autogen) - Multi-agent orchestration
-- [Ollama](https://ollama.com/) - Local LLM inference
-- [Qwen](https://github.com/QwenLM/Qwen2.5) - Foundation model
-- [FastAPI](https://fastapi.tiangolo.com/) - Web framework
-- [Ace Editor](https://ace.c9.io/) - Code editor
-- [Pyodide](https://pyodide.org/) - Python in the browser
+### 1️⃣ **Choose Your Path**
+Select a career track that interests you (or explore all tracks)
+
+### 2️⃣ **Start Learning**
+Our AI generates comprehensive lessons with:
+- Real-world analogies to make concepts stick
+- Detailed explanations (1500+ words per lesson)
+- Code examples you can run in the browser
+- Links to official documentation
+- Progressive difficulty that builds on previous knowledge
+
+### 3️⃣ **Track Your Progress**
+Watch your skill tree grow as you complete lessons:
+- Visual progress bars for each technology
+- Career path completion percentage
+- Auto-saved progress (no manual marking needed)
+
+### 4️⃣ **Practice & Build**
+- Interactive code editor for hands-on practice
+- Real-time Python/JavaScript execution
+- Example code in every lesson
+- Challenges and projects (coming soon)
 
 ---
 
-## 📊 Project Stats
+## 💡 Features
 
-![Lines of Code](https://img.shields.io/badge/Lines_of_Code-2000+-blue?style=flat-square)
-![Lesson Count](https://img.shields.io/badge/Lessons-50+-green?style=flat-square)
-![Docker Image Size](https://img.shields.io/badge/Image_Size-~500MB-yellow?style=flat-square)
-![Generation Speed](https://img.shields.io/badge/Generation-~2min/lesson-orange?style=flat-square)
+### 🤖 **AI-Powered Content**
+Every lesson is generated by state-of-the-art language models, ensuring:
+- Up-to-date information on modern technologies
+- Comprehensive coverage of each topic
+- Clear explanations with practical examples
+- No outdated content or deprecated practices
+
+### 🎨 **Beautiful Interface**
+- Dark theme optimized for long reading sessions
+- Clean, distraction-free layout
+- Smooth animations and transitions
+- Responsive design for all devices
+
+### 💻 **Interactive Code Editor**
+- Ace Editor with syntax highlighting
+- Execute Python code directly in browser (via Pyodide)
+- Run JavaScript examples instantly
+- Copy/paste friendly code blocks
+
+### 📊 **Smart Progress Tracking**
+- Automatic progress saving as you view lessons
+- Skill tree visualization showing your journey
+- Career path filtering to focus on what matters
+- Track completion across 47+ technology tracks
+
+### 🔍 **Powerful Search**
+- Find lessons instantly across all tracks
+- Filter by career path
+- Search by technology or topic
 
 ---
+
+## 🚀 Getting Started
+
+### **[👉 Access DEV//QUEST Academy](https://xray55.github.io/dev-quest/)**
+
+No signup required. No credit card. Just start learning.
+
+### Quick Start Guide:
+
+1. **Visit the platform** at the link above
+2. **Select a career path** (or choose "All Tracks" to explore)
+3. **Click any lesson** to begin
+4. **Your progress auto-saves** as you view lessons
+5. **Use the code editor** to practice examples
+6. **Watch your skill tree grow**
+
+---
+
+## 📈 Learning Statistics
+
+![Lesson Count](https://img.shields.io/badge/Total_Lessons-700+-00ff88?style=flat-square)
+![Technologies](https://img.shields.io/badge/Technologies-50+-ff6b35?style=flat-square)
+![Career Paths](https://img.shields.io/badge/Career_Paths-13-blue?style=flat-square)
+![AI Generated](https://img.shields.io/badge/AI_Generated-100%25-purple?style=flat-square)
+
+---
+
+## 🎯 Who Is This For?
+
+✅ **Beginners** - Start from zero with foundational tracks  
+✅ **Self-Taught Developers** - Fill knowledge gaps systematically  
+✅ **Career Switchers** - Follow proven paths to new roles  
+✅ **Students** - Supplement formal education with practical knowledge  
+✅ **Professionals** - Learn new technologies for career growth  
+✅ **ADHD Learners** - Auto-tracking, visual progress, no manual steps  
+
+---
+
+## 🔥 What Makes Us Different?
+
+| Feature | DEV//QUEST | Traditional Courses |
+|---------|-----------|-------------------|
+| Content Freshness | AI-generated, always current | Pre-recorded, often outdated |
+| Lesson Depth | 1500+ word comprehensive lessons | Brief videos or short articles |
+| Progress Tracking | Automatic, visual skill tree | Manual checkboxes or none |
+| Career Focus | 13 specific career paths | Generic "learn to code" |
+| Cost | Free forever | $20-200/month |
+| Ads | None | Everywhere |
+| Upsells | None | Constant |
+| Prerequisites | None | Often hidden behind paywalls |
+
+---
+
+## 🛣️ Roadmap
+
+### ✅ **Current Features**
+- 700+ AI-generated lessons
+- 13 career learning paths
+- Interactive code editor
+- Skill tree progress visualization
+- Auto-save progress tracking
+
+
+## 🙏 Credits
+
+**Built with:**
+- Advanced AI language models for content generation
+- Microsoft AutoGen for multi-agent orchestration
+- FastAPI for high-performance backend
+- Modern web technologies for seamless UX
+
 
 <div align="center">
 
+### **[🚀 Start Your Learning Journey Today](https://xray55.github.io/dev-quest/)**
+
+**DEV//QUEST Academy** - Master the skills that matter
+
+[![Website](https://img.shields.io/badge/Website-Live-00ff88?style=for-the-badge)](https://xray55.github.io/dev-quest/)
+---
+
 **Built with ❤️ for developers who want to learn without limits**
 
+*No signup • No paywall • No BS*
 
 </div>
