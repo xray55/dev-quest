@@ -32,6 +32,7 @@
             --success-dim: #00473a;
             --warning: #ffa726;
             --danger: #ff5252;
+            --info: #42a5f5;
             
             --border: #2a2a32;
             --border-light: #38383f;
@@ -94,6 +95,30 @@
             color: var(--text-primary);
             letter-spacing: 0.5px;
         }
+        
+        .ai-status-pill {
+            margin-top: 12px;
+            padding: 8px 16px;
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-light);
+            border-radius: 20px;
+            font-size: 13px;
+            color: var(--text-secondary);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .ai-status-pill .pulse-dot {
+            width: 8px;
+            height: 8px;
+            background: var(--success);
+            border-radius: 50%;
+            animation: pulse 2s ease-in-out infinite;
+        }
+        @keyframes pulse {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.5; transform: scale(0.8); }
+        }
 
         /* ========== LAYOUT ========== */
         .app-container {
@@ -109,6 +134,38 @@
             display: flex;
             flex-direction: column;
             overflow: hidden;
+        }
+
+        .ai-generation-banner {
+            padding: 12px 16px;
+            background: linear-gradient(135deg, var(--info), #5e35b1);
+            border-bottom: 1px solid var(--border);
+            display: none;
+            align-items: center;
+            gap: 12px;
+            font-size: 13px;
+            color: white;
+        }
+        .ai-generation-banner.visible {
+            display: flex;
+        }
+        .ai-generation-banner .spinner {
+            width: 16px;
+            height: 16px;
+            border: 2px solid rgba(255,255,255,0.3);
+            border-top-color: white;
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+        }
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+        .ai-generation-banner .text {
+            flex: 1;
+        }
+        .ai-generation-banner .count {
+            font-weight: 700;
+            font-family: 'Space Mono', monospace;
         }
 
         /* ========== CAREER PATH SELECTOR ========== */
@@ -221,175 +278,308 @@
             color: var(--text-tertiary);
             cursor: pointer;
             padding: 4px;
-            font-size: 14px;
-            transition: color 0.2s;
+            display: none;
+        }
+
+        .search-clear.visible {
+            display: block;
         }
 
         .search-clear:hover {
-            color: var(--text-primary);
+            color: var(--accent);
         }
 
-        .sidebar-header {
-            padding: 24px 20px;
+        /* ========== SKILL TREE PROGRESS ========== */
+        .skill-tree-section {
+            padding: 12px 16px;
+            background: var(--bg-primary);
             border-bottom: 1px solid var(--border);
-            background: var(--bg-secondary);
+            max-height: 280px;
+            overflow-y: auto;
         }
 
-        .brand {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            margin-bottom: 16px;
-        }
-
-        .brand-icon {
-            width: 40px;
-            height: 40px;
-            background: linear-gradient(135deg, var(--accent), var(--accent-soft));
-            border-radius: 8px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-family: 'Space Mono', monospace;
-            font-weight: 700;
-            font-size: 16px;
-            color: var(--bg-deep);
-            box-shadow: 0 4px 12px var(--accent-glow);
-        }
-
-        .brand-text h1 {
-            font-size: 18px;
-            font-weight: 700;
-            letter-spacing: -0.5px;
-            margin-bottom: 2px;
-            color: var(--text-primary);
-        }
-
-        .brand-text p {
-            font-size: 12px;
-            color: var(--text-tertiary);
-            font-style: italic;
-        }
-
-        .progress-widget {
-            background: var(--accent-dim);
-            border: 1px solid var(--border-light);
-            border-radius: 6px;
-            padding: 12px;
-        }
-
-        .progress-stats {
+        .skill-tree-header {
             display: flex;
             justify-content: space-between;
-            margin-bottom: 8px;
-            font-size: 13px;
+            align-items: center;
+            margin-bottom: 10px;
+            cursor: pointer;
+            user-select: none;
+        }
+        
+        .skill-tree-header:hover .skill-tree-label {
+            color: var(--accent-soft);
+        }
+
+        .skill-tree-label {
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--text-secondary);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            transition: color 0.2s;
+        }
+
+        .skill-tree-stats {
+            font-size: 11px;
+            color: var(--text-tertiary);
+            font-family: 'Space Mono', monospace;
+        }
+
+        .skill-tree-body {
+            display: block;
+        }
+        
+        .skill-tree-body.collapsed {
+            display: none;
+        }
+
+        .skill-tree-visual {
+            background: var(--bg-elevated);
+            border: 1px solid var(--border-light);
+            border-radius: 8px;
+            padding: 10px;
+            margin-bottom: 10px;
+            max-height: 150px;
+            overflow-y: auto;
+        }
+
+        .skill-tree-track {
+            margin-bottom: 6px;
+        }
+
+        .skill-tree-track:last-child {
+            margin-bottom: 0;
+        }
+
+        .skill-tree-track-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 4px;
+        }
+
+        .skill-tree-track-name {
+            font-size: 10px;
+            font-weight: 600;
             color: var(--text-secondary);
         }
 
-        .progress-bar {
-            height: 6px;
-            background: var(--bg-deep);
-            border-radius: 3px;
-            overflow: hidden;
+        .skill-tree-track-progress {
+            font-size: 9px;
+            color: var(--text-tertiary);
+            font-family: 'Space Mono', monospace;
         }
 
-        .progress-fill {
+        .skill-tree-track-bar {
+            height: 4px;
+            background: var(--bg-code);
+            border-radius: 2px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .skill-tree-track-fill {
             height: 100%;
             background: linear-gradient(90deg, var(--accent), var(--accent-soft));
+            border-radius: 2px;
             transition: width 0.5s ease;
-            box-shadow: 0 0 8px var(--accent-glow);
         }
 
-        .sidebar-content {
+        .overall-progress-bar {
+            height: 8px;
+            background: var(--bg-elevated);
+            border-radius: 4px;
+            overflow: hidden;
+            margin-bottom: 6px;
+        }
+
+        .overall-progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--success), #00b386);
+            border-radius: 4px;
+            transition: width 0.5s ease;
+        }
+
+        .overall-progress-text {
+            font-size: 11px;
+            color: var(--text-tertiary);
+            text-align: center;
+            margin-bottom: 8px;
+        }
+
+        /* ========== LESSON LIST ========== */
+        .lesson-list {
             flex: 1;
             overflow-y: auto;
-            padding: 16px;
+            padding: 12px;
         }
 
-        .track-group {
-            margin-bottom: 24px;
+        .lesson-track {
+            margin-bottom: 16px;
+        }
+
+        .lesson-track.hidden {
+            display: none;
         }
 
         .track-header {
-            font-size: 11px;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 1.5px;
-            color: var(--text-tertiary);
-            margin-bottom: 12px;
-            padding: 0 4px;
-        }
-
-        .lesson-item {
-            padding: 10px 12px;
-            margin-bottom: 4px;
-            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 12px;
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-light);
+            border-radius: 8px 8px 0 0;
             cursor: pointer;
             transition: all 0.2s;
+            user-select: none;
+        }
+
+        .track-header:hover {
+            background: var(--bg-elevated);
+            border-color: var(--accent);
+        }
+
+        .track-title-container {
             display: flex;
             align-items: center;
             gap: 10px;
-            border-left: 3px solid transparent;
+            flex: 1;
+        }
+
+        .track-title {
+            font-size: 13px;
+            font-weight: 700;
+            color: var(--text-primary);
+            letter-spacing: 0.5px;
+        }
+
+        .track-progress-badge {
+            background: var(--accent-dim);
+            color: var(--accent-soft);
+            padding: 2px 8px;
+            border-radius: 10px;
+            font-size: 10px;
+            font-weight: 700;
+            font-family: 'Space Mono', monospace;
+        }
+
+        .track-icon {
+            color: var(--text-tertiary);
+            transition: transform 0.2s;
+        }
+
+        .track-header.expanded .track-icon {
+            transform: rotate(180deg);
+        }
+
+        .lesson-items {
+            display: none;
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-light);
+            border-top: none;
+            border-radius: 0 0 8px 8px;
+            padding: 4px;
+        }
+
+        .lesson-items.expanded {
+            display: block;
+        }
+
+        .lesson-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px 12px;
+            background: var(--bg-primary);
+            border-radius: 6px;
+            margin-bottom: 4px;
+            cursor: pointer;
+            transition: all 0.2s;
+            position: relative;
+        }
+
+        .lesson-item:last-child {
+            margin-bottom: 0;
         }
 
         .lesson-item:hover {
             background: var(--bg-elevated);
-            border-left-color: var(--accent-soft);
+            transform: translateX(4px);
         }
 
         .lesson-item.active {
-            background: var(--highlight);
-            border-left-color: var(--accent);
+            background: var(--accent-dim);
+            border-left: 3px solid var(--accent);
         }
 
-        .lesson-item.completed .lesson-icon {
-            background: var(--success);
-            color: var(--bg-deep);
-        }
-
-        .lesson-icon {
-            width: 24px;
-            height: 24px;
-            background: var(--bg-elevated);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 11px;
-            color: var(--text-tertiary);
-            flex-shrink: 0;
-        }
-
-        .lesson-title {
-            flex: 1;
-            font-size: 14px;
-            line-height: 1.4;
-            color: var(--text-secondary);
-        }
-
-        .lesson-item.active .lesson-title {
-            color: var(--text-primary);
-        }
-
-        /* Filtering styles */
-        .track-group.hidden {
-            display: none;
+        .lesson-item.viewed {
+            opacity: 0.7;
         }
 
         .lesson-item.hidden {
             display: none;
         }
 
-        .lesson-item.search-highlight .lesson-title {
+        .lesson-item.search-highlight {
             background: var(--highlight);
-            border-radius: 3px;
-            padding: 2px 4px;
+            border-left: 3px solid var(--accent);
         }
 
-        /* No results message */
+        .lesson-item.generating {
+            opacity: 0.6;
+            pointer-events: none;
+        }
+
+        .lesson-item.generating .lesson-icon {
+            animation: pulse 1.5s ease-in-out infinite;
+        }
+
+        .lesson-icon {
+            width: 32px;
+            height: 32px;
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+            background: var(--bg-elevated);
+            color: var(--text-tertiary);
+            flex-shrink: 0;
+        }
+
+        .lesson-item.viewed .lesson-icon {
+            background: var(--success-dim);
+            color: var(--success);
+        }
+
+        .lesson-details {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .lesson-title {
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 2px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .lesson-meta {
+            font-size: 11px;
+            color: var(--text-tertiary);
+            display: flex;
+            gap: 8px;
+        }
+
         .no-results {
-            padding: 60px 20px;
             text-align: center;
+            padding: 40px 20px;
             color: var(--text-tertiary);
         }
 
@@ -401,7 +591,6 @@
 
         .no-results p {
             font-size: 14px;
-            line-height: 1.6;
         }
 
         /* ========== MAIN CONTENT ========== */
@@ -412,264 +601,334 @@
             overflow: hidden;
         }
 
-        .content-header {
+        .header {
             padding: 20px 32px;
+            background: var(--bg-primary);
             border-bottom: 1px solid var(--border);
-            background: var(--bg-secondary);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
         }
 
-        .lesson-badge {
-            display: inline-block;
-            padding: 4px 10px;
-            background: var(--accent);
-            color: var(--bg-deep);
-            font-size: 11px;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            border-radius: 4px;
-            margin-bottom: 8px;
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .logo-icon {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, var(--accent), var(--accent-soft));
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
             font-family: 'Space Mono', monospace;
+            font-weight: 700;
+            font-size: 18px;
+            color: var(--bg-deep);
         }
 
-        .lesson-header h2 {
-            font-size: 32px;
+        .logo-text {
+            font-family: 'Space Mono', monospace;
+            font-size: 20px;
             font-weight: 700;
-            line-height: 1.2;
-            margin-bottom: 12px;
-            letter-spacing: -0.5px;
             color: var(--text-primary);
         }
 
-        .lesson-meta {
+        .header-actions {
             display: flex;
-            gap: 20px;
-            font-size: 14px;
-            color: var(--text-tertiary);
+            gap: 12px;
         }
 
-        .lesson-meta i {
-            margin-right: 6px;
-            color: var(--accent);
+        .debug-btn {
+            padding: 8px 16px;
+            background: var(--bg-elevated);
+            border: 1px solid var(--border-light);
+            border-radius: 6px;
+            color: var(--text-secondary);
+            font-size: 13px;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 8px;
         }
 
-        .content-body {
+        .debug-btn:hover {
+            background: var(--bg-secondary);
+            border-color: var(--accent);
+            color: var(--text-primary);
+        }
+
+        .help-btn {
+            padding: 8px 16px;
+            background: var(--bg-elevated);
+            border: 1px solid var(--border-light);
+            border-radius: 6px;
+            color: var(--text-secondary);
+            font-size: 13px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .help-btn:hover {
+            background: var(--bg-secondary);
+            border-color: var(--accent);
+            color: var(--text-primary);
+        }
+
+        .content-wrapper {
             flex: 1;
             display: flex;
             overflow: hidden;
         }
 
-        /* ========== LESSON CONTENT (Left Panel) ========== */
-        .lesson-panel {
+        .lesson-content {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        .lesson-header {
+            padding: 24px 32px;
+            background: var(--bg-primary);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .lesson-header h1 {
+            font-size: 28px;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 12px;
+            line-height: 1.3;
+        }
+
+        .lesson-meta-bar {
+            display: flex;
+            gap: 16px;
+            color: var(--text-tertiary);
+            font-size: 13px;
+        }
+
+        .lesson-meta-bar span {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .analogy-section {
+            padding: 20px 32px;
+            background: linear-gradient(135deg, rgba(255, 107, 53, 0.05), rgba(255, 140, 95, 0.05));
+            border-bottom: 1px solid var(--border);
+            border-left: 4px solid var(--accent);
+        }
+
+        .analogy-section .icon {
+            font-size: 24px;
+            margin-bottom: 8px;
+        }
+
+        .analogy-section h3 {
+            font-size: 14px;
+            font-weight: 700;
+            color: var(--accent-soft);
+            margin-bottom: 8px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .analogy-section p {
+            font-size: 15px;
+            line-height: 1.7;
+            color: var(--text-secondary);
+        }
+
+        .lesson-body {
             flex: 1;
             overflow-y: auto;
-            padding: 32px 40px 80px;
+            padding: 32px;
+        }
+
+        .markdown-content {
+            max-width: 800px;
+        }
+
+        .markdown-content h1 {
+            font-size: 32px;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 16px;
+            line-height: 1.3;
+        }
+
+        .markdown-content h2 {
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin: 32px 0 16px;
+            padding-bottom: 8px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .markdown-content h3 {
+            font-size: 20px;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin: 24px 0 12px;
+        }
+
+        .markdown-content p {
+            margin-bottom: 16px;
+            color: var(--text-secondary);
+            font-size: 16px;
+        }
+
+        .markdown-content ul, .markdown-content ol {
+            margin-bottom: 16px;
+            padding-left: 24px;
+        }
+
+        .markdown-content li {
+            margin-bottom: 8px;
+            color: var(--text-secondary);
+        }
+
+        .markdown-content code {
+            background: var(--bg-code);
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 14px;
+            color: var(--accent-soft);
+        }
+
+        .markdown-content pre {
+            background: var(--bg-code);
+            border: 1px solid var(--border-light);
+            border-radius: 8px;
+            padding: 16px;
+            margin: 20px 0;
+            overflow-x: auto;
+        }
+
+        .markdown-content pre code {
+            background: none;
+            padding: 0;
+            font-size: 14px;
+            color: var(--text-primary);
+        }
+
+        .markdown-content blockquote {
+            border-left: 4px solid var(--accent);
+            padding-left: 16px;
+            margin: 20px 0;
+            color: var(--text-tertiary);
+            font-style: italic;
+        }
+
+        .markdown-content a {
+            color: var(--accent-soft);
+            text-decoration: none;
+            border-bottom: 1px solid transparent;
+            transition: border-color 0.2s;
+        }
+
+        .markdown-content a:hover {
+            border-bottom-color: var(--accent-soft);
+        }
+
+        /* ========== IDE PANEL ========== */
+        .ide-panel {
+            width: 45%;
+            border-left: 1px solid var(--border);
+            display: flex;
+            flex-direction: column;
             background: var(--bg-primary);
         }
 
-        .lesson-content {
-            max-width: 720px;
-            margin: 0 auto;
-        }
-
-        /* Typography */
-        .lesson-content h1 {
-            font-size: 36px;
-            font-weight: 700;
-            line-height: 1.2;
-            margin: 40px 0 20px;
-            letter-spacing: -0.5px;
-            color: var(--text-primary);
-        }
-
-        .lesson-content h2 {
-            font-size: 28px;
-            font-weight: 700;
-            line-height: 1.3;
-            margin: 32px 0 16px;
-            letter-spacing: -0.3px;
-            color: var(--text-primary);
-        }
-
-        .lesson-content h3 {
-            font-size: 22px;
-            font-weight: 600;
-            line-height: 1.4;
-            margin: 24px 0 12px;
-            color: var(--text-primary);
-        }
-
-        .lesson-content p {
-            margin-bottom: 20px;
-            font-size: 17px;
-            line-height: 1.7;
-            color: var(--text-secondary);
-        }
-
-        .lesson-content strong {
-            font-weight: 600;
-            color: var(--text-primary);
-        }
-
-        .lesson-content em {
-            font-style: italic;
-        }
-
-        .lesson-content ul, .lesson-content ol {
-            margin: 16px 0;
-            padding-left: 28px;
-        }
-
-        .lesson-content li {
-            margin-bottom: 8px;
-            font-size: 17px;
-            line-height: 1.7;
-            color: var(--text-secondary);
-        }
-
-        .lesson-content code {
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 15px;
-            background: var(--bg-code);
-            padding: 3px 8px;
-            border-radius: 4px;
-            color: var(--accent-soft);
-            border: 1px solid var(--border);
-        }
-
-        .lesson-content pre {
-            background: var(--bg-code);
-            padding: 16px;
-            border-radius: 8px;
-            overflow-x: auto;
-            margin: 20px 0;
-            border-left: 3px solid var(--accent);
-            border: 1px solid var(--border);
-        }
-
-        .lesson-content pre code {
-            background: none;
-            padding: 0;
-            color: var(--text-secondary);
-            border: none;
-        }
-
-        .lesson-content blockquote {
-            border-left: 4px solid var(--accent);
-            padding-left: 20px;
-            margin: 20px 0;
-            font-style: italic;
-            color: var(--text-tertiary);
-        }
-
-        .lesson-content a {
-            color: var(--accent-soft);
-            text-decoration: underline;
-            text-decoration-thickness: 1px;
-            text-underline-offset: 2px;
-            transition: color 0.2s;
-        }
-
-        .lesson-content a:hover {
-            color: var(--accent);
-        }
-
-        .lesson-content img {
-            max-width: 100%;
-            height: auto;
-            border-radius: 8px;
-            margin: 24px 0;
-            border: 1px solid var(--border);
-        }
-
-        .lesson-content hr {
-            border: none;
-            border-top: 1px solid var(--border);
-            margin: 32px 0;
-        }
-
-        /* ========== CODE EDITOR (Right Panel) ========== */
-        .code-panel {
-            width: 50%;
+        .ide-toolbar {
             display: flex;
-            flex-direction: column;
-            border-left: 2px solid var(--border);
-            background: #1e1e1e;
-        }
-
-        .code-header {
-            display: flex;
-            align-items: center;
             justify-content: space-between;
-            padding: 12px 16px;
-            background: #2d2d2d;
-            border-bottom: 1px solid #3d3d3d;
-        }
-
-        .file-tab {
-            display: flex;
             align-items: center;
-            gap: 8px;
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 13px;
-            color: #d4d4d4;
+            padding: 12px 16px;
+            background: var(--bg-secondary);
+            border-bottom: 1px solid var(--border);
         }
 
-        .file-tab i {
+        .ide-title {
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .ide-actions {
+            display: flex;
+            gap: 8px;
+        }
+
+        .ide-btn {
+            padding: 6px 12px;
+            background: var(--bg-elevated);
+            border: 1px solid var(--border-light);
+            border-radius: 6px;
+            color: var(--text-secondary);
+            font-size: 12px;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        .ide-btn:hover {
+            background: var(--bg-primary);
+            border-color: var(--accent);
+            color: var(--text-primary);
+        }
+
+        .ide-btn.run {
+            background: linear-gradient(135deg, var(--accent), var(--accent-soft));
+            color: var(--bg-deep);
+            border: none;
+            font-weight: 600;
+        }
+
+        .ide-btn.run:hover {
+            opacity: 0.9;
+            transform: translateY(-1px);
+        }
+
+        .code-editor {
+            flex: 1;
+            position: relative;
+        }
+
+        #editor {
+            width: 100%;
+            height: 100%;
             font-size: 14px;
         }
 
-        .code-actions {
-            display: flex;
-            gap: 8px;
-        }
-
-        .code-btn {
-            padding: 6px 12px;
-            background: #3c3c3c;
-            border: none;
-            border-radius: 4px;
-            color: #d4d4d4;
-            font-size: 12px;
-            cursor: pointer;
-            transition: background 0.2s;
-            font-family: 'JetBrains Mono', monospace;
-        }
-
-        .code-btn:hover {
-            background: #4c4c4c;
-        }
-
-        .code-btn.primary {
-            background: var(--accent);
-            color: #fff;
-        }
-
-        .code-btn.primary:hover {
-            background: var(--accent-soft);
-        }
-
-        #code-editor {
-            flex: 1;
-        }
-
-        #console {
-            height: 150px;
-            background: #1e1e1e;
-            border-top: 1px solid #3d3d3d;
-            padding: 12px;
+        .console-output {
+            height: 200px;
+            background: var(--bg-code);
+            border-top: 1px solid var(--border);
+            padding: 16px;
             overflow-y: auto;
             font-family: 'JetBrains Mono', monospace;
             font-size: 13px;
-            color: #d4d4d4;
             line-height: 1.6;
+            color: var(--text-secondary);
         }
 
         /* ========== NAVIGATION FOOTER ========== */
         .nav-footer {
             padding: 16px 32px;
+            background: var(--bg-primary);
             border-top: 1px solid var(--border);
-            background: var(--bg-secondary);
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -678,41 +937,30 @@
         .nav-btn {
             padding: 10px 20px;
             background: var(--bg-elevated);
-            color: var(--text-primary);
             border: 1px solid var(--border-light);
             border-radius: 6px;
+            color: var(--text-secondary);
             font-size: 14px;
-            font-weight: 600;
             cursor: pointer;
             transition: all 0.2s;
-            display: flex;
-            align-items: center;
-            gap: 8px;
+            font-family: 'Literata', Georgia, serif;
         }
 
         .nav-btn:hover:not(:disabled) {
-            background: var(--bg-elevated);
+            background: var(--bg-secondary);
             border-color: var(--accent);
-            transform: translateY(-1px);
-            box-shadow: 0 4px 12px var(--shadow-strong);
+            color: var(--text-primary);
         }
 
         .nav-btn:disabled {
-            background: var(--bg-secondary);
-            color: var(--text-tertiary);
-            border-color: var(--border);
+            opacity: 0.5;
             cursor: not-allowed;
         }
 
-        .complete-btn {
-            background: var(--success);
-            border-color: var(--success);
-            color: var(--bg-deep);
-        }
-
-        .complete-btn:hover {
-            background: #00f5b8;
-            border-color: #00f5b8;
+        .lesson-position {
+            font-size: 13px;
+            color: var(--text-tertiary);
+            font-family: 'Space Mono', monospace;
         }
 
         /* ========== TOAST ========== */
@@ -721,15 +969,14 @@
             bottom: 24px;
             right: 24px;
             background: var(--bg-elevated);
-            color: var(--text-primary);
-            padding: 16px 20px;
-            border-radius: 8px;
             border: 1px solid var(--border-light);
+            border-radius: 8px;
+            padding: 16px 20px;
             box-shadow: 0 8px 24px var(--shadow-strong);
             display: flex;
             align-items: center;
             gap: 12px;
-            transform: translateY(100px);
+            transform: translateY(120px);
             opacity: 0;
             transition: all 0.3s ease;
             z-index: 1000;
@@ -740,359 +987,684 @@
             opacity: 1;
         }
 
-        .toast.success {
-            background: var(--success-dim);
-            border-color: var(--success);
+        .toast-icon {
+            width: 32px;
+            height: 32px;
+            background: linear-gradient(135deg, var(--success), #00b386);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
         }
 
-        .toast i {
-            font-size: 18px;
-            color: var(--success);
+        .toast-content {
+            flex: 1;
         }
 
-        .toast-xp {
-            font-weight: 700;
-            color: var(--warning);
+        .toast-message {
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--text-primary);
         }
 
-        /* ========== SCROLLBAR ========== */
-        ::-webkit-scrollbar {
-            width: 10px;
+        /* Debug Modal */
+        .debug-modal {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.8);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 9998;
         }
 
-        ::-webkit-scrollbar-track {
+        .debug-modal.visible {
+            display: flex;
+        }
+
+        .debug-content {
             background: var(--bg-primary);
+            border: 1px solid var(--border-light);
+            border-radius: 12px;
+            width: 90%;
+            max-width: 800px;
+            max-height: 80vh;
+            display: flex;
+            flex-direction: column;
         }
 
-        ::-webkit-scrollbar-thumb {
+        .debug-header {
+            padding: 20px 24px;
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .debug-header h2 {
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--text-primary);
+        }
+
+        .debug-close {
+            background: none;
+            border: none;
+            color: var(--text-tertiary);
+            font-size: 24px;
+            cursor: pointer;
+            padding: 0;
+            width: 32px;
+            height: 32px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 6px;
+            transition: all 0.2s;
+        }
+
+        .debug-close:hover {
             background: var(--bg-elevated);
-            border-radius: 5px;
+            color: var(--text-primary);
         }
 
-        ::-webkit-scrollbar-thumb:hover {
-            background: var(--border-light);
+        .debug-body {
+            padding: 24px;
+            overflow-y: auto;
+            flex: 1;
+        }
+
+        .debug-status-item {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-light);
+            border-radius: 8px;
+            padding: 12px 16px;
+            margin-bottom: 8px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 13px;
+        }
+
+        .debug-status-item .time {
+            color: var(--text-tertiary);
+            font-size: 11px;
+        }
+
+        .debug-status-item .message {
+            color: var(--text-secondary);
+        }
+
+        .debug-refresh {
+            margin-top: 16px;
+            padding: 10px 20px;
+            background: var(--accent);
+            color: var(--bg-deep);
+            border: none;
+            border-radius: 6px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            width: 100%;
+            transition: all 0.2s;
+        }
+
+        .debug-refresh:hover {
+            opacity: 0.9;
+            transform: translateY(-1px);
         }
 
         /* ========== RESPONSIVE ========== */
-        @media (max-width: 1024px) {
-            .sidebar {
-                width: 280px;
+        @media (max-width: 1200px) {
+            .ide-panel {
+                width: 50%;
             }
-            
-            .code-panel {
-                width: 45%;
+        }
+
+        @media (max-width: 900px) {
+            .content-wrapper {
+                flex-direction: column;
+            }
+            .ide-panel {
+                width: 100%;
+                height: 50%;
+                border-left: none;
+                border-top: 1px solid var(--border);
             }
         }
 
         @media (max-width: 768px) {
-            .content-body {
-                flex-direction: column;
-            }
-            
-            .code-panel {
+            .sidebar {
                 width: 100%;
-                height: 50%;
-                border-left: none;
-                border-top: 2px solid var(--border);
+                max-width: 300px;
+                position: absolute;
+                left: -100%;
+                top: 0;
+                bottom: 0;
+                z-index: 100;
+                transition: left 0.3s;
+            }
+            .sidebar.open {
+                left: 0;
             }
         }
     </style>
 </head>
 <body>
     <!-- Loading Screen -->
-    <div class="loading-screen" id="loading">
-        <div class="loading-logo">D/Q</div>
-        <div class="loading-text">Loading Academy...</div>
+    <div class="loading-screen">
+        <div class="loading-logo">DQ</div>
+        <div class="loading-text">Initializing DEV//QUEST Academy...</div>
+        <div class="ai-status-pill">
+            <div class="pulse-dot"></div>
+            <span>AI Engine Starting</span>
+        </div>
+    </div>
+
+    <!-- Debug Modal -->
+    <div class="debug-modal" id="debug-modal">
+        <div class="debug-content">
+            <div class="debug-header">
+                <h2><i class="fa-solid fa-bug"></i> AI Generation Status</h2>
+                <button class="debug-close" onclick="closeDebugModal()">
+                    <i class="fa-solid fa-times"></i>
+                </button>
+            </div>
+            <div class="debug-body" id="debug-body">
+                <div class="debug-status-item">
+                    <span class="message">Loading AI status...</span>
+                </div>
+                <button class="debug-refresh" onclick="loadDebugInfo()">
+                    <i class="fa-solid fa-refresh"></i> Refresh Status
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast Notification -->
+    <div class="toast" id="toast">
+        <div class="toast-icon">
+            <i class="fa-solid fa-check"></i>
+        </div>
+        <div class="toast-content">
+            <div class="toast-message" id="toast-message">Progress saved!</div>
+        </div>
     </div>
 
     <!-- Main App -->
     <div class="app-container">
         <!-- Sidebar -->
-        <aside class="sidebar">
+        <div class="sidebar">
+            <!-- AI Generation Banner -->
+            <div class="ai-generation-banner" id="ai-banner">
+                <div class="spinner"></div>
+                <div class="text">
+                    AI generating lessons...
+                    <div class="count" id="ai-progress">0 / 0</div>
+                </div>
+            </div>
+
             <!-- Career Path Selector -->
             <div class="path-selector">
                 <div class="path-selector-header">
-                    <i class="fa-solid fa-briefcase"></i>
-                    <span>Career Path</span>
+                    <i class="fa-solid fa-compass"></i>
+                    <span>Your Career Path</span>
                 </div>
-                <select id="career-path-select" onchange="filterByCareerPath()">
-                    <option value="all">📚 All Lessons</option>
-                    <option value="frontend_dev">⚛️ Frontend Developer</option>
-                    <option value="backend_dev">🖥️ Backend Developer</option>
-                    <option value="fullstack_dev">🌐 Full-Stack Developer</option>
-                    <option value="mobile_dev">📱 Mobile Developer</option>
-                    <option value="devops_engineer">☁️ DevOps Engineer</option>
-                    <option value="cloud_architect">🏗️ Cloud Architect</option>
-                    <option value="data_engineer">📊 Data Engineer</option>
-                    <option value="ml_engineer">🤖 ML Engineer</option>
-                    <option value="security_engineer">🛡️ Security Engineer</option>
-                    <option value="penetration_tester">🎯 Penetration Tester</option>
-                    <option value="soc_analyst">🔍 SOC Analyst</option>
+                <select id="career-path-select">
+                    <option value="all">All Tracks</option>
+                    <optgroup label="Software Development">
+                        <option value="fullstack">Full-Stack Developer</option>
+                        <option value="backend">Backend Engineer</option>
+                        <option value="frontend">Frontend Developer</option>
+                        <option value="mobile">Mobile Developer</option>
+                    </optgroup>
+                    <optgroup label="Cloud & Infrastructure">
+                        <option value="devops">DevOps Engineer</option>
+                        <option value="cloud">Cloud Architect</option>
+                        <option value="sre">Site Reliability Engineer</option>
+                    </optgroup>
+                    <optgroup label="Data & AI">
+                        <option value="data">Data Scientist</option>
+                        <option value="ml">Machine Learning Engineer</option>
+                    </optgroup>
+                    <optgroup label="Security">
+                        <option value="redteam">Red Team / Pentester</option>
+                        <option value="blueteam">Blue Team / SOC Analyst</option>
+                        <option value="security">Security Engineer (Full)</option>
+                    </optgroup>
                 </select>
-                <div class="path-info" id="path-info"></div>
+                <div class="path-info" id="path-info">
+                    <div class="path-info-desc"></div>
+                    <div class="path-info-salary"></div>
+                </div>
             </div>
 
-            <!-- Search Bar -->
+            <!-- Search -->
             <div class="search-container">
                 <i class="fa-solid fa-search"></i>
-                <input 
-                    type="text" 
-                    id="lesson-search" 
-                    placeholder="Search lessons, languages, topics..."
-                    oninput="searchLessons()"
-                />
-                <button class="search-clear" id="search-clear" onclick="clearSearch()" style="display: none;">
+                <input type="text" id="lesson-search" placeholder="Search lessons...">
+                <button class="search-clear" id="search-clear">
                     <i class="fa-solid fa-times"></i>
                 </button>
             </div>
 
-            <div class="sidebar-header">
-                <div class="brand">
-                    <div class="brand-icon">D/Q</div>
-                    <div class="brand-text">
-                        <h1>DEV//QUEST</h1>
-                        <p>Your coding journey starts here</p>
+            <!-- Skill Tree Progress Section -->
+            <div class="skill-tree-section">
+                <div class="skill-tree-header" onclick="toggleSkillTree()">
+                    <div class="skill-tree-label">
+                        <i class="fa-solid fa-diagram-project"></i>
+                        <span>Learning Progress</span>
+                        <i class="fa-solid fa-chevron-down" id="skill-tree-icon" style="font-size: 10px; transition: transform 0.2s;"></i>
                     </div>
+                    <div class="skill-tree-stats" id="overall-stats">0 / 0</div>
                 </div>
-                <div class="progress-widget">
-                    <div class="progress-stats">
-                        <span id="progress-text">0 / 0 Complete</span>
-                        <span id="xp-display"><i class="fa-solid fa-star"></i> <span id="xp-count">0</span> XP</span>
+
+                <div class="skill-tree-body" id="skill-tree-body">
+                    <!-- Overall Progress Bar -->
+                    <div class="overall-progress-bar">
+                        <div class="overall-progress-fill" id="overall-progress-fill" style="width: 0%;"></div>
                     </div>
-                    <div class="progress-bar">
-                        <div class="progress-fill" id="progress-fill"></div>
+                    <div class="overall-progress-text" id="overall-progress-text">Get started by viewing your first lesson</div>
+
+                    <!-- Track-by-Track Progress -->
+                    <div class="skill-tree-visual" id="skill-tree-tracks">
+                        <!-- Dynamically populated -->
                     </div>
                 </div>
             </div>
-            <div class="sidebar-content" id="syllabus"></div>
-        </aside>
 
-        <!-- Main Content Area -->
-        <main class="main-content">
-            <header class="content-header">
-                <div class="lesson-badge" id="lesson-badge">CONCEPT</div>
-                <div class="lesson-header">
-                    <h2 id="lesson-title">Loading...</h2>
-                    <div class="lesson-meta">
-                        <span><i class="fa-solid fa-clock"></i> <span id="lesson-duration">10 min</span></span>
-                        <span><i class="fa-solid fa-code"></i> <span id="lesson-lang">Python</span></span>
-                    </div>
+            <!-- Lesson List -->
+            <div class="lesson-list" id="lesson-list">
+                <!-- Dynamically populated -->
+            </div>
+        </div>
+
+        <!-- Main Content -->
+        <div class="main-content">
+            <!-- Header -->
+            <div class="header">
+                <div class="logo">
+                    <div class="logo-icon">DQ</div>
+                    <div class="logo-text">DEV//QUEST</div>
                 </div>
-            </header>
-
-            <div class="content-body">
-                <!-- Lesson Content Panel -->
-                <div class="lesson-panel">
-                    <div class="lesson-content" id="lesson-content">
-                        <p>Select a lesson from the sidebar to begin your journey.</p>
-                    </div>
+                <div class="header-actions">
+                    <button class="debug-btn" onclick="showDebugModal()">
+                        <i class="fa-solid fa-bug"></i>
+                        <span>AI Status</span>
+                    </button>
+                    <button class="help-btn">
+                        <i class="fa-solid fa-circle-question"></i>
+                    </button>
                 </div>
+            </div>
 
-                <!-- Code Editor Panel -->
-                <div class="code-panel">
-                    <div class="code-header">
-                        <div class="file-tab">
-                            <i class="fa-brands fa-python"></i>
-                            <span id="file-name">main.py</span>
+            <!-- Content Wrapper -->
+            <div class="content-wrapper">
+                <!-- Lesson Content -->
+                <div class="lesson-content">
+                    <div class="lesson-header">
+                        <h1 id="lesson-title">Welcome to DEV//QUEST Academy</h1>
+                        <div class="lesson-meta-bar">
+                            <span>
+                                <i class="fa-regular fa-clock"></i>
+                                <span id="lesson-duration">15 min</span>
+                            </span>
+                            <span>
+                                <i class="fa-solid fa-code"></i>
+                                <span id="lesson-type">Concept</span>
+                            </span>
                         </div>
-                        <div class="code-actions">
-                            <button class="code-btn" onclick="resetCode()">
+                    </div>
+
+                    <!-- Analogy Section -->
+                    <div class="analogy-section" id="analogy-section" style="display: none;">
+                        <div class="icon">💡</div>
+                        <h3>Think of it this way...</h3>
+                        <p id="analogy-text"></p>
+                    </div>
+
+                    <div class="lesson-body">
+                        <div class="markdown-content" id="markdown-content">
+                            <h1>Welcome to DEV//QUEST Academy 🚀</h1>
+                            <p>Select a lesson from the sidebar to begin your learning journey. Our AI is generating personalized lessons just for you!</p>
+                            <h2>How It Works</h2>
+                            <ul>
+                                <li>🎯 <strong>Choose Your Path</strong> - Select a career track that interests you</li>
+                                <li>📚 <strong>Learn at Your Pace</strong> - Progress through lessons automatically tracked</li>
+                                <li>💻 <strong>Practice Coding</strong> - Use the live code editor to try examples</li>
+                                <li>📊 <strong>Track Progress</strong> - See your skill tree grow as you learn</li>
+                            </ul>
+                            <p>Your progress is automatically saved as you view lessons. No need to manually mark anything complete!</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- IDE Panel -->
+                <div class="ide-panel">
+                    <div class="ide-toolbar">
+                        <div class="ide-title">
+                            <i class="fa-solid fa-terminal"></i>
+                            Live Code Editor
+                        </div>
+                        <div class="ide-actions">
+                            <button class="ide-btn" onclick="resetCode()">
                                 <i class="fa-solid fa-rotate-left"></i> Reset
                             </button>
-                            <button class="code-btn" onclick="clearConsole()">
-                                <i class="fa-solid fa-trash"></i> Clear
-                            </button>
-                            <button class="code-btn primary" onclick="runCode()">
+                            <button class="ide-btn run" onclick="runCode()">
                                 <i class="fa-solid fa-play"></i> Run
                             </button>
                         </div>
                     </div>
-                    <div id="code-editor"></div>
-                    <div id="console"></div>
+                    <div class="code-editor">
+                        <div id="editor"># Welcome to the live code editor!
+# Write your code here and click "Run" to execute it.
+
+print("Hello, DEV//QUEST!")</div>
+                    </div>
+                    <div class="console-output" id="console">
+                        <span style="color: #888">Output will appear here...</span>
+                    </div>
                 </div>
             </div>
 
             <!-- Navigation Footer -->
-            <footer class="nav-footer">
+            <div class="nav-footer">
                 <button class="nav-btn" id="prev-btn" onclick="prevLesson()" disabled>
-                    <i class="fa-solid fa-chevron-left"></i> Previous
+                    <i class="fa-solid fa-arrow-left"></i> Previous
                 </button>
-                <button class="complete-btn nav-btn" onclick="markComplete()">
-                    <i class="fa-solid fa-check"></i> Mark Complete
-                </button>
+                <div class="lesson-position" id="lesson-position">
+                    Lesson <span id="current-pos">-</span> of <span id="total-pos">-</span>
+                </div>
                 <button class="nav-btn" id="next-btn" onclick="nextLesson()" disabled>
-                    Next <i class="fa-solid fa-chevron-right"></i>
+                    Next <i class="fa-solid fa-arrow-right"></i>
                 </button>
-            </footer>
-        </main>
-    </div>
-
-    <!-- Toast Notification -->
-    <div class="toast" id="toast">
-        <i class="fa-solid fa-check-circle"></i>
-        <span id="toast-message">Great work!</span>
-        <span class="toast-xp" id="toast-xp">+10 XP</span>
+            </div>
+        </div>
     </div>
 
     <script>
         // ========================================
         // API CONFIGURATION
         // ========================================
-        // IMPORTANT: Update this to your API endpoint
-        // For local development: '' (empty string for same origin)
-        // For production with separate API: 'https://your-api-domain.com'
         const API_BASE_URL = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1' 
             ? '' 
-            : 'https://devquest.uk';  // Change this to your actual API URL
-        
+            : 'https://devquest.uk';
+
         // ========================================
-        // GLOBAL STATE
+        // STATE
         // ========================================
-        let curriculum = [];
+        let allTracks = [];
         let allLessons = [];
         let currentLesson = null;
         let currentIndex = -1;
-        let completedLessons = [];
-        let xp = 0;
+        let viewedLessons = [];
         let totalLessons = 0;
-        let editor;
-        let pyodide;
-        let originalCode = '';
-        
-        // Career path and search state
         let currentCareerPath = 'all';
-        let searchQuery = '';
+        let editor = null;
+        let pyodide = null;
+        let originalCode = '';
+        let aiStatusInterval = null;
+        let pendingLessonsCount = 0;
+        let trackProgress = {}; // Track-by-track progress
 
-        // Career paths configuration (matches curriculum.py SKILL_PATHS)
+        // ========================================
+        // CAREER PATHS
+        // ========================================
         const CAREER_PATHS = {
-            all: {
-                name: "All Lessons",
-                icon: "📚",
-                description: "Complete curriculum - all tracks",
-                tracks: []
+            'all': {
+                name: 'All Tracks',
+                tracks: [], // Empty array = show everything
+                desc: 'Explore all available lessons across every technology and specialization.',
+                salary: 'Varied'
             },
-            frontend_dev: {
-                name: "Frontend Developer",
-                icon: "⚛️",
-                description: "Master React, Vue, HTML/CSS, and modern frontend technologies",
-                salary: "$70k-$160k",
-                tracks: ["00", "01A", "01B", "02A", "02B", "02C", "02D", "03", "05", "06A", "06B", "07", "12A"]
+            'fullstack': {
+                name: 'Full-Stack Developer',
+                tracks: ['00. Foundations', '01A. HTML', '01B. CSS', '02A. JavaScript Basics', '02B. JS Data Structures', '02C. JS DOM', '02D. JS Advanced', '03. Git', '05. TypeScript', '06A. React', '06B. React Advanced', '07. Next.js', '08A. Node.js', '08B. SQL', '08C. MongoDB', '08D. API & Auth', '11A. Docker'],
+                desc: 'Master both frontend and backend development to build complete web applications.',
+                salary: '$85k - $190k'
             },
-            backend_dev: {
-                name: "Backend Developer",
-                icon: "🖥️",
-                description: "APIs, databases, Python, Node.js, and server-side development",
-                salary: "$80k-$180k",
-                tracks: ["00", "03", "04B", "08A", "08B", "08C", "08D", "09A", "09B", "10A", "11A"]
+            'backend': {
+                name: 'Backend Engineer',
+                tracks: ['00. Foundations', '03. Git', '08A. Node.js', '08B. SQL', '08C. MongoDB', '08D. API & Auth', '09A. Python', '09B. Python Advanced', '10A. Linux', '11A. Docker', '11B. Kubernetes'],
+                desc: 'Build robust server-side applications and APIs that power modern software.',
+                salary: '$80k - $180k'
             },
-            fullstack_dev: {
-                name: "Full-Stack Developer",
-                icon: "🌐",
-                description: "Complete web development stack from frontend to backend",
-                salary: "$85k-$190k",
-                tracks: ["00", "01A", "01B", "02A", "02D", "03", "05", "06A", "06B", "07", "08A", "08B", "09A", "11A"]
+            'frontend': {
+                name: 'Frontend Developer',
+                tracks: ['00. Foundations', '01A. HTML', '01B. CSS', '02A. JavaScript Basics', '02B. JS Data Structures', '02C. JS DOM', '02D. JS Advanced', '03. Git', '05. TypeScript', '06A. React', '06B. React Advanced', '07. Next.js'],
+                desc: 'Create beautiful, responsive user interfaces that delight users.',
+                salary: '$70k - $160k'
             },
-            mobile_dev: {
-                name: "Mobile Developer",
-                icon: "📱",
-                description: "React Native and cross-platform mobile development",
-                salary: "$90k-$175k",
-                tracks: ["00", "02A", "02D", "05", "06A", "12A"]
+            'mobile': {
+                name: 'Mobile Developer',
+                tracks: ['00. Foundations', '02A. JavaScript Basics', '02D. JS Advanced', '03. Git', '05. TypeScript', '06A. React', '06B. React Advanced', '12A. Mobile (React Native)'],
+                desc: 'Build native mobile applications for iOS and Android.',
+                salary: '$90k - $175k'
             },
-            devops_engineer: {
-                name: "DevOps Engineer",
-                icon: "☁️",
-                description: "Docker, Kubernetes, AWS, and CI/CD automation",
-                salary: "$95k-$200k",
-                tracks: ["00", "03", "09A", "10A", "11A", "11B", "11C", "11D", "11E", "11F", "11G"]
+            'devops': {
+                name: 'DevOps Engineer',
+                tracks: ['00. Foundations', '03. Git', '09A. Python', '10A. Linux', '11A. Docker', '11B. Kubernetes', '11C. AWS', '11D. Terraform', '11E. CI/CD', '11F. Monitoring', '11G. SRE'],
+                desc: 'Automate deployment pipelines and manage cloud infrastructure at scale.',
+                salary: '$95k - $200k'
             },
-            cloud_architect: {
-                name: "Cloud Architect",
-                icon: "🏗️",
-                description: "AWS, Azure, GCP, and cloud infrastructure design",
-                salary: "$120k-$250k",
-                tracks: ["00", "03", "11A", "11B", "11C", "11D", "11E"]
+            'data': {
+                name: 'Data Scientist',
+                tracks: ['00. Foundations', '04A. CS Math', '04B. Data Structures', '04C. Algorithms', '09A. Python', '09B. Python Advanced', '08B. SQL', '13A. Data Science', '13B. ML', '13C. Deep Learning'],
+                desc: 'Extract insights from data using statistical analysis and machine learning.',
+                salary: '$105k - $165k'
             },
-            data_engineer: {
-                name: "Data Engineer",
-                icon: "📊",
-                description: "Big data, ETL pipelines, and data infrastructure",
-                salary: "$100k-$210k",
-                tracks: ["00", "03", "08B", "08C", "09A", "09B", "13A"]
+            'ml': {
+                name: 'Machine Learning Engineer',
+                tracks: ['00. Foundations', '04A. CS Math', '04C. Algorithms', '09A. Python', '09B. Python Advanced', '13A. Data Science', '13B. ML', '13C. Deep Learning', '11A. Docker', '11B. Kubernetes'],
+                desc: 'Build and deploy machine learning models at scale.',
+                salary: '$120k - $210k'
             },
-            ml_engineer: {
-                name: "ML Engineer",
-                icon: "🤖",
-                description: "Machine learning, AI models, and deep learning",
-                salary: "$110k-$230k",
-                tracks: ["00", "04A", "04B", "09A", "09B", "13A", "13B", "13C"]
+            'redteam': {
+                name: 'Red Team / Penetration Tester',
+                tracks: ['00. Foundations', '09A. Python', '10A. Linux', '14A. Red Team', '14B. Web Pentesting', '14C. Network Pentesting', '14D. AD Attacks', '14E. Post-Exploitation'],
+                desc: 'Simulate real-world attacks to identify security vulnerabilities.',
+                salary: '$110k - $190k'
             },
-            security_engineer: {
-                name: "Security Engineer",
-                icon: "🛡️",
-                description: "Application security and secure coding practices",
-                salary: "$95k-$195k",
-                tracks: ["00", "03", "09A", "10A", "14A", "14B", "15A", "15B", "15E"]
+            'blueteam': {
+                name: 'Blue Team / SOC Analyst',
+                tracks: ['00. Foundations', '09A. Python', '10A. Linux', '15A. Blue Team', '15B. SIEM', '15C. DFIR', '15D. Threat Intel', '15E. EDR', '15F. NSM', '15G. Malware Analysis', '15H. Threat Hunting'],
+                desc: 'Defend systems by detecting, analyzing, and responding to security threats.',
+                salary: '$100k - $180k'
             },
-            penetration_tester: {
-                name: "Penetration Tester",
-                icon: "🎯",
-                description: "Ethical hacking and red team operations",
-                salary: "$85k-$180k",
-                tracks: ["00", "03", "10A", "14A", "14B", "14C", "14D", "14E"]
+            'security': {
+                name: 'Security Engineer (Full Spectrum)',
+                tracks: ['00. Foundations', '09A. Python', '10A. Linux', '14A. Red Team', '14B. Web Pentesting', '14C. Network Pentesting', '14D. AD Attacks', '15A. Blue Team', '15B. SIEM', '15C. DFIR', '15D. Threat Intel', '15E. EDR', '15F. NSM', '15I. Purple Team'],
+                desc: 'Master both offensive and defensive security across the entire security spectrum.',
+                salary: '$115k - $200k'
             },
-            soc_analyst: {
-                name: "SOC Analyst",
-                icon: "🔍",
-                description: "Security monitoring and incident response",
-                salary: "$70k-$140k",
-                tracks: ["00", "03", "10A", "15A", "15B", "15C", "15D", "15E", "15F"]
+            'cloud': {
+                name: 'Cloud Architect',
+                tracks: ['00. Foundations', '03. Git', '09A. Python', '10A. Linux', '11A. Docker', '11B. Kubernetes', '11C. AWS', '11D. Terraform', '11E. CI/CD', '11F. Monitoring', '11G. SRE'],
+                desc: 'Design and implement scalable cloud infrastructure solutions.',
+                salary: '$130k - $220k'
+            },
+            'sre': {
+                name: 'Site Reliability Engineer',
+                tracks: ['00. Foundations', '03. Git', '09A. Python', '10A. Linux', '11A. Docker', '11B. Kubernetes', '11C. AWS', '11E. CI/CD', '11F. Monitoring', '11G. SRE'],
+                desc: 'Ensure systems are reliable, scalable, and highly available.',
+                salary: '$120k - $210k'
             }
-        };
-
-        // Language configurations
-        const langConfig = {
-            python: { mode: 'ace/mode/python', file: 'main.py', icon: 'fa-python', brand: true },
-            javascript: { mode: 'ace/mode/javascript', file: 'script.js', icon: 'fa-js', brand: true },
-            html: { mode: 'ace/mode/html', file: 'index.html', icon: 'fa-html5', brand: true },
-            css: { mode: 'ace/mode/css', file: 'styles.css', icon: 'fa-css3-alt', brand: true },
-            sql: { mode: 'ace/mode/sql', file: 'query.sql', icon: 'fa-database', brand: false },
-            bash: { mode: 'ace/mode/sh', file: 'script.sh', icon: 'fa-terminal', brand: false }
         };
 
         // ========================================
         // INITIALIZATION
         // ========================================
         async function init() {
-            console.log('Initializing DEV//QUEST Academy...');
+            console.log('🚀 Initializing DEV//QUEST Academy...');
             
             // Initialize Ace Editor
-            editor = ace.edit('code-editor');
-            editor.setTheme('ace/theme/monokai');
-            editor.session.setMode('ace/mode/python');
-            editor.setFontSize(14);
+            editor = ace.edit("editor");
+            editor.setTheme("ace/theme/monokai");
+            editor.session.setMode("ace/mode/python");
             editor.setOptions({
-                enableBasicAutocompletion: true,
-                enableLiveAutocompletion: true,
+                fontSize: "14px",
                 showPrintMargin: false,
+                enableBasicAutocompletion: true,
+                enableLiveAutocompletion: true
             });
             
-            // Load progress from localStorage
+            // Load progress
             loadProgress();
             
-            // Load saved career path preference
-            loadSavedPreferences();
-            
-            // Fetch curriculum
+            // Load curriculum
             await loadCurriculum();
             
-            // Initialize Pyodide (Python in browser)
+            // Load saved preferences
+            loadSavedPreferences();
+            
+            // Initialize Pyodide in background
             initPyodide();
+            
+            // Set up event listeners
+            setupEventListeners();
+            
+            // Start AI status polling
+            startAIStatusPolling();
             
             // Hide loading screen
             setTimeout(() => {
-                document.getElementById('loading').classList.add('hidden');
-            }, 800);
+                document.querySelector('.loading-screen').classList.add('hidden');
+            }, 1000);
+        }
+
+        function setupEventListeners() {
+            // Career path selector
+            document.getElementById('career-path-select').addEventListener('change', (e) => {
+                currentCareerPath = e.target.value;
+                localStorage.setItem('devquest_career_path', currentCareerPath);
+                filterByCareerPath();
+                updatePathInfo();
+                updateSkillTree();
+            });
+
+            // Search
+            const searchInput = document.getElementById('lesson-search');
+            const searchClear = document.getElementById('search-clear');
+            
+            searchInput.addEventListener('input', (e) => {
+                const query = e.target.value.toLowerCase();
+                searchClear.classList.toggle('visible', query.length > 0);
+                filterLessons(query);
+            });
+            
+            searchClear.addEventListener('click', () => {
+                searchInput.value = '';
+                searchClear.classList.remove('visible');
+                filterLessons('');
+            });
+
+            // Update path info on load
+            updatePathInfo();
+        }
+
+        // ========================================
+        // AI STATUS POLLING
+        // ========================================
+        function startAIStatusPolling() {
+            aiStatusInterval = setInterval(checkAIStatus, 5000);
+            checkAIStatus();
+        }
+
+        async function checkAIStatus() {
+            try {
+                const response = await fetch(`${API_BASE_URL}/ai-status`);
+                const logs = await response.json();
+                
+                const isGenerating = logs.some(log => 
+                    log.message.includes('Generating') || 
+                    log.message.includes('Publishing')
+                );
+                
+                const banner = document.getElementById('ai-banner');
+                if (isGenerating) {
+                    banner.classList.add('visible');
+                    
+                    const curriculum = await fetch(`${API_BASE_URL}/curriculum`).then(r => r.json());
+                    const allLessonsCount = curriculum.tracks.reduce((sum, track) => 
+                        sum + track.lessons.length, 0);
+                    
+                    const pendingCount = curriculum.tracks.reduce((sum, track) => 
+                        sum + track.lessons.filter(l => l.status === 'pending').length, 0);
+                    
+                    document.getElementById('ai-progress').textContent = 
+                        `${allLessonsCount - pendingCount} / ${allLessonsCount}`;
+                } else {
+                    banner.classList.remove('visible');
+                }
+            } catch (error) {
+                console.error('Failed to check AI status:', error);
+            }
+        }
+
+        async function showDebugModal() {
+            document.getElementById('debug-modal').classList.add('visible');
+            await loadDebugInfo();
+        }
+
+        function closeDebugModal() {
+            document.getElementById('debug-modal').classList.remove('visible');
+        }
+
+        async function loadDebugInfo() {
+            const debugBody = document.getElementById('debug-body');
+            debugBody.innerHTML = '<div class="debug-status-item"><span class="message">Loading...</span></div>';
+            
+            try {
+                const response = await fetch(`${API_BASE_URL}/ai-status`);
+                const logs = await response.json();
+                
+                let html = '';
+                logs.forEach(log => {
+                    const time = new Date(log.created_at).toLocaleTimeString();
+                    html += `
+                        <div class="debug-status-item">
+                            <span class="message">${log.message}</span>
+                            <span class="time">${time}</span>
+                        </div>
+                    `;
+                });
+                
+                html += `
+                    <button class="debug-refresh" onclick="loadDebugInfo()">
+                        <i class="fa-solid fa-refresh"></i> Refresh Status
+                    </button>
+                `;
+                
+                debugBody.innerHTML = html;
+            } catch (error) {
+                debugBody.innerHTML = `
+                    <div class="debug-status-item">
+                        <span class="message" style="color: var(--danger);">
+                            Failed to load AI status: ${error.message}
+                        </span>
+                    </div>
+                    <button class="debug-refresh" onclick="loadDebugInfo()">
+                        <i class="fa-solid fa-refresh"></i> Retry
+                    </button>
+                `;
+            }
+        }
+
+        function updatePathInfo() {
+            const pathInfo = document.getElementById('path-info');
+            const pathInfoDesc = pathInfo.querySelector('.path-info-desc');
+            const pathInfoSalary = pathInfo.querySelector('.path-info-salary');
+            
+            const path = CAREER_PATHS[currentCareerPath];
+            if (path && currentCareerPath !== 'all') {
+                pathInfoDesc.textContent = path.desc;
+                pathInfoSalary.textContent = `Average Salary: ${path.salary}`;
+                pathInfo.classList.add('visible');
+            } else {
+                pathInfo.classList.remove('visible');
+            }
         }
 
         // ========================================
@@ -1102,29 +1674,110 @@
             try {
                 const response = await fetch(`${API_BASE_URL}/curriculum`);
                 const data = await response.json();
-                curriculum = data.tracks || [];
                 
-                // Flatten all lessons
+                allTracks = data.tracks;
                 allLessons = [];
-                curriculum.forEach(track => {
-                    if (track.lessons) {
-                        track.lessons.forEach(lesson => {
-                            allLessons.push({ ...lesson, track: track.title });
+                allTracks.forEach(track => {
+                    track.lessons.forEach(lesson => {
+                        allLessons.push({
+                            ...lesson,
+                            trackTitle: track.title
                         });
-                    }
+                    });
                 });
                 
                 totalLessons = allLessons.length;
-                
+                calculateTrackProgress();
                 renderSyllabus();
-                updateProgress();
+                updateSkillTree();
                 
-                // Load first lesson
-                if (allLessons.length > 0) {
-                    loadLesson(allLessons[0].id);
-                }
+                const pendingCount = allLessons.filter(l => l.status === 'pending').length;
+                pendingLessonsCount = pendingCount;
+                document.getElementById('ai-progress').textContent = 
+                    `${totalLessons - pendingCount} / ${totalLessons}`;
+                
+                console.log('✅ Curriculum loaded:', totalLessons, 'lessons');
             } catch (error) {
-                console.error('Failed to load curriculum:', error);
+                console.error('❌ Failed to load curriculum:', error);
+            }
+        }
+
+        // ========================================
+        // SKILL TREE PROGRESS
+        // ========================================
+        function calculateTrackProgress() {
+            trackProgress = {};
+            
+            allTracks.forEach(track => {
+                const totalInTrack = track.lessons.length;
+                const viewedInTrack = track.lessons.filter(l => viewedLessons.includes(l.id)).length;
+                
+                trackProgress[track.id] = {
+                    viewed: viewedInTrack,
+                    total: totalInTrack,
+                    percentage: totalInTrack > 0 ? Math.round((viewedInTrack / totalInTrack) * 100) : 0
+                };
+            });
+        }
+
+        function updateSkillTree() {
+            calculateTrackProgress();
+            
+            // Update overall progress
+            const viewed = viewedLessons.length;
+            const total = totalLessons;
+            const overallPercent = total > 0 ? Math.round((viewed / total) * 100) : 0;
+            
+            document.getElementById('overall-progress-fill').style.width = `${overallPercent}%`;
+            document.getElementById('overall-stats').textContent = `${viewed} / ${total}`;
+            
+            if (viewed === 0) {
+                document.getElementById('overall-progress-text').textContent = 'Get started by viewing your first lesson';
+            } else if (viewed === total) {
+                document.getElementById('overall-progress-text').textContent = '🎉 All lessons completed! You\'re amazing!';
+            } else {
+                document.getElementById('overall-progress-text').textContent = `${overallPercent}% complete - Keep going!`;
+            }
+            
+            // Filter tracks based on career path
+            let tracksToShow = allTracks;
+            const path = CAREER_PATHS[currentCareerPath];
+            if (path && path.tracks.length > 0) {
+                tracksToShow = allTracks.filter(track => path.tracks.includes(track.id));
+            }
+            
+            // Update track-by-track progress
+            const container = document.getElementById('skill-tree-tracks');
+            container.innerHTML = '';
+            
+            tracksToShow.forEach(track => {
+                const progress = trackProgress[track.id] || { viewed: 0, total: 0, percentage: 0 };
+                
+                const trackEl = document.createElement('div');
+                trackEl.className = 'skill-tree-track';
+                trackEl.innerHTML = `
+                    <div class="skill-tree-track-header">
+                        <div class="skill-tree-track-name">${track.title}</div>
+                        <div class="skill-tree-track-progress">${progress.viewed}/${progress.total}</div>
+                    </div>
+                    <div class="skill-tree-track-bar">
+                        <div class="skill-tree-track-fill" style="width: ${progress.percentage}%;"></div>
+                    </div>
+                `;
+                container.appendChild(trackEl);
+            });
+        }
+        
+        function toggleSkillTree() {
+            const body = document.getElementById('skill-tree-body');
+            const icon = document.getElementById('skill-tree-icon');
+            
+            body.classList.toggle('collapsed');
+            
+            if (body.classList.contains('collapsed')) {
+                icon.style.transform = 'rotate(-90deg)';
+            } else {
+                icon.style.transform = 'rotate(0deg)';
             }
         }
 
@@ -1132,180 +1785,202 @@
         // RENDER SYLLABUS
         // ========================================
         function renderSyllabus() {
-            const container = document.getElementById('syllabus');
+            const container = document.getElementById('lesson-list');
+            container.innerHTML = '';
             
-            let html = '';
-            curriculum.forEach(track => {
-                if (!track.lessons || track.lessons.length === 0) return;
+            allTracks.forEach(track => {
+                const progress = trackProgress[track.id] || { viewed: 0, total: 0 };
                 
-                html += `
-                    <div class="track-group" data-track="${escapeHtml(track.id)}">
-                        <div class="track-header">${escapeHtml(track.title)}</div>
+                const trackEl = document.createElement('div');
+                trackEl.className = 'lesson-track';
+                trackEl.dataset.trackId = track.id;
+                
+                const headerEl = document.createElement('div');
+                headerEl.className = 'track-header';
+                headerEl.innerHTML = `
+                    <div class="track-title-container">
+                        <span class="track-title">${track.title}</span>
+                        <span class="track-progress-badge">${progress.viewed}/${progress.total}</span>
+                    </div>
+                    <i class="fa-solid fa-chevron-down track-icon"></i>
                 `;
-                
-                track.lessons.forEach(lesson => {
-                    const completed = completedLessons.includes(lesson.id);
-                    const active = currentLesson && currentLesson.id === lesson.id;
-                    
-                    html += `
-                        <div class="lesson-item ${active ? 'active' : ''} ${completed ? 'completed' : ''}" 
-                             data-lesson-id="${lesson.id}"
-                             onclick="loadLesson(${lesson.id})">
-                            <div class="lesson-icon">
-                                ${completed ? '<i class="fa-solid fa-check"></i>' : lesson.id}
-                            </div>
-                            <div class="lesson-title">${escapeHtml(lesson.title)}</div>
-                        </div>
-                    `;
+                headerEl.addEventListener('click', () => {
+                    headerEl.classList.toggle('expanded');
+                    itemsEl.classList.toggle('expanded');
                 });
                 
-                html += `</div>`;
+                const itemsEl = document.createElement('div');
+                itemsEl.className = 'lesson-items';
+                
+                track.lessons.forEach(lesson => {
+                    const lessonEl = document.createElement('div');
+                    lessonEl.className = 'lesson-item';
+                    lessonEl.dataset.lessonId = lesson.id;
+                    
+                    const isViewed = viewedLessons.includes(lesson.id);
+                    if (isViewed) {
+                        lessonEl.classList.add('viewed');
+                    }
+                    
+                    const isGenerating = lesson.status === 'pending';
+                    if (isGenerating) {
+                        lessonEl.classList.add('generating');
+                    }
+                    
+                    let icon = '📄';
+                    if (lesson.type === 'lab') icon = '🧪';
+                    else if (lesson.type === 'challenge') icon = '🏆';
+                    else if (lesson.type === 'project') icon = '🚀';
+                    
+                    lessonEl.innerHTML = `
+                        <div class="lesson-icon">
+                            ${isViewed ? '<i class="fa-solid fa-check"></i>' : icon}
+                        </div>
+                        <div class="lesson-details">
+                            <div class="lesson-title">${lesson.title}</div>
+                            <div class="lesson-meta">
+                                <span>${lesson.duration || '15 min'}</span>
+                                <span>•</span>
+                                <span>${isGenerating ? 'Generating...' : lesson.type || 'concept'}</span>
+                            </div>
+                        </div>
+                    `;
+                    
+                    if (!isGenerating) {
+                        lessonEl.addEventListener('click', () => loadLesson(lesson.id));
+                    }
+                    
+                    itemsEl.appendChild(lessonEl);
+                });
+                
+                trackEl.appendChild(headerEl);
+                trackEl.appendChild(itemsEl);
+                container.appendChild(trackEl);
             });
             
-            container.innerHTML = html;
+            const firstHeader = container.querySelector('.track-header');
+            const firstItems = container.querySelector('.lesson-items');
+            if (firstHeader && firstItems) {
+                firstHeader.classList.add('expanded');
+                firstItems.classList.add('expanded');
+            }
             
-            // Apply saved filters
-            applyFilters();
+            filterByCareerPath();
         }
 
         // ========================================
         // LOAD LESSON
         // ========================================
-        async function loadLesson(id) {
+        async function loadLesson(lessonId) {
             try {
-                const response = await fetch(`${API_BASE_URL}/lesson/${id}`);
-                const data = await response.json();
+                const response = await fetch(`${API_BASE_URL}/lesson/${lessonId}`);
+                const lesson = await response.json();
                 
-                if (data.error) {
-                    console.error('Lesson not found');
+                if (lesson.error) {
+                    console.error('Lesson not found:', lessonId);
                     return;
                 }
                 
-                currentLesson = data;
-                currentIndex = allLessons.findIndex(l => l.id === id);
+                currentLesson = lesson;
+                currentIndex = allLessons.findIndex(l => l.id === lessonId);
                 
-                // Update header
-                document.getElementById('lesson-badge').textContent = (data.lesson_type || 'concept').toUpperCase();
-                document.getElementById('lesson-title').textContent = data.title || 'Untitled Lesson';
-                document.getElementById('lesson-duration').textContent = data.duration || '10 min';
-                document.getElementById('lesson-lang').textContent = (data.ide_mode || 'Python').toUpperCase();
-                
-                // ⭐ CRITICAL FIX: Display data.content (NOT data.description)
-                const contentEl = document.getElementById('lesson-content');
-                if (data.content) {
-                    contentEl.innerHTML = marked.parse(data.content);
-                } else {
-                    contentEl.innerHTML = '<p>No content available for this lesson yet.</p>';
+                // Auto-mark as viewed
+                if (!viewedLessons.includes(lessonId)) {
+                    viewedLessons.push(lessonId);
+                    localStorage.setItem('devquest_viewed', JSON.stringify(viewedLessons));
+                    updateSkillTree();
+                    renderSyllabus();
+                    showToast('Progress saved!');
                 }
                 
-                // Configure code editor
-                const lang = data.ide_mode || 'python';
-                const config = langConfig[lang] || langConfig.python;
+                document.getElementById('lesson-title').textContent = lesson.title;
+                document.getElementById('lesson-type').textContent = lesson.lesson_type || 'concept';
+                document.getElementById('lesson-duration').textContent = '15 min';
                 
-                editor.session.setMode(config.mode);
-                document.getElementById('file-name').textContent = config.file;
+                const analogySection = document.getElementById('analogy-section');
+                const analogyText = document.getElementById('analogy-text');
+                if (lesson.analogy) {
+                    analogyText.textContent = lesson.analogy;
+                    analogySection.style.display = 'block';
+                } else {
+                    analogySection.style.display = 'none';
+                }
                 
-                // Update file tab icon
-                const iconClass = config.brand ? 'fa-brands' : 'fa-solid';
-                document.querySelector('.file-tab i').className = `${iconClass} ${config.icon}`;
+                const markdown = marked.parse(lesson.content || lesson.content_markdown || '# Loading...');
+                document.getElementById('markdown-content').innerHTML = markdown;
                 
-                // Set starter code
-                originalCode = data.starter_code || `# ${data.title}\n# Write your code here\n\n`;
-                editor.setValue(originalCode, -1);
+                const code = lesson.starter_code || '# No starter code provided';
+                originalCode = code;
+                editor.setValue(code, -1);
                 
-                // Update navigation
-                renderSyllabus();
-                updateNavButtons();
+                const mode = lesson.ide_mode || 'python';
+                editor.session.setMode(`ace/mode/${mode}`);
                 
-                // Clear console
                 document.getElementById('console').innerHTML = '';
                 
+                document.querySelectorAll('.lesson-item').forEach(el => {
+                    el.classList.remove('active');
+                });
+                const activeLesson = document.querySelector(`[data-lesson-id="${lessonId}"]`);
+                if (activeLesson) {
+                    activeLesson.classList.add('active');
+                    activeLesson.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+                }
+                
+                updateNavButtons();
+                updateLessonPosition();
+                
+                console.log('📖 Loaded lesson:', lesson.title);
             } catch (error) {
                 console.error('Failed to load lesson:', error);
             }
         }
 
+        function updateLessonPosition() {
+            if (currentIndex >= 0 && totalLessons > 0) {
+                document.getElementById('current-pos').textContent = currentIndex + 1;
+                document.getElementById('total-pos').textContent = totalLessons;
+            } else {
+                document.getElementById('current-pos').textContent = '-';
+                document.getElementById('total-pos').textContent = '-';
+            }
+        }
+
         // ========================================
-        // CAREER PATH FILTER
+        // FILTERING
         // ========================================
         function filterByCareerPath() {
-            const select = document.getElementById('career-path-select');
-            currentCareerPath = select.value;
-            
-            const pathConfig = CAREER_PATHS[currentCareerPath];
-            const pathInfo = document.getElementById('path-info');
-            
-            // Update path info display
-            if (currentCareerPath === 'all') {
-                pathInfo.classList.remove('visible');
-            } else {
-                pathInfo.innerHTML = `
-                    <div class="path-info-desc">${pathConfig.description}</div>
-                    <div class="path-info-salary">💰 ${pathConfig.salary}</div>
-                `;
-                pathInfo.classList.add('visible');
+            const path = CAREER_PATHS[currentCareerPath];
+            if (!path || currentCareerPath === 'all') {
+                document.querySelectorAll('.lesson-track').forEach(el => {
+                    el.classList.remove('hidden');
+                });
+                return;
             }
             
-            // Apply filter
-            applyFilters();
-            
-            // Save preference
-            localStorage.setItem('devquest_career_path', currentCareerPath);
+            document.querySelectorAll('.lesson-track').forEach(trackEl => {
+                const trackId = trackEl.dataset.trackId;
+                const shouldShow = path.tracks.includes(trackId);
+                trackEl.classList.toggle('hidden', !shouldShow);
+            });
         }
 
-        // ========================================
-        // SEARCH
-        // ========================================
-        function searchLessons() {
-            const input = document.getElementById('lesson-search');
-            searchQuery = input.value.toLowerCase().trim();
-            
-            const clearBtn = document.getElementById('search-clear');
-            clearBtn.style.display = searchQuery ? 'block' : 'none';
-            
-            applyFilters();
-        }
-
-        function clearSearch() {
-            document.getElementById('lesson-search').value = '';
-            searchQuery = '';
-            document.getElementById('search-clear').style.display = 'none';
-            applyFilters();
-        }
-
-        // ========================================
-        // APPLY FILTERS (Combined career path + search)
-        // ========================================
-        function applyFilters() {
-            const container = document.getElementById('syllabus');
-            const pathConfig = CAREER_PATHS[currentCareerPath];
-            
-            if (!curriculum || curriculum.length === 0) return;
-            
+        function filterLessons(searchQuery) {
+            const container = document.getElementById('lesson-list');
             let visibleLessonCount = 0;
             
-            curriculum.forEach(track => {
-                const trackEl = container.querySelector(`[data-track="${track.id}"]`);
-                if (!trackEl) return;
-                
-                // Check if track matches career path
-                const trackNumber = track.id.split('.')[0].trim();
-                const trackMatchesPath = pathConfig.tracks.length === 0 || 
-                                         pathConfig.tracks.some(t => trackNumber.startsWith(t));
-                
-                if (!trackMatchesPath) {
-                    trackEl.classList.add('hidden');
+            allTracks.forEach(track => {
+                const trackEl = container.querySelector(`[data-track-id="${track.id}"]`);
+                if (!trackEl) {
                     return;
                 }
                 
-                // Filter lessons within track
                 let visibleLessonsInTrack = 0;
                 
                 track.lessons.forEach(lesson => {
                     const lessonEl = trackEl.querySelector(`[data-lesson-id="${lesson.id}"]`);
                     if (!lessonEl) return;
                     
-                    // Search filter
                     const matchesSearch = !searchQuery || 
                                         lesson.title.toLowerCase().includes(searchQuery) ||
                                         track.title.toLowerCase().includes(searchQuery);
@@ -1322,11 +1997,9 @@
                     }
                 });
                 
-                // Hide track if no visible lessons
                 trackEl.classList.toggle('hidden', visibleLessonsInTrack === 0);
             });
             
-            // Show "no results" message if needed
             const existingNoResults = container.querySelector('.no-results');
             if (existingNoResults) existingNoResults.remove();
             
@@ -1342,9 +2015,6 @@
             }
         }
 
-        // ========================================
-        // LOAD SAVED PREFERENCES
-        // ========================================
         function loadSavedPreferences() {
             const savedPath = localStorage.getItem('devquest_career_path');
             if (savedPath && CAREER_PATHS[savedPath]) {
@@ -1380,9 +2050,9 @@
         async function initPyodide() {
             try {
                 pyodide = await loadPyodide();
-                console.log('Pyodide loaded successfully');
+                console.log('✅ Pyodide loaded successfully');
             } catch (error) {
-                console.error('Failed to load Pyodide:', error);
+                console.error('❌ Failed to load Pyodide:', error);
             }
         }
 
@@ -1445,58 +2115,23 @@
         // ========================================
         // PROGRESS SYSTEM
         // ========================================
-        function markComplete() {
-            if (currentLesson && !completedLessons.includes(currentLesson.id)) {
-                completedLessons.push(currentLesson.id);
-                localStorage.setItem('devquest_completed', JSON.stringify(completedLessons));
-                
-                addXP(10);
-                updateProgress();
-                renderSyllabus();
-                
-                showToast('Lesson completed!', 10);
-            }
-        }
-        
-        function addXP(amount) {
-            xp += amount;
-            localStorage.setItem('devquest_xp', xp.toString());
-            document.getElementById('xp-count').textContent = xp;
-        }
-        
-        function updateProgress() {
-            const completed = completedLessons.length;
-            const percent = totalLessons > 0 ? Math.round((completed / totalLessons) * 100) : 0;
-            
-            document.getElementById('progress-fill').style.width = `${percent}%`;
-            document.getElementById('progress-text').textContent = `${completed} / ${totalLessons} Complete`;
-        }
-        
         function loadProgress() {
-            const savedCompleted = localStorage.getItem('devquest_completed');
-            const savedXP = localStorage.getItem('devquest_xp');
+            const savedViewed = localStorage.getItem('devquest_viewed');
             
-            if (savedCompleted) {
-                completedLessons = JSON.parse(savedCompleted);
-            }
-            
-            if (savedXP) {
-                xp = parseInt(savedXP, 10);
-                document.getElementById('xp-count').textContent = xp;
+            if (savedViewed) {
+                viewedLessons = JSON.parse(savedViewed);
             }
         }
 
         // ========================================
         // TOAST
         // ========================================
-        function showToast(message, xpGain) {
+        function showToast(message) {
             const toast = document.getElementById('toast');
             document.getElementById('toast-message').textContent = message;
-            document.getElementById('toast-xp').textContent = xpGain > 0 ? `+${xpGain} XP` : '';
-            document.getElementById('toast-xp').style.display = xpGain > 0 ? 'inline' : 'none';
             
             toast.classList.add('visible');
-            setTimeout(() => toast.classList.remove('visible'), 3000);
+            setTimeout(() => toast.classList.remove('visible'), 2000);
         }
 
         // ========================================
