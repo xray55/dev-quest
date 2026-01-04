@@ -539,39 +539,63 @@
 
         /* ========== TREE STRUCTURE ENHANCEMENTS ========== */
         
-        /* Tree structure indentation based on depth */
-        .lesson-item[data-depth="0"] { 
-            padding-left: 12px; 
+        /* Toggle chevron for parent lessons */
+        .lesson-toggle {
+            width: 20px;
+            height: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-tertiary);
+            font-size: 10px;
+            transition: transform 0.2s;
+            cursor: pointer;
+            margin-right: -4px;
+            z-index: 2; /* Ensure clickability */
         }
 
-        .lesson-item[data-depth="1"] { 
-            padding-left: 32px; 
-            border-left: 2px solid var(--border); 
+        .lesson-toggle:hover {
+            color: var(--text-primary);
+            background: rgba(255,255,255,0.05);
+            border-radius: 4px;
+        }
+
+        .lesson-toggle.expanded {
+            transform: rotate(90deg);
+        }
+
+        .lesson-toggle.invisible {
+            visibility: hidden;
+            pointer-events: none;
+        }
+
+        /* Tree structure indentation based on depth */
+        .lesson-item[data-depth="0"] {
+            padding-left: 4px;
+        }
+
+        .lesson-item[data-depth="1"] {
+            padding-left: 24px;
+            border-left: 2px solid var(--border);
             margin-left: 8px;
         }
 
-        .lesson-item[data-depth="2"] { 
-            padding-left: 52px; 
-            border-left: 2px solid var(--border); 
+        .lesson-item[data-depth="2"] {
+            padding-left: 44px;
+            border-left: 2px solid var(--border);
             margin-left: 16px;
         }
 
-        .lesson-item[data-depth="3"] { 
-            padding-left: 72px; 
-            border-left: 2px solid var(--border); 
+        .lesson-item[data-depth="3"] {
+            padding-left: 64px;
+            border-left: 2px solid var(--border);
             margin-left: 24px;
         }
 
-        .lesson-item[data-depth="4"] { 
-            padding-left: 92px; 
-            border-left: 2px solid var(--border); 
+        .lesson-item[data-depth="4"] {
+            padding-left: 84px;
+            border-left: 2px solid var(--border);
             margin-left: 32px;
-        }
-
-        .lesson-item[data-depth="5"] { 
-            padding-left: 112px; 
-            border-left: 2px solid var(--border); 
-            margin-left: 40px;
         }
 
         /* Depth badges (L1, L2, L3, etc.) */
@@ -631,8 +655,7 @@
         .lesson-item[data-depth="1"]::before,
         .lesson-item[data-depth="2"]::before,
         .lesson-item[data-depth="3"]::before,
-        .lesson-item[data-depth="4"]::before,
-        .lesson-item[data-depth="5"]::before {
+        .lesson-item[data-depth="4"]::before {
             content: '';
             position: absolute;
             left: calc(var(--indent) - 10px);
@@ -642,11 +665,10 @@
             background: var(--border-light);
         }
 
-        .lesson-item[data-depth="1"] { --indent: 32px; }
-        .lesson-item[data-depth="2"] { --indent: 52px; }
-        .lesson-item[data-depth="3"] { --indent: 72px; }
-        .lesson-item[data-depth="4"] { --indent: 92px; }
-        .lesson-item[data-depth="5"] { --indent: 112px; }
+        .lesson-item[data-depth="1"] { --indent: 24px; }
+        .lesson-item[data-depth="2"] { --indent: 44px; }
+        .lesson-item[data-depth="3"] { --indent: 64px; }
+        .lesson-item[data-depth="4"] { --indent: 84px; }
 
 
         .lesson-icon {
@@ -789,6 +811,27 @@
             background: var(--bg-secondary);
             border-color: var(--accent);
             color: var(--text-primary);
+        }
+
+        /* NEW: Discord Button Style */
+        .discord-btn {
+            padding: 8px 16px;
+            background: #5865F2; /* Discord Brand Color */
+            border: 1px solid #4752C4;
+            border-radius: 6px;
+            color: white;
+            font-size: 13px;
+            cursor: pointer;
+            transition: all 0.2s;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .discord-btn:hover {
+            background: #4752C4;
+            opacity: 0.9;
         }
 
         /* ========== HELP MODAL ========== */
@@ -1485,7 +1528,6 @@
         </div>
     </div>
 
-    <!-- ========== HELP MODAL ========== -->
     <div class="help-modal" id="help-modal">
         <div class="help-modal-content">
             <div class="help-modal-header">
@@ -1500,7 +1542,6 @@
                 </button>
             </div>
             <div class="help-modal-body">
-                <!-- Welcome Section -->
                 <div class="help-section">
                     <div class="help-section-title">
                         <div class="help-section-icon">
@@ -1513,7 +1554,6 @@
                     </div>
                 </div>
 
-                <!-- How It Works -->
                 <div class="help-section">
                     <div class="help-section-title">
                         <div class="help-section-icon">
@@ -1543,7 +1583,6 @@
                     </div>
                 </div>
 
-                <!-- Tree Structure -->
                 <div class="help-section">
                     <div class="help-section-title">
                         <div class="help-section-icon">
@@ -1577,7 +1616,6 @@
                     </div>
                 </div>
 
-                <!-- Key Features -->
                 <div class="help-section">
                     <div class="help-section-title">
                         <div class="help-section-icon">
@@ -1619,7 +1657,6 @@
                     </div>
                 </div>
 
-                <!-- How to Use -->
                 <div class="help-section">
                     <div class="help-section-title">
                         <div class="help-section-icon">
@@ -1639,7 +1676,6 @@
                     </div>
                 </div>
 
-                <!-- Keyboard Shortcuts -->
                 <div class="help-section">
                     <div class="help-section-title">
                         <div class="help-section-icon">
@@ -1667,7 +1703,6 @@
                     </div>
                 </div>
 
-                <!-- Tips -->
                 <div class="help-section">
                     <div class="help-section-title">
                         <div class="help-section-icon">
@@ -1687,7 +1722,6 @@
                     </div>
                 </div>
 
-                <!-- Footer -->
                 <div class="help-content" style="text-align: center; padding-top: 24px; border-top: 1px solid var(--border);">
                     <strong>Built with AI for personalized, infinite-depth learning 🚀</strong><br>
                     <span style="color: var(--text-tertiary); font-size: 12px;">
@@ -1791,6 +1825,11 @@
                     <div class="logo-text">DEV//QUEST</div>
                 </div>
                 <div class="header-actions">
+                    <a href="https://discord.gg/VjC9G3WCHc" target="_blank" class="discord-btn">
+                        <i class="fa-brands fa-discord"></i>
+                        <span>Discord</span>
+                    </a>
+
                     <button class="debug-btn" onclick="showDebugModal()">
                         <i class="fa-solid fa-bug"></i>
                         <span>AI Status</span>
@@ -1896,6 +1935,8 @@ print("Hello, DEV//QUEST!")</div>
         let currentLesson = null;
         let currentIndex = -1;
         let viewedLessons = [];
+        let expandedLessons = new Set(); // Track which parent lessons are expanded
+        let expandedTracks = new Set(); // Track which main tracks are expanded
         let totalLessons = 0;
         let currentCareerPath = 'all';
         let editor = null;
@@ -2203,49 +2244,29 @@ print("Hello, DEV//QUEST!")</div>
         // TREE STRUCTURE HELPERS
         // ========================================
         function calculateLessonDepth(lessonNumber) {
-            /**
-             * Calculate depth based on lesson number pattern
-             * 01 = 0, 01a = 1, 01a-1 = 2, 01a-1-i = 3, etc.
-             */
             if (!lessonNumber) return 0;
-            
             let depth = 0;
-            
             // Count letters (a, b, c)
             if (/[a-z]/i.test(lessonNumber)) {
                 depth += 1;
             }
-            
             // Count dashes (but not the -P suffix)
             const dashCount = (lessonNumber.match(/-/g) || []).length;
             const isPractice = lessonNumber.endsWith('-P');
-            
             if (isPractice) {
-                depth += dashCount - 1; // Subtract 1 for the -P
+                depth += dashCount - 1;
             } else {
                 depth += dashCount;
             }
-            
-            return Math.min(depth, 5); // Cap at depth 5
+            return Math.min(depth, 5);
         }
 
         function getLessonNumber(lesson) {
-            /**
-             * Extract lesson number from lesson object
-             * Handles both lesson.lesson_number and lesson.id
-             */
-            if (lesson.lesson_number) {
-                return lesson.lesson_number;
-            }
-            
-            // Fallback: try to extract from id or title
+            if (lesson.lesson_number) return lesson.lesson_number;
             return lesson.id.toString();
         }
 
         function isPracticeLesson(lessonNumber) {
-            /**
-             * Check if a lesson is a practice lesson
-             */
             return lessonNumber && lessonNumber.endsWith('-P');
         }
 
@@ -2269,6 +2290,12 @@ print("Hello, DEV//QUEST!")</div>
                 });
 
                 totalLessons = allLessons.length;
+
+                // Auto-expand the first track on initial load
+                if (allTracks.length > 0 && expandedTracks.size === 0) {
+                    expandedTracks.add(allTracks[0].id);
+                }
+
                 calculateTrackProgress();
                 renderSyllabus();
                 updateSkillTree();
@@ -2289,11 +2316,9 @@ print("Hello, DEV//QUEST!")</div>
         // ========================================
         function calculateTrackProgress() {
             trackProgress = {};
-
             allTracks.forEach(track => {
                 const totalInTrack = track.lessons.length;
                 const viewedInTrack = track.lessons.filter(l => viewedLessons.includes(l.id)).length;
-
                 trackProgress[track.id] = {
                     viewed: viewedInTrack,
                     total: totalInTrack,
@@ -2304,8 +2329,6 @@ print("Hello, DEV//QUEST!")</div>
 
         function updateSkillTree() {
             calculateTrackProgress();
-
-            // Update overall progress
             const viewed = viewedLessons.length;
             const total = totalLessons;
             const overallPercent = total > 0 ? Math.round((viewed / total) * 100) : 0;
@@ -2321,20 +2344,17 @@ print("Hello, DEV//QUEST!")</div>
                 document.getElementById('overall-progress-text').textContent = `${overallPercent}% complete - Keep going!`;
             }
 
-            // Filter tracks based on career path
             let tracksToShow = allTracks;
             const path = CAREER_PATHS[currentCareerPath];
             if (path && path.tracks.length > 0) {
                 tracksToShow = allTracks.filter(track => path.tracks.includes(track.id));
             }
 
-            // Update track-by-track progress
             const container = document.getElementById('skill-tree-tracks');
             container.innerHTML = '';
 
             tracksToShow.forEach(track => {
                 const progress = trackProgress[track.id] || { viewed: 0, total: 0, percentage: 0 };
-
                 const trackEl = document.createElement('div');
                 trackEl.className = 'skill-tree-track';
                 trackEl.innerHTML = `
@@ -2353,9 +2373,7 @@ print("Hello, DEV//QUEST!")</div>
         function toggleSkillTree() {
             const body = document.getElementById('skill-tree-body');
             const icon = document.getElementById('skill-tree-icon');
-
             body.classList.toggle('collapsed');
-
             if (body.classList.contains('collapsed')) {
                 icon.style.transform = 'rotate(-90deg)';
             } else {
@@ -2364,27 +2382,38 @@ print("Hello, DEV//QUEST!")</div>
         }
 
         // ========================================
-        // RENDER SYLLABUS
+        // RENDER SYLLABUS - NEW COLLAPSIBLE LOGIC
         // ========================================
+        function toggleSubLesson(event, lessonId) {
+            event.stopPropagation(); // Don't click the lesson itself
+
+            if (expandedLessons.has(lessonId)) {
+                expandedLessons.delete(lessonId);
+            } else {
+                expandedLessons.add(lessonId);
+            }
+
+            // Re-render to update visibility
+            renderSyllabus();
+        }
+
         function renderSyllabus() {
             const container = document.getElementById('lesson-list');
-
-            // Check if we already have content to avoid full re-render flickering
             const existingTracks = container.children.length > 0;
             if (existingTracks) {
-                // Just update badges if needed, or clear if you want full re-render
-                container.innerHTML = '';
+                container.innerHTML = ''; // Clean rebuild needed for tree view toggling
             }
 
             allTracks.forEach(track => {
                 const progress = trackProgress[track.id] || { viewed: 0, total: 0 };
-
                 const trackEl = document.createElement('div');
                 trackEl.className = 'lesson-track';
                 trackEl.dataset.trackId = track.id;
 
+                const isTrackExpanded = expandedTracks.has(track.id);
+
                 const headerEl = document.createElement('div');
-                headerEl.className = 'track-header';
+                headerEl.className = `track-header ${isTrackExpanded ? 'expanded' : ''}`;
                 headerEl.innerHTML = `
                     <div class="track-title-container">
                         <span class="track-title">${track.title}</span>
@@ -2393,73 +2422,97 @@ print("Hello, DEV//QUEST!")</div>
                     <i class="fa-solid fa-chevron-down track-icon"></i>
                 `;
 
-                // Toggle Logic
                 headerEl.addEventListener('click', () => {
-                    headerEl.classList.toggle('expanded');
-                    itemsEl.classList.toggle('expanded');
+                    if (expandedTracks.has(track.id)) {
+                        expandedTracks.delete(track.id);
+                        headerEl.classList.remove('expanded');
+                        itemsEl.classList.remove('expanded');
+                    } else {
+                        expandedTracks.add(track.id);
+                        headerEl.classList.add('expanded');
+                        itemsEl.classList.add('expanded');
+                    }
                 });
 
                 const itemsEl = document.createElement('div');
-                itemsEl.className = 'lesson-items';
+                itemsEl.className = `lesson-items ${isTrackExpanded ? 'expanded' : ''}`;
 
-                track.lessons.forEach(lesson => {
-                    const lessonEl = document.createElement('div');
-                    
-                    // Extract lesson metadata
+                // --- NEW VISIBILITY LOGIC ---
+                // We maintain a stack of "open states" for each depth level.
+                // visibilityStack[0] is always true (root items are visible).
+                // visibilityStack[1] is true only if parent (Depth 0) is expanded.
+                let visibilityStack = [true];
+
+                for (let i = 0; i < track.lessons.length; i++) {
+                    const lesson = track.lessons[i];
                     const lessonNumber = getLessonNumber(lesson);
                     const depth = calculateLessonDepth(lessonNumber);
                     const isPractice = isPracticeLesson(lessonNumber);
-                    
-                    // Set up lesson element
+
+                    // Look ahead to check if this lesson is a parent
+                    const nextLesson = track.lessons[i + 1];
+                    let nextDepth = 0;
+                    if (nextLesson) {
+                        nextDepth = calculateLessonDepth(getLessonNumber(nextLesson));
+                    }
+                    const isParent = nextLesson && nextDepth > depth;
+
+                    // Determine Visibility
+                    // An item is visible if its parent scope (visibilityStack[depth]) is true.
+                    const isVisible = visibilityStack[depth];
+
+                    // Determine Next Scope
+                    // If this item is a parent, set the visibility for the next depth level
+                    if (isParent) {
+                        const isExpanded = expandedLessons.has(lesson.id);
+                        // The *next* level is visible only if:
+                        // 1. We are currently visible
+                        // 2. We are expanded
+                        visibilityStack[depth + 1] = isVisible && isExpanded;
+                    } else {
+                        // If not a parent, next level visibility is irrelevant/reset,
+                        // but usually handled by the next parent we encounter.
+                        // We strictly don't need to clear, but it's safe.
+                    }
+
+                    // --- RENDER ---
+                    const lessonEl = document.createElement('div');
                     lessonEl.className = 'lesson-item';
                     lessonEl.dataset.lessonId = lesson.id;
                     lessonEl.dataset.depth = depth;
-                    lessonEl.dataset.lessonNumber = lessonNumber;
 
-                    if (isPractice) {
-                        lessonEl.classList.add('practice');
+                    if (!isVisible) {
+                        lessonEl.classList.add('hidden');
                     }
 
-                    const isViewed = viewedLessons.includes(lesson.id);
-                    if (isViewed) {
-                        lessonEl.classList.add('viewed');
-                    }
+                    if (isPractice) lessonEl.classList.add('practice');
+                    if (viewedLessons.includes(lesson.id)) lessonEl.classList.add('viewed');
+                    if (lesson.status === 'pending') lessonEl.classList.add('generating');
 
-                    const isGenerating = lesson.status === 'pending';
-                    if (isGenerating) {
-                        lessonEl.classList.add('generating');
-                    }
-
-                    // Determine icon based on type and practice status
                     let icon = '📄';
-                    if (isPractice) {
-                        icon = '🎯';
-                    } else if (lesson.type === 'lab') {
-                        icon = '🧪';
-                    } else if (lesson.type === 'challenge') {
-                        icon = '🏆';
-                    } else if (lesson.type === 'project') {
-                        icon = '🚀';
+                    if (isPractice) icon = '🎯';
+                    else if (lesson.type === 'lab') icon = '🧪';
+                    else if (lesson.type === 'challenge') icon = '🏆';
+                    else if (lesson.type === 'project') icon = '🚀';
+
+                    // Build Toggle Button
+                    let toggleHtml = '';
+                    if (isParent) {
+                        const isExpanded = expandedLessons.has(lesson.id);
+                        toggleHtml = `<div class="lesson-toggle ${isExpanded ? 'expanded' : ''}" onclick="toggleSubLesson(event, ${lesson.id})">
+                            <i class="fa-solid fa-chevron-right"></i>
+                        </div>`;
+                    } else {
+                        toggleHtml = `<div class="lesson-toggle invisible"><i class="fa-solid fa-chevron-right"></i></div>`;
                     }
 
-                    // Build depth indicator
-                    let depthIndicator = '';
-                    if (depth > 0) {
-                        depthIndicator = `<span class="depth-badge">L${depth}</span>`;
-                    }
+                    let depthIndicator = depth > 0 ? `<span class="depth-badge">L${depth}</span>` : '';
+                    let practiceBadge = isPractice ? `<span class="practice-badge"><i class="fa-solid fa-dumbbell"></i> PRACTICE</span>` : '';
 
-                    // Build practice badge
-                    let practiceBadge = '';
-                    if (isPractice) {
-                        practiceBadge = `<span class="practice-badge">
-                            <i class="fa-solid fa-dumbbell"></i> PRACTICE
-                        </span>`;
-                    }
-
-                    // Render lesson HTML
                     lessonEl.innerHTML = `
+                        ${toggleHtml}
                         <div class="lesson-icon">
-                            ${isViewed ? '<i class="fa-solid fa-check"></i>' : icon}
+                            ${viewedLessons.includes(lesson.id) ? '<i class="fa-solid fa-check"></i>' : icon}
                         </div>
                         <div class="lesson-details">
                             <div class="lesson-title">
@@ -2471,33 +2524,22 @@ print("Hello, DEV//QUEST!")</div>
                             <div class="lesson-meta">
                                 <span>${lesson.duration || '15 min'}</span>
                                 <span>•</span>
-                                <span>${isGenerating ? 'Generating...' : lesson.type || 'concept'}</span>
-                                ${depth > 0 ? `<span>•</span><span>Depth ${depth}</span>` : ''}
+                                <span>${lesson.status === 'pending' ? 'Generating...' : lesson.type || 'concept'}</span>
                             </div>
                         </div>
                     `;
 
-                    if (!isGenerating) {
+                    if (lesson.status !== 'pending') {
                         lessonEl.addEventListener('click', () => loadLesson(lesson.id));
                     }
 
                     itemsEl.appendChild(lessonEl);
-                });
+                }
 
                 trackEl.appendChild(headerEl);
                 trackEl.appendChild(itemsEl);
                 container.appendChild(trackEl);
             });
-
-            // Expand the first track by default only on initial load
-            if (!existingTracks) {
-                const firstHeader = container.querySelector('.track-header');
-                const firstItems = container.querySelector('.lesson-items');
-                if (firstHeader && firstItems) {
-                    firstHeader.classList.add('expanded');
-                    firstItems.classList.add('expanded');
-                }
-            }
 
             filterByCareerPath();
         }
@@ -2518,13 +2560,10 @@ print("Hello, DEV//QUEST!")</div>
                 currentLesson = lesson;
                 currentIndex = allLessons.findIndex(l => l.id === lessonId);
 
-                // Auto-mark as viewed
                 if (!viewedLessons.includes(lessonId)) {
                     viewedLessons.push(lessonId);
                     localStorage.setItem('devquest_viewed', JSON.stringify(viewedLessons));
                     updateSkillTree();
-                    // NOTE: Removed renderSyllabus here to prevent sidebar reset!
-                    // Instead, update just the visual state of the lesson item
                     const lessonEl = document.querySelector(`[data-lesson-id="${lessonId}"]`);
                     if (lessonEl) {
                         lessonEl.classList.add('viewed');
@@ -2559,7 +2598,7 @@ print("Hello, DEV//QUEST!")</div>
 
                 document.getElementById('console').innerHTML = '';
 
-                // --- UI FIX: Highlight Active & Keep Sidebar Open ---
+                // UI Update
                 document.querySelectorAll('.lesson-item').forEach(el => {
                     el.classList.remove('active');
                 });
@@ -2568,22 +2607,15 @@ print("Hello, DEV//QUEST!")</div>
                 if (activeLesson) {
                     activeLesson.classList.add('active');
 
-                    // Force Sidebar Track Open
+                    // Auto-expand parent track
                     const trackEl = activeLesson.closest('.lesson-track');
                     if (trackEl) {
-                        const header = trackEl.querySelector('.track-header');
-                        const items = trackEl.querySelector('.lesson-items');
-
-                        // Add class if missing
-                        if (header && !header.classList.contains('expanded')) {
-                            header.classList.add('expanded');
-                        }
-                        if (items && !items.classList.contains('expanded')) {
-                            items.classList.add('expanded');
-                        }
+                        const trackId = trackEl.dataset.trackId;
+                        expandedTracks.add(trackId);
+                        trackEl.querySelector('.track-header').classList.add('expanded');
+                        trackEl.querySelector('.lesson-items').classList.add('expanded');
                     }
 
-                    // Scroll to it
                     activeLesson.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
                 }
 
@@ -2631,9 +2663,7 @@ print("Hello, DEV//QUEST!")</div>
 
             allTracks.forEach(track => {
                 const trackEl = container.querySelector(`[data-track-id="${track.id}"]`);
-                if (!trackEl) {
-                    return;
-                }
+                if (!trackEl) return;
 
                 let visibleLessonsInTrack = 0;
 
@@ -2659,20 +2689,6 @@ print("Hello, DEV//QUEST!")</div>
 
                 trackEl.classList.toggle('hidden', visibleLessonsInTrack === 0);
             });
-
-            const existingNoResults = container.querySelector('.no-results');
-            if (existingNoResults) existingNoResults.remove();
-
-            if (visibleLessonCount === 0) {
-                const noResults = document.createElement('div');
-                noResults.className = 'no-results';
-                noResults.innerHTML = `
-                    <i class="fa-solid fa-search"></i>
-                    <p>No lessons found matching "${searchQuery || 'your criteria'}"</p>
-                    <p style="margin-top: 8px; font-size: 12px;">Try a different search term or career path</p>
-                `;
-                container.appendChild(noResults);
-            }
         }
 
         function loadSavedPreferences() {
@@ -2728,14 +2744,11 @@ print("Hello, DEV//QUEST!")</div>
                     consoleEl.innerHTML = '<span style="color: #f59e0b">⏳ Python is still loading...</span>';
                     return;
                 }
-
                 try {
                     let output = [];
                     pyodide.setStdout({ batched: (text) => output.push(text) });
                     pyodide.setStderr({ batched: (text) => output.push(`<span style="color:#ef4444">${text}</span>`) });
-
                     await pyodide.runPythonAsync(code);
-
                     consoleEl.innerHTML = output.join('\n') || '<span style="color: #888">No output</span>';
                 } catch (e) {
                     consoleEl.innerHTML = `<span style="color: #ef4444">${escapeHtml(e.toString())}</span>`;
@@ -2745,15 +2758,11 @@ print("Hello, DEV//QUEST!")</div>
                     const logs = [];
                     const originalLog = console.log;
                     const originalError = console.error;
-
                     console.log = (...args) => logs.push(args.map(String).join(' '));
                     console.error = (...args) => logs.push(`<span style="color:#ef4444">${args.map(String).join(' ')}</span>`);
-
                     eval(code);
-
                     console.log = originalLog;
                     console.error = originalError;
-
                     consoleEl.innerHTML = logs.join('\n') || '<span style="color: #888">No output</span>';
                 } catch (e) {
                     consoleEl.innerHTML = `<span style="color: #ef4444">${escapeHtml(e.toString())}</span>`;
@@ -2768,44 +2777,26 @@ print("Hello, DEV//QUEST!")</div>
             document.getElementById('console').innerHTML = '';
         }
 
-        function clearConsole() {
-            document.getElementById('console').innerHTML = '';
-        }
-
-        // ========================================
-        // PROGRESS SYSTEM
-        // ========================================
         function loadProgress() {
             const savedViewed = localStorage.getItem('devquest_viewed');
-
             if (savedViewed) {
                 viewedLessons = JSON.parse(savedViewed);
             }
         }
 
-        // ========================================
-        // TOAST
-        // ========================================
         function showToast(message) {
             const toast = document.getElementById('toast');
             document.getElementById('toast-message').textContent = message;
-
             toast.classList.add('visible');
             setTimeout(() => toast.classList.remove('visible'), 2000);
         }
 
-        // ========================================
-        // UTILITY
-        // ========================================
         function escapeHtml(text) {
             const div = document.createElement('div');
             div.textContent = text;
             return div.innerHTML;
         }
 
-        // ========================================
-        // START
-        // ========================================
         document.addEventListener('DOMContentLoaded', init);
     </script>
 </body>
