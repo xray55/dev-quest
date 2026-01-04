@@ -841,7 +841,7 @@
         }
 
         .help-modal-body {
-            padding: 24px;
+            padding: 12px 24px; /* Reduced top padding */
         }
 
         .help-section {
@@ -2074,7 +2074,7 @@ print("Hello, DEVQUEST!")</div>
             },
             'backend_dev': {
                 name: 'Backend Developer',
-                tracks: ["00", "03", "04B", "08A", "08B", "08C", "08D", "09A", "09B", "09D", "10A", "11A", "19B", "19C", "26A", "30A"],
+                tracks: ["00", "03", "04B", "08A", "08B", "08C", "08D", "09A", "09B", "09D", "10A", "11A", "19B", "19C", "26A", "29A", "30A"],
                 desc: 'Master server-side logic, databases, APIs, and system architecture that powers the web.',
                 salary: '$80k-$180k'
             },
@@ -2086,7 +2086,7 @@ print("Hello, DEVQUEST!")</div>
             },
             'mobile_dev': {
                 name: 'Mobile Developer',
-                tracks: ["00", "02A", "02D", "05", "06A", "12A", "12B", "18C"],
+                tracks: ["00", "02A", "02D", "05", "06A", "12A", "12B", "18C", "17A"],
                 desc: 'Build native applications for iOS and Android devices.',
                 salary: '$90k-$175k'
             },
@@ -2609,7 +2609,7 @@ print("Hello, DEVQUEST!")</div>
                 const trackEl = document.createElement('div');
                 trackEl.className = 'lesson-track';
                 trackEl.dataset.trackId = track.id;
-                trackEl.dataset.trackPath = track.path_name || ""; // Store path name for filtering
+                trackEl.dataset.trackPath = track.title; // Store full title for filtering
 
                 const isTrackExpanded = expandedTracks.has(track.id);
 
@@ -2638,66 +2638,79 @@ print("Hello, DEVQUEST!")</div>
                 const itemsEl = document.createElement('div');
                 itemsEl.className = `lesson-items ${isTrackExpanded ? 'expanded' : ''}`;
 
-                // --- NEW VISIBILITY LOGIC ---
-                let visibilityStack = [true];
+                // If track has no lessons, show "Coming Soon" message
+                if (track.lessons.length === 0) {
+                    const emptyMsg = document.createElement('div');
+                    emptyMsg.className = 'empty-track-message';
+                    emptyMsg.innerHTML = `
+                        <div style="padding: 20px; text-align: center; color: var(--text-tertiary);">
+                            <i class="fa-solid fa-clock" style="font-size: 24px; margin-bottom: 8px; color: var(--accent);"></i>
+                            <div style="font-size: 14px; font-weight: 600;">Coming Soon</div>
+                            <div style="font-size: 12px; margin-top: 4px;">AI is generating lessons for this track</div>
+                        </div>
+                    `;
+                    itemsEl.appendChild(emptyMsg);
+                } else {
+                    // --- NEW VISIBILITY LOGIC ---
+                    let visibilityStack = [true];
 
-                for (let i = 0; i < track.lessons.length; i++) {
-                    const lesson = track.lessons[i];
-                    const lessonNumber = getLessonNumber(lesson);
-                    const depth = calculateLessonDepth(lessonNumber);
-                    const isPractice = isPracticeLesson(lessonNumber);
+                    for (let i = 0; i < track.lessons.length; i++) {
+                        const lesson = track.lessons[i];
+                        const lessonNumber = getLessonNumber(lesson);
+                        const depth = calculateLessonDepth(lessonNumber);
+                        const isPractice = isPracticeLesson(lessonNumber);
 
-                    // Look ahead to check if this lesson is a parent
-                    const nextLesson = track.lessons[i + 1];
-                    let nextDepth = 0;
-                    if (nextLesson) {
-                        nextDepth = calculateLessonDepth(getLessonNumber(nextLesson));
-                    }
-                    const isParent = nextLesson && nextDepth > depth;
+                        // Look ahead to check if this lesson is a parent
+                        const nextLesson = track.lessons[i + 1];
+                        let nextDepth = 0;
+                        if (nextLesson) {
+                            nextDepth = calculateLessonDepth(getLessonNumber(nextLesson));
+                        }
+                        const isParent = nextLesson && nextDepth > depth;
 
-                    // Determine Visibility
-                    const isVisible = visibilityStack[depth];
+                        // Determine Visibility
+                        const isVisible = visibilityStack[depth];
 
-                    // Determine Next Scope
-                    if (isParent) {
-                        const isExpanded = expandedLessons.has(lesson.id);
-                        visibilityStack[depth + 1] = isVisible && isExpanded;
-                    }
+                        // Determine Next Scope
+                        if (isParent) {
+                            const isExpanded = expandedLessons.has(lesson.id);
+                            visibilityStack[depth + 1] = isVisible && isExpanded;
+                        }
 
-                    // --- RENDER ---
-                    const lessonEl = document.createElement('div');
-                    lessonEl.className = 'lesson-item';
-                    lessonEl.dataset.lessonId = lesson.id;
-                    lessonEl.dataset.depth = depth;
+                        // --- RENDER ---
+                        const lessonEl = document.createElement('div');
+                        lessonEl.className = 'lesson-item';
+                        lessonEl.dataset.lessonId = lesson.id;
+                        lessonEl.dataset.depth = depth;
 
-                    if (!isVisible) {
-                        lessonEl.classList.add('hidden');
-                    }
+                        if (!isVisible) {
+                            lessonEl.classList.add('hidden');
+                        }
 
-                    if (isPractice) lessonEl.classList.add('practice');
-                    if (lesson.status === 'pending') lessonEl.classList.add('generating');
+                        if (isPractice) lessonEl.classList.add('practice');
+                        if (lesson.status === 'pending') lessonEl.classList.add('generating');
 
-                    let icon = '📄';
-                    if (isPractice) icon = '🎯';
-                    else if (lesson.type === 'lab') icon = '🧪';
-                    else if (lesson.type === 'challenge') icon = '🏆';
-                    else if (lesson.type === 'project') icon = '🚀';
+                        let icon = '📄';
+                        if (isPractice) icon = '🎯';
+                        else if (lesson.type === 'lab') icon = '🧪';
+                        else if (lesson.type === 'challenge') icon = '🏆';
+                        else if (lesson.type === 'project') icon = '🚀';
 
-                    // Build Toggle Button
-                    let toggleHtml = '';
-                    if (isParent) {
-                        const isExpanded = expandedLessons.has(lesson.id);
-                        toggleHtml = `<div class="lesson-toggle ${isExpanded ? 'expanded' : ''}" onclick="toggleSubLesson(event, ${lesson.id})">
-                            <i class="fa-solid fa-chevron-right"></i>
-                        </div>`;
-                    } else {
-                        toggleHtml = `<div class="lesson-toggle invisible"><i class="fa-solid fa-chevron-right"></i></div>`;
-                    }
+                        // Build Toggle Button
+                        let toggleHtml = '';
+                        if (isParent) {
+                            const isExpanded = expandedLessons.has(lesson.id);
+                            toggleHtml = `<div class="lesson-toggle ${isExpanded ? 'expanded' : ''}" onclick="toggleSubLesson(event, ${lesson.id})">
+                                <i class="fa-solid fa-chevron-right"></i>
+                            </div>`;
+                        } else {
+                            toggleHtml = `<div class="lesson-toggle invisible"><i class="fa-solid fa-chevron-right"></i></div>`;
+                        }
 
-                    let depthIndicator = depth > 0 ? `<span class="depth-badge">L${depth}</span>` : '';
-                    let practiceBadge = isPractice ? `<span class="practice-badge"><i class="fa-solid fa-dumbbell"></i> PRACTICE</span>` : '';
+                        let depthIndicator = depth > 0 ? `<span class="depth-badge">L${depth}</span>` : '';
+                        let practiceBadge = isPractice ? `<span class="practice-badge"><i class="fa-solid fa-dumbbell"></i> PRACTICE</span>` : '';
 
-                    lessonEl.innerHTML = `
+                        lessonEl.innerHTML = `
                         ${toggleHtml}
                         <div class="lesson-icon">
                             ${icon}
@@ -2717,12 +2730,13 @@ print("Hello, DEVQUEST!")</div>
                         </div>
                     `;
 
-                    if (lesson.status !== 'pending') {
-                        lessonEl.addEventListener('click', () => loadLesson(lesson.id));
-                    }
+                        if (lesson.status !== 'pending') {
+                            lessonEl.addEventListener('click', () => loadLesson(lesson.id));
+                        }
 
-                    itemsEl.appendChild(lessonEl);
-                }
+                        itemsEl.appendChild(lessonEl);
+                    }
+                } // End of else block for tracks with lessons
 
                 trackEl.appendChild(headerEl);
                 trackEl.appendChild(itemsEl);
@@ -2836,16 +2850,11 @@ print("Hello, DEVQUEST!")</div>
                 return;
             }
 
-            // We need to match based on the track identifier in the track.lessons (e.g., "01A", "00", "20A")
-            // The HTML structure needs a way to link lesson tracks to these IDs.
-            // Current HTML generation uses track.path_name (e.g. "00. Foundations")
-            
+            // Extract track ID from data attribute and match against career path tracks
             document.querySelectorAll('.lesson-track').forEach(trackEl => {
-                // Extract track ID from path name (e.g., "00. Foundations" -> "00")
-                // Or "01A. HTML" -> "01A"
-                const pathName = trackEl.dataset.trackPath || "";
-                const trackId = pathName.split('.')[0]; 
-                
+                // Get track ID directly from dataset (e.g., "00", "01A", "17B")
+                const trackId = trackEl.dataset.trackId || "";
+
                 const shouldShow = path.tracks.includes(trackId);
                 trackEl.classList.toggle('hidden', !shouldShow);
             });
