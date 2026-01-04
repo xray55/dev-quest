@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>DEV//QUEST Academy</title>
+    <title>DEVQUEST Academy</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <link href="https://fonts.googleapis.com/css2?family=Literata:ital,wght@0,400;0,600;0,700;1,400&family=JetBrains+Mono:wght@400;500;600&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
@@ -321,126 +321,6 @@
             color: var(--accent);
         }
 
-        /* ========== SKILL TREE PROGRESS ========== */
-        .skill-tree-section {
-            padding: 12px 16px;
-            background: var(--bg-primary);
-            border-bottom: 1px solid var(--border);
-            max-height: 280px;
-            overflow-y: auto;
-        }
-
-        .skill-tree-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 10px;
-            cursor: pointer;
-            user-select: none;
-        }
-
-        .skill-tree-header:hover .skill-tree-label {
-            color: var(--accent-soft);
-        }
-
-        .skill-tree-label {
-            font-size: 12px;
-            font-weight: 600;
-            color: var(--text-secondary);
-            display: flex;
-            align-items: center;
-            gap: 6px;
-            transition: color 0.2s;
-        }
-
-        .skill-tree-stats {
-            font-size: 11px;
-            color: var(--text-tertiary);
-            font-family: 'Space Mono', monospace;
-        }
-
-        .skill-tree-body {
-            display: block;
-        }
-
-        .skill-tree-body.collapsed {
-            display: none;
-        }
-
-        .skill-tree-visual {
-            background: var(--bg-elevated);
-            border: 1px solid var(--border-light);
-            border-radius: 8px;
-            padding: 10px;
-            margin-bottom: 10px;
-            max-height: 150px;
-            overflow-y: auto;
-        }
-
-        .skill-tree-track {
-            margin-bottom: 6px;
-        }
-
-        .skill-tree-track:last-child {
-            margin-bottom: 0;
-        }
-
-        .skill-tree-track-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 4px;
-        }
-
-        .skill-tree-track-name {
-            font-size: 10px;
-            font-weight: 600;
-            color: var(--text-secondary);
-        }
-
-        .skill-tree-track-progress {
-            font-size: 9px;
-            color: var(--text-tertiary);
-            font-family: 'Space Mono', monospace;
-        }
-
-        .skill-tree-track-bar {
-            height: 4px;
-            background: var(--bg-code);
-            border-radius: 2px;
-            overflow: hidden;
-            position: relative;
-        }
-
-        .skill-tree-track-fill {
-            height: 100%;
-            background: linear-gradient(90deg, var(--accent), var(--accent-soft));
-            border-radius: 2px;
-            transition: width 0.5s ease;
-        }
-
-        .overall-progress-bar {
-            height: 8px;
-            background: var(--bg-elevated);
-            border-radius: 4px;
-            overflow: hidden;
-            margin-bottom: 6px;
-        }
-
-        .overall-progress-fill {
-            height: 100%;
-            background: linear-gradient(90deg, var(--success), #00b386);
-            border-radius: 4px;
-            transition: width 0.5s ease;
-        }
-
-        .overall-progress-text {
-            font-size: 11px;
-            color: var(--text-tertiary);
-            text-align: center;
-            margin-bottom: 8px;
-        }
-
         /* ========== LESSON LIST ========== */
         .lesson-list {
             flex: 1;
@@ -545,10 +425,6 @@
         .lesson-item.active {
             background: var(--accent-dim);
             border-left: 3px solid var(--accent);
-        }
-
-        .lesson-item.viewed {
-            opacity: 0.7;
         }
 
         .lesson-item.hidden {
@@ -716,11 +592,6 @@
             flex-shrink: 0;
         }
 
-        .lesson-item.viewed .lesson-icon {
-            background: var(--success-dim);
-            color: var(--success);
-        }
-
         .lesson-details {
             flex: 1;
             min-width: 0;
@@ -864,6 +735,33 @@
         .discord-btn:hover {
             background: #4752C4;
             opacity: 0.9;
+        }
+
+        /* NEW: IDE Toggle Button */
+        .ide-toggle-btn {
+            padding: 8px 16px;
+            background: var(--bg-elevated);
+            border: 1px solid var(--border-light);
+            border-radius: 6px;
+            color: var(--text-secondary);
+            font-size: 13px;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .ide-toggle-btn:hover {
+            background: var(--bg-secondary);
+            border-color: var(--accent);
+            color: var(--text-primary);
+        }
+
+        .ide-toggle-btn.active {
+            background: var(--accent);
+            color: var(--bg-deep);
+            border-color: var(--accent);
         }
 
         /* ========== HELP MODAL ========== */
@@ -1100,29 +998,29 @@
         }
 
         .analogy-section {
-            padding: 20px 32px;
+            padding: 12px 24px;
             background: linear-gradient(135deg, rgba(255, 107, 53, 0.05), rgba(255, 140, 95, 0.05));
             border-bottom: 1px solid var(--border);
             border-left: 4px solid var(--accent);
         }
 
         .analogy-section .icon {
-            font-size: 24px;
-            margin-bottom: 8px;
+            font-size: 18px;
+            margin-bottom: 4px;
         }
 
         .analogy-section h3 {
-            font-size: 14px;
+            font-size: 11px;
             font-weight: 700;
             color: var(--accent-soft);
-            margin-bottom: 8px;
+            margin-bottom: 4px;
             text-transform: uppercase;
             letter-spacing: 0.5px;
         }
 
         .analogy-section p {
-            font-size: 15px;
-            line-height: 1.7;
+            font-size: 13px;
+            line-height: 1.5;
             color: var(--text-secondary);
         }
 
@@ -1227,6 +1125,17 @@
             display: flex;
             flex-direction: column;
             background: var(--bg-primary);
+            transition: width 0.3s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.3s;
+        }
+
+        /* COLLAPSED STATE */
+        .ide-panel.collapsed {
+            width: 0;
+            border-left: none;
+            opacity: 0;
+            pointer-events: none;
+            padding: 0;
+            overflow: hidden;
         }
 
         .ide-toolbar {
@@ -1236,6 +1145,7 @@
             padding: 12px 16px;
             background: var(--bg-secondary);
             border-bottom: 1px solid var(--border);
+            min-width: 400px; /* Prevent layout squashing during transition */
         }
 
         .ide-title {
@@ -1555,6 +1465,11 @@
         }
 
         @media (max-width: 768px) {
+            /* Hide the Desktop Toggle on Mobile */
+            .ide-toggle-btn {
+                display: none !important;
+            }
+
             .sidebar {
                 width: 100%;
                 max-width: 300px;
@@ -1656,23 +1571,23 @@
             .header-actions { gap: 4px; }
 
             /* Compact buttons */
-            .discord-btn, .debug-btn, .help-btn {
+            .discord-btn, .debug-btn, .help-btn, .ide-toggle-btn {
                 padding: 6px 8px;
                 font-size: 12px;
             }
 
             /* Hide text labels earlier to prevent overflow */
-            .discord-btn span, .debug-btn span { display: none; }
+            .discord-btn span, .debug-btn span, .ide-toggle-btn span { display: none; }
 
             /* Ensure icons are visible */
-            .discord-btn i, .debug-btn i, .help-btn i { font-size: 14px; }
+            .discord-btn i, .debug-btn i, .help-btn i, .ide-toggle-btn i { font-size: 14px; }
         }
     </style>
 </head>
 <body>
     <div class="loading-screen">
         <div class="loading-logo">DQ</div>
-        <div class="loading-text">Initializing DEV//QUEST Academy...</div>
+        <div class="loading-text">Initializing DEVQUEST Academy...</div>
         <div class="ai-status-pill">
             <div class="pulse-dot"></div>
             <span>AI Engine Starting</span>
@@ -1705,7 +1620,7 @@
                     <div class="help-modal-icon">
                         <i class="fa-solid fa-graduation-cap"></i>
                     </div>
-                    <span>DEV//QUEST Academy Guide</span>
+                    <span>DEVQUEST Academy Guide</span>
                 </div>
                 <button class="help-close-btn" onclick="closeHelpModal()">
                     <i class="fa-solid fa-times"></i>
@@ -1720,7 +1635,7 @@
                         <span>Welcome to Your AI-Powered Learning Platform</span>
                     </div>
                     <div class="help-content">
-                        DEV//QUEST Academy uses <strong>recursive AI agents</strong> to create an infinitely deep, personalized curriculum. Every concept breaks down until it's crystal clear, with practice exercises at every level.
+                        DEVQUEST Academy uses <strong>recursive AI agents</strong> to create an infinitely deep, personalized curriculum. Every concept breaks down until it's crystal clear, with practice exercises at every level.
                     </div>
                 </div>
 
@@ -1730,9 +1645,6 @@
                             <i class="fa-solid fa-brain"></i>
                         </div>
                         <span>How the Infinite Learning System Works</span>
-                    </div>
-                    <div class="help-content">
-                        <strong>3 AI Agents Working Together:</strong>
                     </div>
                     <div class="help-features">
                         <div class="help-feature">
@@ -1930,25 +1842,51 @@
                 </div>
                 <select id="career-path-select">
                     <option value="all">All Tracks</option>
-                    <optgroup label="Software Development">
-                        <option value="fullstack">Full-Stack Developer</option>
-                        <option value="backend">Backend Engineer</option>
-                        <option value="frontend">Frontend Developer</option>
-                        <option value="mobile">Mobile Developer</option>
+                    
+                    <optgroup label="Software Engineering">
+                        <option value="frontend_dev">Frontend Developer</option>
+                        <option value="backend_dev">Backend Developer</option>
+                        <option value="fullstack_dev">Full-Stack Developer</option>
+                        <option value="mobile_dev">Mobile Developer</option>
                     </optgroup>
-                    <optgroup label="Cloud & Infrastructure">
-                        <option value="devops">DevOps Engineer</option>
-                        <option value="cloud">Cloud Architect</option>
+
+                    <optgroup label="Java Engineering">
+                        <option value="java_dev">Java Developer</option>
+                        <option value="java_engineer">Java Enterprise Engineer</option>
+                        <option value="spring_boot_dev">Spring Boot Developer</option>
+                        <option value="android_dev">Android Developer</option>
+                    </optgroup>
+
+                    <optgroup label="DevOps & Cloud">
+                        <option value="devops_engineer">DevOps Engineer</option>
                         <option value="sre">Site Reliability Engineer</option>
+                        <option value="cloud_architect">Cloud Architect</option>
+                        <option value="platform_engineer">Platform Engineer</option>
                     </optgroup>
+
+                    <optgroup label="Cybersecurity">
+                        <option value="penetration_tester">Penetration Tester (Red Team)</option>
+                        <option value="red_team_operator">Red Team Operator</option>
+                        <option value="soc_analyst">SOC Analyst (Blue Team)</option>
+                        <option value="incident_responder">Incident Responder</option>
+                        <option value="threat_hunter">Threat Hunter</option>
+                        <option value="security_engineer">Security Engineer</option>
+                        <option value="purple_team">Purple Team Engineer</option>
+                        <option value="grc_analyst">GRC Analyst</option>
+                    </optgroup>
+
                     <optgroup label="Data & AI">
-                        <option value="data">Data Scientist</option>
-                        <option value="ml">Machine Learning Engineer</option>
+                        <option value="data_scientist">Data Scientist</option>
+                        <option value="ai_engineer">AI Engineer</option>
                     </optgroup>
-                    <optgroup label="Security">
-                        <option value="redteam">Red Team / Pentester</option>
-                        <option value="blueteam">Blue Team / SOC Analyst</option>
-                        <option value="security">Security Engineer (Full)</option>
+
+                    <optgroup label="Specialized Roles">
+                        <option value="game_dev">Game Developer</option>
+                        <option value="blockchain_dev">Blockchain Developer</option>
+                        <option value="embedded_dev">Embedded Systems Developer</option>
+                        <option value="qa_engineer">QA Engineer</option>
+                        <option value="systems_engineer">Systems Engineer</option>
+                        <option value="api_developer">API Developer</option>
                     </optgroup>
                 </select>
                 <div class="path-info" id="path-info">
@@ -1965,27 +1903,6 @@
                 </button>
             </div>
 
-            <div class="skill-tree-section">
-                <div class="skill-tree-header" onclick="toggleSkillTree()">
-                    <div class="skill-tree-label">
-                        <i class="fa-solid fa-diagram-project"></i>
-                        <span>Learning Progress</span>
-                        <i class="fa-solid fa-chevron-down" id="skill-tree-icon" style="font-size: 10px; transition: transform 0.2s;"></i>
-                    </div>
-                    <div class="skill-tree-stats" id="overall-stats">0 / 0</div>
-                </div>
-
-                <div class="skill-tree-body" id="skill-tree-body">
-                    <div class="overall-progress-bar">
-                        <div class="overall-progress-fill" id="overall-progress-fill" style="width: 0%;"></div>
-                    </div>
-                    <div class="overall-progress-text" id="overall-progress-text">Get started by viewing your first lesson</div>
-
-                    <div class="skill-tree-visual" id="skill-tree-tracks">
-                        </div>
-                </div>
-            </div>
-
             <div class="lesson-list" id="lesson-list">
                 </div>
         </div>
@@ -1997,9 +1914,14 @@
                         <i class="fa-solid fa-bars"></i>
                     </button>
                     <div class="logo-icon">DQ</div>
-                    <div class="logo-text">DEV//QUEST</div>
+                    <div class="logo-text">DEVQUEST</div>
                 </div>
                 <div class="header-actions">
+                    <button class="ide-toggle-btn" onclick="toggleIDE()" id="ide-toggle-btn">
+                        <i class="fa-solid fa-terminal"></i>
+                        <span>Open Code</span>
+                    </button>
+                    
                     <a href="https://discord.gg/VjC9G3WCHc" target="_blank" class="discord-btn">
                         <i class="fa-brands fa-discord"></i>
                         <span>Discord</span>
@@ -2027,7 +1949,7 @@
             <div class="content-wrapper">
                 <div class="lesson-content" id="lesson-view">
                     <div class="lesson-header">
-                        <h1 id="lesson-title">Welcome to DEV//QUEST Academy</h1>
+                        <h1 id="lesson-title">Welcome to DEVQUEST Academy</h1>
                         <div class="lesson-meta-bar">
                             <span>
                                 <i class="fa-regular fa-clock"></i>
@@ -2048,7 +1970,7 @@
 
                     <div class="lesson-body">
                         <div class="markdown-content" id="markdown-content">
-                            <h1>Welcome to DEV//QUEST Academy 🚀</h1>
+                            <h1>Welcome to DEVQUEST Academy 🚀</h1>
                             <p>Select a lesson from the sidebar to begin your learning journey. Our AI is generating personalized lessons just for you!</p>
                             <h2>How It Works</h2>
                             <ul>
@@ -2081,7 +2003,7 @@
                         <div id="editor"># Welcome to the live code editor!
 # Write your code here and click "Run" to execute it.
 
-print("Hello, DEV//QUEST!")</div>
+print("Hello, DEVQUEST!")</div>
                     </div>
                     <div class="console-output" id="console">
                         <span style="color: #888">Output will appear here...</span>
@@ -2118,7 +2040,6 @@ print("Hello, DEV//QUEST!")</div>
         let allLessons = [];
         let currentLesson = null;
         let currentIndex = -1;
-        let viewedLessons = [];
         let expandedLessons = new Set(); // Track which parent lessons are expanded
         let expandedTracks = new Set(); // Track which main tracks are expanded
         let totalLessons = 0;
@@ -2128,11 +2049,14 @@ print("Hello, DEV//QUEST!")</div>
         let originalCode = '';
         let aiStatusInterval = null;
         let pendingLessonsCount = 0;
-        let trackProgress = {}; // Track-by-track progress
+        
+        // NEW: IDE State
+        let isIdeOpen = false;
 
         // ========================================
         // CAREER PATHS
         // ========================================
+        // NOTE: These match the SKILL_PATHS dictionary in curriculum.py
         const CAREER_PATHS = {
             'all': {
                 name: 'All Tracks',
@@ -2140,77 +2064,185 @@ print("Hello, DEV//QUEST!")</div>
                 desc: 'Explore all available lessons across every technology and specialization.',
                 salary: 'Varied'
             },
-            'fullstack': {
-                name: 'Full-Stack Developer',
-                tracks: ['00. Foundations', '01A. HTML', '01B. CSS', '02A. JavaScript Basics', '02B. JS Data Structures', '02C. JS DOM', '02D. JS Advanced', '03. Git', '05. TypeScript', '06A. React', '06B. React Advanced', '07. Next.js', '08A. Node.js', '08B. SQL', '08C. MongoDB', '08D. API & Auth', '11A. Docker'],
-                desc: 'Master both frontend and backend development to build complete web applications.',
-                salary: '$85k - $190k'
-            },
-            'backend': {
-                name: 'Backend Engineer',
-                tracks: ['00. Foundations', '03. Git', '08A. Node.js', '08B. SQL', '08C. MongoDB', '08D. API & Auth', '09A. Python', '09B. Python Advanced', '10A. Linux', '11A. Docker', '11B. Kubernetes'],
-                desc: 'Build robust server-side applications and APIs that power modern software.',
-                salary: '$80k - $180k'
-            },
-            'frontend': {
+            
+            // --- SOFTWARE ENGINEERING ---
+            'frontend_dev': {
                 name: 'Frontend Developer',
-                tracks: ['00. Foundations', '01A. HTML', '01B. CSS', '02A. JavaScript Basics', '02B. JS Data Structures', '02C. JS DOM', '02D. JS Advanced', '03. Git', '05. TypeScript', '06A. React', '06B. React Advanced', '07. Next.js'],
-                desc: 'Create beautiful, responsive user interfaces that delight users.',
-                salary: '$70k - $160k'
+                tracks: ["00", "01A", "01B", "02A", "02B", "02C", "02D", "03", "05", "06A", "06B", "07", "12A", "19A"],
+                desc: 'Specialize in building the visual and interactive parts of web applications using HTML, CSS, React, and more.',
+                salary: '$70k-$160k'
             },
-            'mobile': {
+            'backend_dev': {
+                name: 'Backend Developer',
+                tracks: ["00", "03", "04B", "08A", "08B", "08C", "08D", "09A", "09B", "09D", "10A", "11A", "19B", "19C", "26A", "30A"],
+                desc: 'Master server-side logic, databases, APIs, and system architecture that powers the web.',
+                salary: '$80k-$180k'
+            },
+            'fullstack_dev': {
+                name: 'Full-Stack Developer',
+                tracks: ["00", "01A", "01B", "02A", "02D", "03", "05", "06A", "06B", "07", "08A", "08B", "09A", "11A", "19A", "19B"],
+                desc: 'Become a versatile engineer capable of handling both client-side and server-side development.',
+                salary: '$85k-$190k'
+            },
+            'mobile_dev': {
                 name: 'Mobile Developer',
-                tracks: ['00. Foundations', '02A. JavaScript Basics', '02D. JS Advanced', '03. Git', '05. TypeScript', '06A. React', '06B. React Advanced', '12A. Mobile (React Native)'],
-                desc: 'Build native mobile applications for iOS and Android.',
-                salary: '$90k - $175k'
+                tracks: ["00", "02A", "02D", "05", "06A", "12A", "12B", "18C"],
+                desc: 'Build native applications for iOS and Android devices.',
+                salary: '$90k-$175k'
             },
-            'devops': {
+
+            // --- JAVA ENGINEERING ---
+            'java_dev': {
+                name: 'Java Developer',
+                tracks: ["00", "03", "04B", "04C", "08B", "17A", "17B", "17C", "17D"],
+                desc: 'Focus on core Java development, object-oriented programming, and backend logic.',
+                salary: '$80k-$170k'
+            },
+            'java_engineer': {
+                name: 'Java Enterprise Engineer',
+                tracks: ["00", "03", "04B", "04C", "08B", "10A", "11A", "11B", "11C", "17A", "17B", "17C", "17D", "17E", "17F", "18A", "18B", "25A"],
+                desc: 'Design large-scale enterprise systems using the Java ecosystem and Spring framework.',
+                salary: '$100k-$200k'
+            },
+            'spring_boot_dev': {
+                name: 'Spring Boot Developer',
+                tracks: ["00", "03", "08B", "17A", "17B", "17C", "17D", "17E", "11B", "11C"],
+                desc: 'Specialize in building microservices and web applications with the Spring Boot framework.',
+                salary: '$90k-$180k'
+            },
+            'android_dev': {
+                name: 'Android Developer',
+                tracks: ["00", "03", "17A", "17B", "18C"],
+                desc: 'Create mobile applications specifically for the Android platform using Kotlin and Java.',
+                salary: '$85k-$175k'
+            },
+
+            // --- DEVOPS & CLOUD ---
+            'devops_engineer': {
                 name: 'DevOps Engineer',
-                tracks: ['00. Foundations', '03. Git', '09A. Python', '10A. Linux', '11A. Docker', '11B. Kubernetes', '11C. AWS', '11D. Terraform', '11E. CI/CD', '11F. Monitoring', '11G. SRE'],
-                desc: 'Automate deployment pipelines and manage cloud infrastructure at scale.',
-                salary: '$95k - $200k'
-            },
-            'data': {
-                name: 'Data Scientist',
-                tracks: ['00. Foundations', '04A. CS Math', '04B. Data Structures', '04C. Algorithms', '09A. Python', '09B. Python Advanced', '08B. SQL', '13A. Data Science', '13B. ML', '13C. Deep Learning'],
-                desc: 'Extract insights from data using statistical analysis and machine learning.',
-                salary: '$105k - $165k'
-            },
-            'ml': {
-                name: 'Machine Learning Engineer',
-                tracks: ['00. Foundations', '04A. CS Math', '04C. Algorithms', '09A. Python', '09B. Python Advanced', '13A. Data Science', '13B. ML', '13C. Deep Learning', '11A. Docker', '11B. Kubernetes'],
-                desc: 'Build and deploy machine learning models at scale.',
-                salary: '$120k - $210k'
-            },
-            'redteam': {
-                name: 'Red Team / Penetration Tester',
-                tracks: ['00. Foundations', '09A. Python', '10A. Linux', '14A. Red Team', '14B. Web Pentesting', '14C. Network Pentesting', '14D. AD Attacks', '14E. Post-Exploitation'],
-                desc: 'Simulate real-world attacks to identify security vulnerabilities.',
-                salary: '$110k - $190k'
-            },
-            'blueteam': {
-                name: 'Blue Team / SOC Analyst',
-                tracks: ['00. Foundations', '09A. Python', '10A. Linux', '15A. Blue Team', '15B. SIEM', '15C. DFIR', '15D. Threat Intel', '15E. EDR', '15F. NSM', '15G. Malware Analysis', '15H. Threat Hunting'],
-                desc: 'Defend systems by detecting, analyzing, and responding to security threats.',
-                salary: '$100k - $180k'
-            },
-            'security': {
-                name: 'Security Engineer (Full Spectrum)',
-                tracks: ['00. Foundations', '09A. Python', '10A. Linux', '14A. Red Team', '14B. Web Pentesting', '14C. Network Pentesting', '14D. AD Attacks', '15A. Blue Team', '15B. SIEM', '15C. DFIR', '15D. Threat Intel', '15E. EDR', '15F. NSM', '15I. Purple Team'],
-                desc: 'Master both offensive and defensive security across the entire security spectrum.',
-                salary: '$115k - $200k'
-            },
-            'cloud': {
-                name: 'Cloud Architect',
-                tracks: ['00. Foundations', '03. Git', '09A. Python', '10A. Linux', '11A. Docker', '11B. Kubernetes', '11C. AWS', '11D. Terraform', '11E. CI/CD', '11F. Monitoring', '11G. SRE'],
-                desc: 'Design and implement scalable cloud infrastructure solutions.',
-                salary: '$130k - $220k'
+                tracks: ["00", "03", "09A", "09D", "10A", "10B", "11A", "11B", "11C", "11D", "11E", "11F", "11G"],
+                desc: 'Bridge the gap between development and operations with automation, CI/CD, and infrastructure.',
+                salary: '$95k-$200k'
             },
             'sre': {
                 name: 'Site Reliability Engineer',
-                tracks: ['00. Foundations', '03. Git', '09A. Python', '10A. Linux', '11A. Docker', '11B. Kubernetes', '11C. AWS', '11E. CI/CD', '11F. Monitoring', '11G. SRE'],
-                desc: 'Ensure systems are reliable, scalable, and highly available.',
-                salary: '$120k - $210k'
+                tracks: ["00", "03", "04C", "09A", "09D", "10A", "10B", "11A", "11B", "11C", "11F", "11G", "25A"],
+                desc: 'Ensure production systems are scalable, reliable, and efficient.',
+                salary: '$110k-$220k'
+            },
+            'cloud_architect': {
+                name: 'Cloud Architect',
+                tracks: ["00", "03", "09A", "10A", "11A", "11B", "11C", "11D", "11E", "11F", "11G", "20A", "20B", "25A"],
+                desc: 'Design and manage complex cloud environments on AWS, Azure, or GCP.',
+                salary: '$130k-$250k'
+            },
+            'platform_engineer': {
+                name: 'Platform Engineer',
+                tracks: ["00", "03", "09A", "10A", "11A", "11B", "11C", "11D", "11E", "11F", "11G", "17E"],
+                desc: 'Build internal developer platforms to accelerate software delivery.',
+                salary: '$120k-$220k'
+            },
+
+            // --- CYBERSECURITY ---
+            'penetration_tester': {
+                name: 'Penetration Tester',
+                tracks: ["00", "03", "09A", "10A", "11A", "14A", "14B", "14C", "14D", "14E"],
+                desc: 'Ethically hack systems to identify and fix vulnerabilities before attackers do.',
+                salary: '$85k-$170k'
+            },
+            'red_team_operator': {
+                name: 'Red Team Operator',
+                tracks: ["00", "03", "09A", "09C", "10A", "10B", "11A", "14A", "14B", "14C", "14D", "14E", "28A"],
+                desc: 'Simulate sophisticated adversaries to test an organization\'s detection and response capabilities.',
+                salary: '$100k-$200k'
+            },
+            'soc_analyst': {
+                name: 'SOC Analyst',
+                tracks: ["00", "03", "09A", "11A", "15A", "15B", "15C", "15D", "15E", "15F"],
+                desc: 'Monitor, analyze, and respond to security alerts in a Security Operations Center.',
+                salary: '$65k-$120k'
+            },
+            'incident_responder': {
+                name: 'Incident Responder',
+                tracks: ["00", "03", "09A", "11A", "15A", "15B", "15C", "15D", "15E", "15F", "15G", "15H"],
+                desc: 'Investigate and mitigate cyber attacks when they occur.',
+                salary: '$85k-$165k'
+            },
+            'threat_hunter': {
+                name: 'Threat Hunter',
+                tracks: ["00", "03", "09A", "11A", "15A", "15B", "15C", "15D", "15E", "15F", "15G", "15H", "15I"],
+                desc: 'Proactively search for hidden threats that evade automated defense systems.',
+                salary: '$95k-$180k'
+            },
+            'security_engineer': {
+                name: 'Security Engineer',
+                tracks: ["00", "03", "09A", "09D", "10A", "11A", "14A", "15A", "15B", "15C", "15D", "15F", "15G", "25A"],
+                desc: 'Build secure systems and implement security tools and infrastructure.',
+                salary: '$100k-$190k'
+            },
+            'purple_team': {
+                name: 'Purple Team Engineer',
+                tracks: ["00", "03", "09A", "11A", "14A", "14B", "14C", "14D", "15A", "15B", "15C", "15D", "15E", "15G"],
+                desc: 'Combine offensive and defensive skills to improve overall security posture.',
+                salary: '$105k-$195k'
+            },
+            'grc_analyst': {
+                name: 'GRC Analyst',
+                tracks: ["00", "15A", "16A", "16B", "16C", "16D"],
+                desc: 'Manage Governance, Risk, and Compliance to ensure organizations meet security standards.',
+                salary: '$70k-$140k'
+            },
+
+            // --- DATA & AI ---
+            'data_scientist': {
+                name: 'Data Scientist',
+                tracks: ["00", "03", "09A", "09B", "13A", "13B", "13C"],
+                desc: 'Analyze complex data to help organizations make better decisions.',
+                salary: '$95k-$190k'
+            },
+            'ai_engineer': {
+                name: 'AI Engineer',
+                tracks: ["00", "03", "09A", "09B", "13A", "13B", "13C", "13D"],
+                desc: 'Build and deploy Artificial Intelligence and Machine Learning models.',
+                salary: '$120k-$250k'
+            },
+
+            // --- SPECIALIZED ---
+            'game_dev': {
+                name: 'Game Developer',
+                tracks: ["00", "03", "04A", "04B", "04C", "21A", "21B", "26A", "27A"],
+                desc: 'Create engaging video games using engines like Unity and languages like C# and C++.',
+                salary: '$60k-$150k'
+            },
+            'blockchain_dev': {
+                name: 'Blockchain Developer',
+                tracks: ["00", "03", "02A", "09A", "22A", "22B", "22C"],
+                desc: 'Develop decentralized applications and smart contracts.',
+                salary: '$100k-$220k'
+            },
+            'embedded_dev': {
+                name: 'Embedded Systems Developer',
+                tracks: ["00", "03", "04A", "04B", "04C", "09C", "27A", "28A"],
+                desc: 'Program hardware and low-level systems using C, C++, and Rust.',
+                salary: '$80k-$160k'
+            },
+            'qa_engineer': {
+                name: 'QA Engineer',
+                tracks: ["00", "03", "09A", "24A", "24B"],
+                desc: 'Ensure software quality through automated testing and performance analysis.',
+                salary: '$65k-$140k'
+            },
+            'systems_engineer': {
+                name: 'Systems Engineer',
+                tracks: ["00", "03", "04A", "09C", "09D", "10A", "10B", "11A", "25A", "27A", "28A"],
+                desc: 'Manage and optimize complex computer systems and networks.',
+                salary: '$90k-$180k'
+            },
+            'api_developer': {
+                name: 'API Developer',
+                tracks: ["00", "03", "08A", "08B", "08D", "09A", "09B", "17C", "17D", "19C", "26A"],
+                desc: 'Specialize in designing, building, and maintaining APIs for software integration.',
+                salary: '$85k-$170k'
             }
         };
 
@@ -2218,7 +2250,7 @@ print("Hello, DEV//QUEST!")</div>
         // INITIALIZATION
         // ========================================
         async function init() {
-            console.log('🚀 Initializing DEV//QUEST Academy...');
+            console.log('🚀 Initializing DEVQUEST Academy...');
 
             // Initialize Ace Editor
             editor = ace.edit("editor");
@@ -2230,9 +2262,9 @@ print("Hello, DEV//QUEST!")</div>
                 enableBasicAutocompletion: true,
                 enableLiveAutocompletion: true
             });
-
-            // Load progress
-            loadProgress();
+            
+            // Set IDE to initially collapsed
+            document.getElementById('ide-view').classList.add('collapsed');
 
             // Load curriculum
             await loadCurriculum();
@@ -2262,7 +2294,6 @@ print("Hello, DEV//QUEST!")</div>
                 localStorage.setItem('devquest_career_path', currentCareerPath);
                 filterByCareerPath();
                 updatePathInfo();
-                updateSkillTree();
             });
 
             // Search
@@ -2283,6 +2314,31 @@ print("Hello, DEV//QUEST!")</div>
 
             // Update path info on load
             updatePathInfo();
+        }
+
+        // ========================================
+        // NEW: TOGGLE IDE
+        // ========================================
+        function toggleIDE() {
+            const idePanel = document.getElementById('ide-view');
+            const btn = document.getElementById('ide-toggle-btn');
+            const text = btn.querySelector('span');
+            
+            isIdeOpen = !isIdeOpen;
+            
+            if (isIdeOpen) {
+                idePanel.classList.remove('collapsed');
+                btn.classList.add('active');
+                text.textContent = "Hide Code";
+                // Important: Trigger resize after transition so text renders correctly
+                setTimeout(() => { 
+                    if(editor) editor.resize(); 
+                }, 350);
+            } else {
+                idePanel.classList.add('collapsed');
+                btn.classList.remove('active');
+                text.textContent = "Open Code";
+            }
         }
 
         // ========================================
@@ -2513,9 +2569,7 @@ print("Hello, DEV//QUEST!")</div>
                     expandedTracks.add(allTracks[0].id);
                 }
 
-                calculateTrackProgress();
                 renderSyllabus();
-                updateSkillTree();
 
                 const pendingCount = allLessons.filter(l => l.status === 'pending').length;
                 pendingLessonsCount = pendingCount;
@@ -2525,76 +2579,6 @@ print("Hello, DEV//QUEST!")</div>
                 console.log('✅ Curriculum loaded:', totalLessons, 'lessons');
             } catch (error) {
                 console.error('❌ Failed to load curriculum:', error);
-            }
-        }
-
-        // ========================================
-        // SKILL TREE PROGRESS
-        // ========================================
-        function calculateTrackProgress() {
-            trackProgress = {};
-            allTracks.forEach(track => {
-                const totalInTrack = track.lessons.length;
-                const viewedInTrack = track.lessons.filter(l => viewedLessons.includes(l.id)).length;
-                trackProgress[track.id] = {
-                    viewed: viewedInTrack,
-                    total: totalInTrack,
-                    percentage: totalInTrack > 0 ? Math.round((viewedInTrack / totalInTrack) * 100) : 0
-                };
-            });
-        }
-
-        function updateSkillTree() {
-            calculateTrackProgress();
-            const viewed = viewedLessons.length;
-            const total = totalLessons;
-            const overallPercent = total > 0 ? Math.round((viewed / total) * 100) : 0;
-
-            document.getElementById('overall-progress-fill').style.width = `${overallPercent}%`;
-            document.getElementById('overall-stats').textContent = `${viewed} / ${total}`;
-
-            if (viewed === 0) {
-                document.getElementById('overall-progress-text').textContent = 'Get started by viewing your first lesson';
-            } else if (viewed === total) {
-                document.getElementById('overall-progress-text').textContent = '🎉 All lessons completed! You\'re amazing!';
-            } else {
-                document.getElementById('overall-progress-text').textContent = `${overallPercent}% complete - Keep going!`;
-            }
-
-            let tracksToShow = allTracks;
-            const path = CAREER_PATHS[currentCareerPath];
-            if (path && path.tracks.length > 0) {
-                tracksToShow = allTracks.filter(track => path.tracks.includes(track.id));
-            }
-
-            const container = document.getElementById('skill-tree-tracks');
-            container.innerHTML = '';
-
-            tracksToShow.forEach(track => {
-                const progress = trackProgress[track.id] || { viewed: 0, total: 0, percentage: 0 };
-                const trackEl = document.createElement('div');
-                trackEl.className = 'skill-tree-track';
-                trackEl.innerHTML = `
-                    <div class="skill-tree-track-header">
-                        <div class="skill-tree-track-name">${track.title}</div>
-                        <div class="skill-tree-track-progress">${progress.viewed}/${progress.total}</div>
-                    </div>
-                    <div class="skill-tree-track-bar">
-                        <div class="skill-tree-track-fill" style="width: ${progress.percentage}%;"></div>
-                    </div>
-                `;
-                container.appendChild(trackEl);
-            });
-        }
-
-        function toggleSkillTree() {
-            const body = document.getElementById('skill-tree-body');
-            const icon = document.getElementById('skill-tree-icon');
-            body.classList.toggle('collapsed');
-            if (body.classList.contains('collapsed')) {
-                icon.style.transform = 'rotate(-90deg)';
-            } else {
-                icon.style.transform = 'rotate(0deg)';
             }
         }
 
@@ -2622,10 +2606,10 @@ print("Hello, DEV//QUEST!")</div>
             }
 
             allTracks.forEach(track => {
-                const progress = trackProgress[track.id] || { viewed: 0, total: 0 };
                 const trackEl = document.createElement('div');
                 trackEl.className = 'lesson-track';
                 trackEl.dataset.trackId = track.id;
+                trackEl.dataset.trackPath = track.path_name || ""; // Store path name for filtering
 
                 const isTrackExpanded = expandedTracks.has(track.id);
 
@@ -2634,7 +2618,7 @@ print("Hello, DEV//QUEST!")</div>
                 headerEl.innerHTML = `
                     <div class="track-title-container">
                         <span class="track-title">${track.title}</span>
-                        <span class="track-progress-badge">${progress.viewed}/${progress.total}</span>
+                        <span class="track-progress-badge">${track.lessons.length}</span>
                     </div>
                     <i class="fa-solid fa-chevron-down track-icon"></i>
                 `;
@@ -2655,9 +2639,6 @@ print("Hello, DEV//QUEST!")</div>
                 itemsEl.className = `lesson-items ${isTrackExpanded ? 'expanded' : ''}`;
 
                 // --- NEW VISIBILITY LOGIC ---
-                // We maintain a stack of "open states" for each depth level.
-                // visibilityStack[0] is always true (root items are visible).
-                // visibilityStack[1] is true only if parent (Depth 0) is expanded.
                 let visibilityStack = [true];
 
                 for (let i = 0; i < track.lessons.length; i++) {
@@ -2675,21 +2656,12 @@ print("Hello, DEV//QUEST!")</div>
                     const isParent = nextLesson && nextDepth > depth;
 
                     // Determine Visibility
-                    // An item is visible if its parent scope (visibilityStack[depth]) is true.
                     const isVisible = visibilityStack[depth];
 
                     // Determine Next Scope
-                    // If this item is a parent, set the visibility for the next depth level
                     if (isParent) {
                         const isExpanded = expandedLessons.has(lesson.id);
-                        // The *next* level is visible only if:
-                        // 1. We are currently visible
-                        // 2. We are expanded
                         visibilityStack[depth + 1] = isVisible && isExpanded;
-                    } else {
-                        // If not a parent, next level visibility is irrelevant/reset,
-                        // but usually handled by the next parent we encounter.
-                        // We strictly don't need to clear, but it's safe.
                     }
 
                     // --- RENDER ---
@@ -2703,7 +2675,6 @@ print("Hello, DEV//QUEST!")</div>
                     }
 
                     if (isPractice) lessonEl.classList.add('practice');
-                    if (viewedLessons.includes(lesson.id)) lessonEl.classList.add('viewed');
                     if (lesson.status === 'pending') lessonEl.classList.add('generating');
 
                     let icon = '📄';
@@ -2729,7 +2700,7 @@ print("Hello, DEV//QUEST!")</div>
                     lessonEl.innerHTML = `
                         ${toggleHtml}
                         <div class="lesson-icon">
-                            ${viewedLessons.includes(lesson.id) ? '<i class="fa-solid fa-check"></i>' : icon}
+                            ${icon}
                         </div>
                         <div class="lesson-details">
                             <div class="lesson-title">
@@ -2776,19 +2747,6 @@ print("Hello, DEV//QUEST!")</div>
 
                 currentLesson = lesson;
                 currentIndex = allLessons.findIndex(l => l.id === lessonId);
-
-                if (!viewedLessons.includes(lessonId)) {
-                    viewedLessons.push(lessonId);
-                    localStorage.setItem('devquest_viewed', JSON.stringify(viewedLessons));
-                    updateSkillTree();
-                    const lessonEl = document.querySelector(`[data-lesson-id="${lessonId}"]`);
-                    if (lessonEl) {
-                        lessonEl.classList.add('viewed');
-                        const icon = lessonEl.querySelector('.lesson-icon');
-                        icon.innerHTML = '<i class="fa-solid fa-check"></i>';
-                    }
-                    showToast('Progress saved!');
-                }
 
                 document.getElementById('lesson-title').textContent = lesson.title;
                 document.getElementById('lesson-type').textContent = lesson.lesson_type || 'concept';
@@ -2878,8 +2836,16 @@ print("Hello, DEV//QUEST!")</div>
                 return;
             }
 
+            // We need to match based on the track identifier in the track.lessons (e.g., "01A", "00", "20A")
+            // The HTML structure needs a way to link lesson tracks to these IDs.
+            // Current HTML generation uses track.path_name (e.g. "00. Foundations")
+            
             document.querySelectorAll('.lesson-track').forEach(trackEl => {
-                const trackId = trackEl.dataset.trackId;
+                // Extract track ID from path name (e.g., "00. Foundations" -> "00")
+                // Or "01A. HTML" -> "01A"
+                const pathName = trackEl.dataset.trackPath || "";
+                const trackId = pathName.split('.')[0]; 
+                
                 const shouldShow = path.tracks.includes(trackId);
                 trackEl.classList.toggle('hidden', !shouldShow);
             });
@@ -3004,13 +2970,6 @@ print("Hello, DEV//QUEST!")</div>
         function resetCode() {
             editor.setValue(originalCode, -1);
             document.getElementById('console').innerHTML = '';
-        }
-
-        function loadProgress() {
-            const savedViewed = localStorage.getItem('devquest_viewed');
-            if (savedViewed) {
-                viewedLessons = JSON.parse(savedViewed);
-            }
         }
 
         function showToast(message) {
