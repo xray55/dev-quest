@@ -11,7 +11,7 @@
 
 ## **[🎯 Start Learning →](https://xray55.github.io/dev-quest/)**
 
-[![Discord](https://img.shields.io/badge/Discord-Join_Community-5865F2?style=flat-square&logo=discord)](https://discord.gg/hD4PEWKMpx)
+[![Discord](https://img.shields.io/badge/Discord-Join_Community-5865F2?style=flat-square&logo=discord)](https://discord.gg/VjC9G3WCHc)
 
 </div>
 
