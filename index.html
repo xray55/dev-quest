@@ -538,39 +538,39 @@
         }
 
         /* ========== TREE STRUCTURE ENHANCEMENTS ========== */
-
+        
         /* Tree structure indentation based on depth */
-        .lesson-item[data-depth="0"] {
-            padding-left: 12px;
+        .lesson-item[data-depth="0"] { 
+            padding-left: 12px; 
         }
 
-        .lesson-item[data-depth="1"] {
-            padding-left: 32px;
-            border-left: 2px solid var(--border);
+        .lesson-item[data-depth="1"] { 
+            padding-left: 32px; 
+            border-left: 2px solid var(--border); 
             margin-left: 8px;
         }
 
-        .lesson-item[data-depth="2"] {
-            padding-left: 52px;
-            border-left: 2px solid var(--border);
+        .lesson-item[data-depth="2"] { 
+            padding-left: 52px; 
+            border-left: 2px solid var(--border); 
             margin-left: 16px;
         }
 
-        .lesson-item[data-depth="3"] {
-            padding-left: 72px;
-            border-left: 2px solid var(--border);
+        .lesson-item[data-depth="3"] { 
+            padding-left: 72px; 
+            border-left: 2px solid var(--border); 
             margin-left: 24px;
         }
 
-        .lesson-item[data-depth="4"] {
-            padding-left: 92px;
-            border-left: 2px solid var(--border);
+        .lesson-item[data-depth="4"] { 
+            padding-left: 92px; 
+            border-left: 2px solid var(--border); 
             margin-left: 32px;
         }
 
-        .lesson-item[data-depth="5"] {
-            padding-left: 112px;
-            border-left: 2px solid var(--border);
+        .lesson-item[data-depth="5"] { 
+            padding-left: 112px; 
+            border-left: 2px solid var(--border); 
             margin-left: 40px;
         }
 
@@ -790,6 +790,198 @@
             border-color: var(--accent);
             color: var(--text-primary);
         }
+
+        /* ========== HELP MODAL ========== */
+        .help-modal {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(8px);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 10000;
+            padding: 20px;
+        }
+
+        .help-modal.active {
+            display: flex;
+        }
+
+        .help-modal-content {
+            background: var(--bg-primary);
+            border: 1px solid var(--border-light);
+            border-radius: 16px;
+            max-width: 800px;
+            max-height: 90vh;
+            width: 100%;
+            overflow-y: auto;
+            box-shadow: 0 20px 60px var(--shadow-strong);
+        }
+
+        .help-modal-header {
+            padding: 24px;
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            position: sticky;
+            top: 0;
+            background: var(--bg-primary);
+            z-index: 1;
+        }
+
+        .help-modal-title {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--text-primary);
+        }
+
+        .help-modal-icon {
+            width: 48px;
+            height: 48px;
+            background: linear-gradient(135deg, var(--accent), var(--accent-soft));
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+        }
+
+        .help-close-btn {
+            background: var(--bg-elevated);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 8px 12px;
+            color: var(--text-secondary);
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .help-close-btn:hover {
+            background: var(--bg-secondary);
+            border-color: var(--accent);
+            color: var(--text-primary);
+        }
+
+        .help-modal-body {
+            padding: 24px;
+        }
+
+        .help-section {
+            margin-bottom: 32px;
+        }
+
+        .help-section:last-child {
+            margin-bottom: 0;
+        }
+
+        .help-section-title {
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 16px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .help-section-icon {
+            width: 32px;
+            height: 32px;
+            background: var(--bg-elevated);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--accent);
+        }
+
+        .help-content {
+            color: var(--text-secondary);
+            line-height: 1.8;
+            margin-bottom: 16px;
+        }
+
+        .help-features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 16px;
+        }
+
+        .help-feature {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 16px;
+            transition: all 0.2s;
+        }
+
+        .help-feature:hover {
+            border-color: var(--accent);
+            transform: translateY(-2px);
+        }
+
+        .help-feature-icon {
+            font-size: 24px;
+            margin-bottom: 8px;
+        }
+
+        .help-feature-title {
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 4px;
+        }
+
+        .help-feature-desc {
+            font-size: 12px;
+            color: var(--text-tertiary);
+            line-height: 1.6;
+        }
+
+        .help-shortcut {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: var(--bg-elevated);
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            padding: 8px 12px;
+            margin: 4px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 12px;
+        }
+
+        .help-shortcut-key {
+            background: var(--bg-deep);
+            border: 1px solid var(--border-light);
+            border-radius: 4px;
+            padding: 2px 6px;
+            font-weight: 600;
+            color: var(--accent);
+        }
+
+        .help-tree-example {
+            background: var(--bg-code);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 16px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 12px;
+            color: var(--text-secondary);
+            line-height: 1.8;
+            overflow-x: auto;
+        }
+
+        .help-tree-example .depth-0 { color: var(--text-primary); }
+        .help-tree-example .depth-1 { color: var(--info); margin-left: 20px; }
+        .help-tree-example .depth-2 { color: var(--success); margin-left: 40px; }
+        .help-tree-example .practice { color: var(--warning); }
+
 
         .content-wrapper {
             flex: 1;
@@ -1293,6 +1485,219 @@
         </div>
     </div>
 
+    <!-- ========== HELP MODAL ========== -->
+    <div class="help-modal" id="help-modal">
+        <div class="help-modal-content">
+            <div class="help-modal-header">
+                <div class="help-modal-title">
+                    <div class="help-modal-icon">
+                        <i class="fa-solid fa-graduation-cap"></i>
+                    </div>
+                    <span>DEV//QUEST Academy Guide</span>
+                </div>
+                <button class="help-close-btn" onclick="closeHelpModal()">
+                    <i class="fa-solid fa-times"></i>
+                </button>
+            </div>
+            <div class="help-modal-body">
+                <!-- Welcome Section -->
+                <div class="help-section">
+                    <div class="help-section-title">
+                        <div class="help-section-icon">
+                            <i class="fa-solid fa-rocket"></i>
+                        </div>
+                        <span>Welcome to Your AI-Powered Learning Platform</span>
+                    </div>
+                    <div class="help-content">
+                        DEV//QUEST Academy uses <strong>recursive AI agents</strong> to create an infinitely deep, personalized curriculum. Every concept breaks down until it's crystal clear, with practice exercises at every level.
+                    </div>
+                </div>
+
+                <!-- How It Works -->
+                <div class="help-section">
+                    <div class="help-section-title">
+                        <div class="help-section-icon">
+                            <i class="fa-solid fa-brain"></i>
+                        </div>
+                        <span>How the Infinite Learning System Works</span>
+                    </div>
+                    <div class="help-content">
+                        <strong>3 AI Agents Working Together:</strong>
+                    </div>
+                    <div class="help-features">
+                        <div class="help-feature">
+                            <div class="help-feature-icon">🤖</div>
+                            <div class="help-feature-title">Content Generator (32B Model)</div>
+                            <div class="help-feature-desc">Creates comprehensive 1500+ word lessons with examples, analogies, and code</div>
+                        </div>
+                        <div class="help-feature">
+                            <div class="help-feature-icon">🔍</div>
+                            <div class="help-feature-title">QA Reviewer (7B Model)</div>
+                            <div class="help-feature-desc">Reviews every lesson and breaks complex topics into sub-lessons (01 → 01a, 01b, 01c)</div>
+                        </div>
+                        <div class="help-feature">
+                            <div class="help-feature-icon">🎯</div>
+                            <div class="help-feature-title">Practice Generator</div>
+                            <div class="help-feature-desc">Creates hands-on exercises after each concept to reinforce learning</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Tree Structure -->
+                <div class="help-section">
+                    <div class="help-section-title">
+                        <div class="help-section-icon">
+                            <i class="fa-solid fa-sitemap"></i>
+                        </div>
+                        <span>Understanding the Lesson Tree</span>
+                    </div>
+                    <div class="help-content">
+                        Lessons automatically organize into a <strong>hierarchical tree structure</strong> for progressive learning:
+                    </div>
+                    <div class="help-tree-example">
+<span class="depth-0">📄 01 Python Basics</span>
+  <span class="depth-1">📄 01a Variables [L1]</span>
+    <span class="depth-2">📄 01a-1 Variable Naming [L2]</span>
+      <span class="practice">🎯 01a-1-P PRACTICE Variable Naming</span>
+    <span class="depth-2">📄 01a-2 Variable Scope [L2]</span>
+      <span class="practice">🎯 01a-2-P PRACTICE Variable Scope</span>
+    <span class="practice">🎯 01a-P PRACTICE All Variables</span>
+  <span class="depth-1">📄 01b Data Types [L1]</span>
+    <span class="practice">🎯 01b-P PRACTICE Data Types</span>
+  <span class="practice">🎯 01-P PRACTICE All Python Basics</span>
+                    </div>
+                    <div class="help-content" style="margin-top: 12px;">
+                        <strong>Legend:</strong>
+                        <ul style="margin-left: 20px; margin-top: 8px;">
+                            <li>📄 = Theory/Concept lesson</li>
+                            <li>🎯 = Practice lesson (exercises)</li>
+                            <li>[L1], [L2], [L3] = Depth level</li>
+                            <li>Orange highlight = Practice lesson</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Key Features -->
+                <div class="help-section">
+                    <div class="help-section-title">
+                        <div class="help-section-icon">
+                            <i class="fa-solid fa-star"></i>
+                        </div>
+                        <span>Key Features</span>
+                    </div>
+                    <div class="help-features">
+                        <div class="help-feature">
+                            <div class="help-feature-icon">♾️</div>
+                            <div class="help-feature-title">Infinite Depth</div>
+                            <div class="help-feature-desc">Concepts break down until atomic (max 5 levels deep)</div>
+                        </div>
+                        <div class="help-feature">
+                            <div class="help-feature-icon">💪</div>
+                            <div class="help-feature-title">Practice Everywhere</div>
+                            <div class="help-feature-desc">5 progressive exercises after each concept branch</div>
+                        </div>
+                        <div class="help-feature">
+                            <div class="help-feature-icon">🧠</div>
+                            <div class="help-feature-title">ADHD-Friendly</div>
+                            <div class="help-feature-desc">Small chunks (5-10 min), clear progress, natural breaks</div>
+                        </div>
+                        <div class="help-feature">
+                            <div class="help-feature-icon">💻</div>
+                            <div class="help-feature-title">Built-in IDE</div>
+                            <div class="help-feature-desc">Code directly in browser with instant feedback</div>
+                        </div>
+                        <div class="help-feature">
+                            <div class="help-feature-icon">📊</div>
+                            <div class="help-feature-title">Progress Tracking</div>
+                            <div class="help-feature-desc">Visual skill tree shows your learning journey</div>
+                        </div>
+                        <div class="help-feature">
+                            <div class="help-feature-icon">🔄</div>
+                            <div class="help-feature-title">Self-Optimizing</div>
+                            <div class="help-feature-desc">AI continuously improves curriculum quality</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- How to Use -->
+                <div class="help-section">
+                    <div class="help-section-title">
+                        <div class="help-section-icon">
+                            <i class="fa-solid fa-play"></i>
+                        </div>
+                        <span>How to Use the Platform</span>
+                    </div>
+                    <div class="help-content">
+                        <ol style="margin-left: 20px; line-height: 2;">
+                            <li><strong>Choose Your Path:</strong> Select career track (Full-Stack, DevOps, Security, etc.)</li>
+                            <li><strong>Browse Curriculum:</strong> Click any track to expand lessons</li>
+                            <li><strong>Click a Lesson:</strong> Starts the learning experience</li>
+                            <li><strong>Read → Code → Practice:</strong> Learn concept, try code, do exercises</li>
+                            <li><strong>Mark Complete:</strong> System tracks progress automatically</li>
+                            <li><strong>Deep Dive:</strong> Sub-lessons appear as concepts expand</li>
+                        </ol>
+                    </div>
+                </div>
+
+                <!-- Keyboard Shortcuts -->
+                <div class="help-section">
+                    <div class="help-section-title">
+                        <div class="help-section-icon">
+                            <i class="fa-solid fa-keyboard"></i>
+                        </div>
+                        <span>Keyboard Shortcuts</span>
+                    </div>
+                    <div>
+                        <div class="help-shortcut">
+                            <span class="help-shortcut-key">Ctrl</span> + <span class="help-shortcut-key">Enter</span>
+                            <span>Run Code</span>
+                        </div>
+                        <div class="help-shortcut">
+                            <span class="help-shortcut-key">Ctrl</span> + <span class="help-shortcut-key">S</span>
+                            <span>Save Progress</span>
+                        </div>
+                        <div class="help-shortcut">
+                            <span class="help-shortcut-key">Ctrl</span> + <span class="help-shortcut-key">F</span>
+                            <span>Search Lessons</span>
+                        </div>
+                        <div class="help-shortcut">
+                            <span class="help-shortcut-key">?</span>
+                            <span>Open This Help</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Tips -->
+                <div class="help-section">
+                    <div class="help-section-title">
+                        <div class="help-section-icon">
+                            <i class="fa-solid fa-lightbulb"></i>
+                        </div>
+                        <span>Pro Tips for Effective Learning</span>
+                    </div>
+                    <div class="help-content">
+                        <ul style="margin-left: 20px; line-height: 2;">
+                            <li>✅ <strong>Don't rush:</strong> Each lesson is designed to be 5-15 minutes</li>
+                            <li>✅ <strong>Do ALL practice lessons:</strong> They're key to mastery</li>
+                            <li>✅ <strong>Use the IDE:</strong> Type code yourself, don't just read</li>
+                            <li>✅ <strong>Follow the tree:</strong> Complete 01a before 01a-1</li>
+                            <li>✅ <strong>Take breaks:</strong> Natural stopping points after each lesson</li>
+                            <li>✅ <strong>Check AI Status:</strong> See what's being generated next</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Footer -->
+                <div class="help-content" style="text-align: center; padding-top: 24px; border-top: 1px solid var(--border);">
+                    <strong>Built with AI for personalized, infinite-depth learning 🚀</strong><br>
+                    <span style="color: var(--text-tertiary); font-size: 12px;">
+                        Powered by Qwen 2.5 Coder 32B • AutoGen • Ollama
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <div class="toast" id="toast">
         <div class="toast-icon">
             <i class="fa-solid fa-check"></i>
@@ -1390,7 +1795,7 @@
                         <i class="fa-solid fa-bug"></i>
                         <span>AI Status</span>
                     </button>
-                    <button class="help-btn">
+                    <button class="help-btn" onclick="openHelpModal()">
                         <i class="fa-solid fa-circle-question"></i>
                     </button>
                 </div>
@@ -1703,6 +2108,42 @@ print("Hello, DEV//QUEST!")</div>
             document.getElementById('debug-modal').classList.remove('visible');
         }
 
+        // ========================================
+        // HELP MODAL FUNCTIONS
+        // ========================================
+        function openHelpModal() {
+            document.getElementById('help-modal').classList.add('active');
+        }
+
+        function closeHelpModal() {
+            document.getElementById('help-modal').classList.remove('active');
+        }
+
+        // Close modal when clicking outside
+        document.addEventListener('click', (e) => {
+            const helpModal = document.getElementById('help-modal');
+            if (e.target === helpModal) {
+                closeHelpModal();
+            }
+        });
+
+        // Keyboard shortcut: ? key opens help
+        document.addEventListener('keydown', (e) => {
+            if (e.key === '?' && !e.ctrlKey && !e.metaKey) {
+                const activeElement = document.activeElement;
+                // Only open if not typing in input/textarea
+                if (activeElement.tagName !== 'INPUT' && activeElement.tagName !== 'TEXTAREA') {
+                    e.preventDefault();
+                    openHelpModal();
+                }
+            }
+            // ESC closes help modal
+            if (e.key === 'Escape') {
+                closeHelpModal();
+            }
+        });
+
+
         async function loadDebugInfo() {
             const debugBody = document.getElementById('debug-body');
             debugBody.innerHTML = '<div class="debug-status-item"><span class="message">Loading...</span></div>';
@@ -1767,24 +2208,24 @@ print("Hello, DEV//QUEST!")</div>
              * 01 = 0, 01a = 1, 01a-1 = 2, 01a-1-i = 3, etc.
              */
             if (!lessonNumber) return 0;
-
+            
             let depth = 0;
-
+            
             // Count letters (a, b, c)
             if (/[a-z]/i.test(lessonNumber)) {
                 depth += 1;
             }
-
+            
             // Count dashes (but not the -P suffix)
             const dashCount = (lessonNumber.match(/-/g) || []).length;
             const isPractice = lessonNumber.endsWith('-P');
-
+            
             if (isPractice) {
                 depth += dashCount - 1; // Subtract 1 for the -P
             } else {
                 depth += dashCount;
             }
-
+            
             return Math.min(depth, 5); // Cap at depth 5
         }
 
@@ -1796,7 +2237,7 @@ print("Hello, DEV//QUEST!")</div>
             if (lesson.lesson_number) {
                 return lesson.lesson_number;
             }
-
+            
             // Fallback: try to extract from id or title
             return lesson.id.toString();
         }
@@ -1963,12 +2404,12 @@ print("Hello, DEV//QUEST!")</div>
 
                 track.lessons.forEach(lesson => {
                     const lessonEl = document.createElement('div');
-
+                    
                     // Extract lesson metadata
                     const lessonNumber = getLessonNumber(lesson);
                     const depth = calculateLessonDepth(lessonNumber);
                     const isPractice = isPracticeLesson(lessonNumber);
-
+                    
                     // Set up lesson element
                     lessonEl.className = 'lesson-item';
                     lessonEl.dataset.lessonId = lesson.id;
