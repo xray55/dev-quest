@@ -537,6 +537,118 @@
             animation: pulse 1.5s ease-in-out infinite;
         }
 
+        /* ========== TREE STRUCTURE ENHANCEMENTS ========== */
+
+        /* Tree structure indentation based on depth */
+        .lesson-item[data-depth="0"] {
+            padding-left: 12px;
+        }
+
+        .lesson-item[data-depth="1"] {
+            padding-left: 32px;
+            border-left: 2px solid var(--border);
+            margin-left: 8px;
+        }
+
+        .lesson-item[data-depth="2"] {
+            padding-left: 52px;
+            border-left: 2px solid var(--border);
+            margin-left: 16px;
+        }
+
+        .lesson-item[data-depth="3"] {
+            padding-left: 72px;
+            border-left: 2px solid var(--border);
+            margin-left: 24px;
+        }
+
+        .lesson-item[data-depth="4"] {
+            padding-left: 92px;
+            border-left: 2px solid var(--border);
+            margin-left: 32px;
+        }
+
+        .lesson-item[data-depth="5"] {
+            padding-left: 112px;
+            border-left: 2px solid var(--border);
+            margin-left: 40px;
+        }
+
+        /* Depth badges (L1, L2, L3, etc.) */
+        .depth-badge {
+            display: inline-block;
+            padding: 2px 6px;
+            background: var(--bg-elevated);
+            border-radius: 4px;
+            font-size: 10px;
+            font-family: 'JetBrains Mono', monospace;
+            color: var(--text-tertiary);
+            margin-right: 6px;
+            vertical-align: middle;
+        }
+
+        /* Practice lesson special styling */
+        .lesson-item.practice {
+            background: rgba(255, 166, 38, 0.1);
+            border-left: 3px solid var(--warning) !important;
+        }
+
+        .lesson-item.practice:hover {
+            background: rgba(255, 166, 38, 0.15);
+        }
+
+        .lesson-item.practice .lesson-icon {
+            background: rgba(255, 166, 38, 0.2);
+            color: var(--warning);
+        }
+
+        /* Practice badge */
+        .practice-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            padding: 2px 8px;
+            background: var(--warning);
+            color: var(--bg-deep);
+            border-radius: 4px;
+            font-size: 10px;
+            font-weight: 600;
+            font-family: 'JetBrains Mono', monospace;
+            margin-left: 8px;
+        }
+
+        /* Lesson number display */
+        .lesson-number {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 11px;
+            color: var(--text-tertiary);
+            margin-right: 8px;
+            min-width: 50px;
+            display: inline-block;
+        }
+
+        /* Sub-lesson connector lines */
+        .lesson-item[data-depth="1"]::before,
+        .lesson-item[data-depth="2"]::before,
+        .lesson-item[data-depth="3"]::before,
+        .lesson-item[data-depth="4"]::before,
+        .lesson-item[data-depth="5"]::before {
+            content: '';
+            position: absolute;
+            left: calc(var(--indent) - 10px);
+            top: 50%;
+            width: 8px;
+            height: 2px;
+            background: var(--border-light);
+        }
+
+        .lesson-item[data-depth="1"] { --indent: 32px; }
+        .lesson-item[data-depth="2"] { --indent: 52px; }
+        .lesson-item[data-depth="3"] { --indent: 72px; }
+        .lesson-item[data-depth="4"] { --indent: 92px; }
+        .lesson-item[data-depth="5"] { --indent: 112px; }
+
+
         .lesson-icon {
             width: 32px;
             height: 32px;
@@ -1647,6 +1759,56 @@ print("Hello, DEV//QUEST!")</div>
         }
 
         // ========================================
+        // TREE STRUCTURE HELPERS
+        // ========================================
+        function calculateLessonDepth(lessonNumber) {
+            /**
+             * Calculate depth based on lesson number pattern
+             * 01 = 0, 01a = 1, 01a-1 = 2, 01a-1-i = 3, etc.
+             */
+            if (!lessonNumber) return 0;
+
+            let depth = 0;
+
+            // Count letters (a, b, c)
+            if (/[a-z]/i.test(lessonNumber)) {
+                depth += 1;
+            }
+
+            // Count dashes (but not the -P suffix)
+            const dashCount = (lessonNumber.match(/-/g) || []).length;
+            const isPractice = lessonNumber.endsWith('-P');
+
+            if (isPractice) {
+                depth += dashCount - 1; // Subtract 1 for the -P
+            } else {
+                depth += dashCount;
+            }
+
+            return Math.min(depth, 5); // Cap at depth 5
+        }
+
+        function getLessonNumber(lesson) {
+            /**
+             * Extract lesson number from lesson object
+             * Handles both lesson.lesson_number and lesson.id
+             */
+            if (lesson.lesson_number) {
+                return lesson.lesson_number;
+            }
+
+            // Fallback: try to extract from id or title
+            return lesson.id.toString();
+        }
+
+        function isPracticeLesson(lessonNumber) {
+            /**
+             * Check if a lesson is a practice lesson
+             */
+            return lessonNumber && lessonNumber.endsWith('-P');
+        }
+
+        // ========================================
         // LOAD CURRICULUM
         // ========================================
         async function loadCurriculum() {
@@ -1801,8 +1963,21 @@ print("Hello, DEV//QUEST!")</div>
 
                 track.lessons.forEach(lesson => {
                     const lessonEl = document.createElement('div');
+
+                    // Extract lesson metadata
+                    const lessonNumber = getLessonNumber(lesson);
+                    const depth = calculateLessonDepth(lessonNumber);
+                    const isPractice = isPracticeLesson(lessonNumber);
+
+                    // Set up lesson element
                     lessonEl.className = 'lesson-item';
                     lessonEl.dataset.lessonId = lesson.id;
+                    lessonEl.dataset.depth = depth;
+                    lessonEl.dataset.lessonNumber = lessonNumber;
+
+                    if (isPractice) {
+                        lessonEl.classList.add('practice');
+                    }
 
                     const isViewed = viewedLessons.includes(lesson.id);
                     if (isViewed) {
@@ -1814,21 +1989,49 @@ print("Hello, DEV//QUEST!")</div>
                         lessonEl.classList.add('generating');
                     }
 
+                    // Determine icon based on type and practice status
                     let icon = '📄';
-                    if (lesson.type === 'lab') icon = '🧪';
-                    else if (lesson.type === 'challenge') icon = '🏆';
-                    else if (lesson.type === 'project') icon = '🚀';
+                    if (isPractice) {
+                        icon = '🎯';
+                    } else if (lesson.type === 'lab') {
+                        icon = '🧪';
+                    } else if (lesson.type === 'challenge') {
+                        icon = '🏆';
+                    } else if (lesson.type === 'project') {
+                        icon = '🚀';
+                    }
 
+                    // Build depth indicator
+                    let depthIndicator = '';
+                    if (depth > 0) {
+                        depthIndicator = `<span class="depth-badge">L${depth}</span>`;
+                    }
+
+                    // Build practice badge
+                    let practiceBadge = '';
+                    if (isPractice) {
+                        practiceBadge = `<span class="practice-badge">
+                            <i class="fa-solid fa-dumbbell"></i> PRACTICE
+                        </span>`;
+                    }
+
+                    // Render lesson HTML
                     lessonEl.innerHTML = `
                         <div class="lesson-icon">
                             ${isViewed ? '<i class="fa-solid fa-check"></i>' : icon}
                         </div>
                         <div class="lesson-details">
-                            <div class="lesson-title">${lesson.title}</div>
+                            <div class="lesson-title">
+                                <span class="lesson-number">${lessonNumber}</span>
+                                ${depthIndicator}
+                                ${lesson.title}
+                                ${practiceBadge}
+                            </div>
                             <div class="lesson-meta">
                                 <span>${lesson.duration || '15 min'}</span>
                                 <span>•</span>
                                 <span>${isGenerating ? 'Generating...' : lesson.type || 'concept'}</span>
+                                ${depth > 0 ? `<span>•</span><span>Depth ${depth}</span>` : ''}
                             </div>
                         </div>
                     `;
