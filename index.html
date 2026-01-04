@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>DEV//QUEST Academy</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <link href="https://fonts.googleapis.com/css2?family=Literata:ital,wght@0,400;0,600;0,700;1,400&family=JetBrains+Mono:wght@400;500;600&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/marked/9.1.2/marked.min.js"></script>
@@ -18,28 +18,28 @@
             --bg-secondary: #1e1e24;
             --bg-elevated: #26262e;
             --bg-code: #1a1a20;
-            
+
             --text-primary: #e8e8ec;
             --text-secondary: #b8b8c0;
             --text-tertiary: #7d7d88;
-            
+
             --accent: #ff6b35;
             --accent-soft: #ff8c5f;
             --accent-dim: #4a2618;
             --accent-glow: rgba(255, 107, 53, 0.2);
-            
+
             --success: #00d9a3;
             --success-dim: #00473a;
             --warning: #ffa726;
             --danger: #ff5252;
             --info: #42a5f5;
-            
+
             --border: #2a2a32;
             --border-light: #38383f;
-            
+
             --shadow: rgba(0, 0, 0, 0.3);
             --shadow-strong: rgba(0, 0, 0, 0.6);
-            
+
             --highlight: rgba(255, 107, 53, 0.1);
         }
 
@@ -51,6 +51,8 @@
             color: var(--text-primary);
             line-height: 1.7;
             overflow: hidden;
+            /* FIX: Use dynamic viewport height for mobile browsers */
+            height: 100dvh;
         }
 
         /* ========== LOADING SCREEN ========== */
@@ -95,7 +97,7 @@
             color: var(--text-primary);
             letter-spacing: 0.5px;
         }
-        
+
         .ai-status-pill {
             margin-top: 12px;
             padding: 8px 16px;
@@ -123,7 +125,36 @@
         /* ========== LAYOUT ========== */
         .app-container {
             display: flex;
-            height: 100vh;
+            height: 100%; /* Uses body's 100dvh */
+            position: relative;
+        }
+
+        /* ========== MOBILE MENU ELEMENTS ========== */
+        .mobile-menu-btn {
+            display: none; /* Hidden on desktop */
+            background: none;
+            border: none;
+            color: var(--text-primary);
+            font-size: 20px;
+            cursor: pointer;
+            margin-right: 12px;
+            padding: 4px;
+        }
+
+        .sidebar-overlay {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.5);
+            backdrop-filter: blur(2px);
+            z-index: 4999;
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        .sidebar-overlay.visible {
+            display: block;
+            opacity: 1;
         }
 
         /* ========== SIDEBAR ========== */
@@ -134,6 +165,7 @@
             display: flex;
             flex-direction: column;
             overflow: hidden;
+            z-index: 5000; /* Above content on mobile */
         }
 
         .ai-generation-banner {
@@ -306,7 +338,7 @@
             cursor: pointer;
             user-select: none;
         }
-        
+
         .skill-tree-header:hover .skill-tree-label {
             color: var(--accent-soft);
         }
@@ -330,7 +362,7 @@
         .skill-tree-body {
             display: block;
         }
-        
+
         .skill-tree-body.collapsed {
             display: none;
         }
@@ -538,7 +570,7 @@
         }
 
         /* ========== TREE STRUCTURE ENHANCEMENTS ========== */
-        
+
         /* Toggle chevron for parent lessons */
         .lesson-toggle {
             width: 20px;
@@ -1030,6 +1062,7 @@
             flex: 1;
             display: flex;
             overflow: hidden;
+            position: relative; /* Make sure tabs work */
         }
 
         .lesson-content {
@@ -1326,7 +1359,7 @@
             transform: translateY(120px);
             opacity: 0;
             transition: all 0.3s ease;
-            z-index: 1000;
+            z-index: 6000;
         }
 
         .toast.visible {
@@ -1355,22 +1388,60 @@
             color: var(--text-primary);
         }
 
-        /* Debug Modal */
-        .debug-modal {
+        /* ========== MOBILE TABS (NEW) ========== */
+        .mobile-tabs {
+            display: none;
+            background: var(--bg-primary);
+            border-top: 1px solid var(--border);
+            padding: 8px 16px;
+            justify-content: space-around;
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            z-index: 4000;
+        }
+
+        .mobile-tab-btn {
+            flex: 1;
+            padding: 10px;
+            background: transparent;
+            border: none;
+            color: var(--text-tertiary);
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            transition: all 0.2s;
+        }
+
+        .mobile-tab-btn.active {
+            background: var(--bg-elevated);
+            color: var(--accent);
+        }
+
+        /* ========== MODALS ========== */
+        .debug-modal, .help-modal {
             position: fixed;
             inset: 0;
             background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(8px);
             display: none;
             align-items: center;
             justify-content: center;
-            z-index: 9998;
+            z-index: 10000;
+            padding: 20px;
         }
 
-        .debug-modal.visible {
+        .debug-modal.visible, .help-modal.active {
             display: flex;
         }
 
-        .debug-content {
+        .debug-content, .help-modal-content {
             background: var(--bg-primary);
             border: 1px solid var(--border-light);
             border-radius: 12px;
@@ -1379,9 +1450,10 @@
             max-height: 80vh;
             display: flex;
             flex-direction: column;
+            box-shadow: 0 20px 60px var(--shadow-strong);
         }
 
-        .debug-header {
+        .debug-header, .help-modal-header {
             padding: 20px 24px;
             border-bottom: 1px solid var(--border);
             display: flex;
@@ -1395,7 +1467,7 @@
             color: var(--text-primary);
         }
 
-        .debug-close {
+        .debug-close, .help-close-btn {
             background: none;
             border: none;
             color: var(--text-tertiary);
@@ -1411,12 +1483,12 @@
             transition: all 0.2s;
         }
 
-        .debug-close:hover {
+        .debug-close:hover, .help-close-btn:hover {
             background: var(--bg-elevated);
             color: var(--text-primary);
         }
 
-        .debug-body {
+        .debug-body, .help-modal-body {
             padding: 24px;
             overflow-y: auto;
             flex: 1;
@@ -1490,12 +1562,110 @@
                 left: -100%;
                 top: 0;
                 bottom: 0;
-                z-index: 100;
+                z-index: 5000;
                 transition: left 0.3s;
+                background: var(--bg-primary); /* Ensure bg is opaque */
             }
             .sidebar.open {
                 left: 0;
+                box-shadow: 0 0 50px rgba(0,0,0,0.8);
             }
+            .mobile-menu-btn {
+                display: block;
+            }
+
+            /* Responsive Footer - Side by Side & Lifted */
+            .nav-footer {
+                padding: 12px 16px;
+                flex-direction: row;
+                flex-wrap: wrap;
+                gap: 10px;
+                margin-bottom: 70px; /* LIFTED: Clear the mobile tabs! */
+            }
+            .lesson-position {
+                width: 100%;
+                text-align: center;
+                order: -1;
+                margin-bottom: 4px;
+            }
+            .nav-btn {
+                flex: 1;
+                justify-content: center;
+            }
+
+            /* MOBILE TABS VISIBLE */
+            .mobile-tabs {
+                display: flex;
+            }
+
+            /* MOBILE TAB LOGIC - Controlled by JS classes */
+            .lesson-content.mobile-hidden {
+                display: none !important;
+            }
+            .ide-panel.mobile-hidden {
+                display: none !important;
+            }
+
+            /* Full height when active */
+            .ide-panel {
+                width: 100%;
+                height: 100%;
+                border-top: none;
+            }
+            .content-wrapper {
+                height: calc(100vh - 140px); /* Adjust for header/tabs */
+            }
+
+            /* UNIFIED SCROLLING FIX FOR MOBILE */
+            /* 1. Make the container scrollable, not just the body */
+            .lesson-content {
+                display: block;      /* Disable flexbox locking */
+                height: 100%;        /* Full height of wrapper */
+                overflow-y: auto;    /* Scroll the whole thing */
+                -webkit-overflow-scrolling: touch;
+            }
+
+            /* 2. Remove independent scrolling from the body */
+            .lesson-body {
+                overflow: visible;   /* Let it expand */
+                height: auto;
+                padding-bottom: 20px; /* Standard padding, footer margin handles spacing */
+            }
+
+            /* 3. Ensure header/analogy flow naturally */
+            .lesson-header, .analogy-section {
+                flex-shrink: 0;      /* Prevent squishing */
+            }
+
+            /* COMPACT STYLING FOR MOBILE */
+            .lesson-header { padding: 16px; }
+            .lesson-header h1 { font-size: 22px; line-height: 1.3; }
+
+            .analogy-section { padding: 16px; }
+            .analogy-section p { font-size: 14px; line-height: 1.5; }
+
+            .lesson-body { padding: 16px; }
+        }
+
+        /* === NEW: Aggressive Header Shrinking for Mobile === */
+        @media (max-width: 600px) {
+            .header { padding: 10px 12px; } /* Less padding */
+            .logo { gap: 8px; }
+            .logo-icon { width: 28px; height: 28px; font-size: 12px; }
+            .logo-text { font-size: 16px; } /* Smaller text */
+            .header-actions { gap: 4px; }
+
+            /* Compact buttons */
+            .discord-btn, .debug-btn, .help-btn {
+                padding: 6px 8px;
+                font-size: 12px;
+            }
+
+            /* Hide text labels earlier to prevent overflow */
+            .discord-btn span, .debug-btn span { display: none; }
+
+            /* Ensure icons are visible */
+            .discord-btn i, .debug-btn i, .help-btn i { font-size: 14px; }
         }
     </style>
 </head>
@@ -1742,6 +1912,8 @@
     </div>
 
     <div class="app-container">
+        <div class="sidebar-overlay" onclick="toggleMobileSidebar()"></div>
+
         <div class="sidebar">
             <div class="ai-generation-banner" id="ai-banner">
                 <div class="spinner"></div>
@@ -1821,6 +1993,9 @@
         <div class="main-content">
             <div class="header">
                 <div class="logo">
+                    <button class="mobile-menu-btn" onclick="toggleMobileSidebar()">
+                        <i class="fa-solid fa-bars"></i>
+                    </button>
                     <div class="logo-icon">DQ</div>
                     <div class="logo-text">DEV//QUEST</div>
                 </div>
@@ -1840,8 +2015,17 @@
                 </div>
             </div>
 
+            <div class="mobile-tabs">
+                <button class="mobile-tab-btn active" id="tab-lesson" onclick="switchMobileTab('lesson')">
+                    <i class="fa-solid fa-book-open"></i> Lesson
+                </button>
+                <button class="mobile-tab-btn" id="tab-code" onclick="switchMobileTab('code')">
+                    <i class="fa-solid fa-code"></i> Code
+                </button>
+            </div>
+
             <div class="content-wrapper">
-                <div class="lesson-content">
+                <div class="lesson-content" id="lesson-view">
                     <div class="lesson-header">
                         <h1 id="lesson-title">Welcome to DEV//QUEST Academy</h1>
                         <div class="lesson-meta-bar">
@@ -1878,7 +2062,7 @@
                     </div>
                 </div>
 
-                <div class="ide-panel">
+                <div class="ide-panel mobile-hidden" id="ide-view">
                     <div class="ide-toolbar">
                         <div class="ide-title">
                             <i class="fa-solid fa-terminal"></i>
@@ -2099,6 +2283,39 @@ print("Hello, DEV//QUEST!")</div>
 
             // Update path info on load
             updatePathInfo();
+        }
+
+        // ========================================
+        // MOBILE UI LOGIC
+        // ========================================
+        function toggleMobileSidebar() {
+            document.querySelector('.sidebar').classList.toggle('open');
+            document.querySelector('.sidebar-overlay').classList.toggle('visible');
+        }
+
+        function switchMobileTab(tabName) {
+            // Only works if mobile tabs are visible (CSS handles this via media query)
+            const lessonView = document.getElementById('lesson-view');
+            const ideView = document.getElementById('ide-view');
+            const tabLesson = document.getElementById('tab-lesson');
+            const tabCode = document.getElementById('tab-code');
+
+            if (tabName === 'lesson') {
+                lessonView.classList.remove('mobile-hidden');
+                ideView.classList.add('mobile-hidden');
+                tabLesson.classList.add('active');
+                tabCode.classList.remove('active');
+            } else {
+                lessonView.classList.add('mobile-hidden');
+                ideView.classList.remove('mobile-hidden');
+                tabLesson.classList.remove('active');
+                tabCode.classList.add('active');
+
+                // IMPORTANT: Resize editor when switching to code view
+                if (editor) {
+                    editor.resize();
+                }
+            }
         }
 
         // ========================================
@@ -2622,6 +2839,17 @@ print("Hello, DEV//QUEST!")</div>
                 updateNavButtons();
                 updateLessonPosition();
 
+                // Reset Content Scroll (The Fix for Bottom Scrolling)
+                document.getElementById('lesson-view').scrollTop = 0; // Mobile container
+                const body = document.querySelector('.lesson-body');
+                if(body) body.scrollTop = 0; // Desktop container
+
+                // MOBILE UX: Auto-close sidebar & Switch to Lesson Tab
+                if (window.innerWidth <= 768) {
+                    if(document.querySelector('.sidebar').classList.contains('open')) toggleMobileSidebar();
+                    switchMobileTab('lesson');
+                }
+
                 console.log('📖 Loaded lesson:', lesson.title);
             } catch (error) {
                 console.error('Failed to load lesson:', error);
@@ -2697,6 +2925,7 @@ print("Hello, DEV//QUEST!")</div>
                 document.getElementById('career-path-select').value = savedPath;
                 currentCareerPath = savedPath;
                 filterByCareerPath();
+                updatePathInfo();
             }
         }
 
