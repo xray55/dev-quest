@@ -3,11 +3,12 @@
 <div align="center">
 
 ![DEVQUEST Status](https://img.shields.io/badge/Status-Live-00ff88?style=for-the-badge&logo=cpu)
-![AI Powered](https://img.shields.io/badge/AI_Powered-Advanced_LLMs-ff6b35?style=for-the-badge&logo=openai)
-![Lessons](https://img.shields.io/badge/Lessons-700+-blue?style=for-the-badge&logo=bookstack)
+![AI Powered](https://img.shields.io/badge/AI_Engine-Recursive_Agents-ff6b35?style=for-the-badge&logo=openai)
+![Curriculum](https://img.shields.io/badge/Curriculum-Infinite_Depth-blueviolet?style=for-the-badge&logo=bookstack)
+![Security](https://img.shields.io/badge/Security-Uncensored_Educational-red?style=for-the-badge&logo=kali-linux)
 
-### 🚀 AI-Powered Learning Platform
-**Master programming, cybersecurity, and data science with AI-generated lessons**
+### 🚀 Recursive AI-Powered Learning Platform
+**Master Programming, Cybersecurity, Data Science, and Systems Engineering with an infinite-depth AI curriculum.**
 
 ## **[🎯 Start Learning →](https://xray55.github.io/dev-quest/)**
 
@@ -17,120 +18,116 @@
 
 ---
 
-## 🎯 What Is DEVQUEST?
+## 🧬 The Recursive AI Difference
 
-**DEVQUEST Academy** is an AI-powered learning platform that generates comprehensive, personalized programming lessons in real-time. Unlike traditional courses with pre-recorded content, our AI creates fresh, detailed lessons tailored to modern development practices.
+**DEVQUEST Academy** is not a static course. It is powered by a **Recursive AI Engine** that builds a personalized curriculum in real-time.
 
-### 🌟 Why DEVQUEST?
-
-✨ **AI-Generated Content** - Every lesson is created by advanced language models trained on cutting-edge knowledge  
-📚 **Massive Curriculum** - 700+ lessons across 50+ technologies and specializations  
-🎯 **Career-Focused Paths** - Follow guided tracks for specific roles (Full-Stack, DevOps, Security, etc.)  
-💻 **Interactive Learning** - Built-in code editor with live Python/JavaScript execution  
-📊 **Visual Progress Tracking** - Skill tree system shows your growth across all technologies  
-🌙 **Beautiful Dark Interface** - Distraction-free, eye-friendly design for extended learning  
-🆓 **Completely Free** - No paywalls, no premium tiers, no credit card required  
+1.  **Infinite Depth:** If a concept is too complex, the AI recursively breaks it down into sub-lessons (`01a`, `01b`) until it is atomic and understandable.
+2.  **Specialized Models:**
+    * **Coding:** Uses `Qwen 2.5 Coder 32B` for high-precision engineering lessons.
+    * **Security:** Uses `Qwen 3 Abliterated` for **uncensored** Red Team training (no "I cannot assist" refusals).
+3.  **Polyglot Curriculum:** Covers everything from Low-Level C/Rust to High-Level AI/ML and Enterprise Java.
 
 ---
 
-## 🗺️ Learning Paths
+## 🗺️ Career Paths & Skills Gained
 
-Choose your career destination and let our AI guide you:
+We support **25+ Specialized Career Paths** across 6 disciplines. Each path includes targeted theory, labs, and capstone projects.
 
-### 💻 **Software Development**
-- **Full-Stack Developer** - Master frontend and backend (React, Node.js, databases)
-- **Frontend Developer** - Build beautiful UIs (HTML, CSS, JavaScript, React, TypeScript)
-- **Backend Engineer** - Server-side architecture (APIs, databases, Python, Node.js)
-- **Mobile Developer** - iOS/Android apps with React Native
+### 💻 **Software Engineering**
+*Master the full stack of modern application development.*
 
-### ☁️ **Cloud & Infrastructure**
-- **DevOps Engineer** - Automate everything (Docker, Kubernetes, CI/CD, AWS)
-- **Cloud Architect** - Design cloud solutions (AWS, Terraform, microservices)
-- **Site Reliability Engineer** - Build resilient systems (monitoring, SRE practices)
+| Role | Focus | Salary Range | Key Certifications |
+| :--- | :--- | :--- | :--- |
+| **Frontend Developer** | React, TypeScript, UI/UX | `$70k - $160k` | Meta Frontend Dev |
+| **Backend Developer** | Node.js, Python, APIs | `$80k - $180k` | AWS Developer Associate |
+| **Full-Stack Developer** | End-to-End Architecture | `$85k - $190k` | AWS Solutions Architect |
+| **Mobile Developer** | React Native, iOS, Android | `$90k - $175k` | Meta React Native |
 
-### 🤖 **Data & AI**
-- **Data Scientist** - Analyze data and build models (Python, SQL, ML, statistics)
-- **Machine Learning Engineer** - Production ML systems (PyTorch, TensorFlow, MLOps)
+### 🛡️ **Cybersecurity & InfoSec**
+*Powered by uncensored models for authentic offensive and defensive training.*
 
-### 🛡️ **Cybersecurity**
-- **Red Team / Penetration Tester** - Offensive security (web/network pentesting, exploit development)
-- **Blue Team / SOC Analyst** - Defensive security (SIEM, DFIR, threat hunting)
-- **Security Engineer** - Full-spectrum security (both red and blue team skills)
+| Role | Focus | Salary Range | Key Certifications |
+| :--- | :--- | :--- | :--- |
+| **Penetration Tester** | Red Team, Ethical Hacking | `$85k - $170k` | OSCP, CEH, GPEN |
+| **Red Team Operator** | Adversary Emulation, C2 | `$100k - $200k` | OSEP, CRTO, CRTL |
+| **SOC Analyst** | Blue Team, SIEM, Defense | `$65k - $120k` | CySA+, BTL1, Security+ |
+| **Incident Responder** | DFIR, Forensics, Malware | `$85k - $165k` | GCIH, GCFA, GREM |
+| **Threat Hunter** | Proactive Threat Detection | `$95k - $180k` | GCTI, GDAT |
+| **Purple Team Engineer** | Detection Engineering | `$105k - $195k` | OSCP, GDAT |
+| **GRC Analyst** | Governance, Risk, Audit | `$70k - $140k` | CISSP, CISA, CRISC |
+
+### ☁️ **DevOps & Cloud**
+*Build the infrastructure that powers the internet.*
+
+| Role | Focus | Salary Range | Key Certifications |
+| :--- | :--- | :--- | :--- |
+| **DevOps Engineer** | CI/CD, Docker, Kubernetes | `$95k - $200k` | CKA, AWS DevOps Pro |
+| **Cloud Architect** | AWS/Azure Design Patterns | `$130k - $250k` | AWS Solutions Architect Pro |
+| **SRE** | Reliability, Observability | `$110k - $220k` | CKA, Google Cloud Pro |
+| **Platform Engineer** | Internal Developer Platforms | `$120k - $220k` | CKA, Terraform Associate |
+
+### ☕ **Java & Enterprise Engineering**
+*The backbone of large-scale corporate systems.*
+
+| Role | Focus | Salary Range | Key Certifications |
+| :--- | :--- | :--- | :--- |
+| **Java Developer** | Core Java, JVM, OOP | `$80k - $170k` | Oracle Certified Pro |
+| **Enterprise Engineer** | Jakarta EE, Large Systems | `$100k - $200k` | Spring Professional |
+| **Spring Boot Dev** | Microservices, APIs | `$90k - $180k` | Spring Boot Certified |
+| **Android Developer** | Kotlin, Jetpack Compose | `$85k - $175k` | Google Associate Android |
+
+### 🔬 **Data Science & AI**
+*Harness the power of data and Large Language Models.*
+
+| Role | Focus | Salary Range | Key Certifications |
+| :--- | :--- | :--- | :--- |
+| **Data Scientist** | Python, Pandas, Analytics | `$95k - $190k` | AWS ML Specialty |
+| **AI Engineer** | LLMs, RAG, PyTorch | `$120k - $250k` | OpenAI/LangChain Certs |
+
+### 🛠️ **Specialized Roles**
+*Niche high-value technical domains.*
+
+| Role | Focus | Salary Range |
+| :--- | :--- | :--- |
+| **Game Developer** | Unity, C#, 3D Math, Physics | `$60k - $150k` |
+| **Blockchain Dev** | Solidity, Web3, Smart Contracts | `$100k - $220k` |
+| **Embedded Dev** | C, Rust, IoT, Firmware | `$80k - $160k` |
+| **Systems Engineer** | Linux Kernel, Low-Level C | `$90k - $180k` |
+| **API Developer** | REST, GraphQL, gRPC Integration | `$85k - $170k` |
 
 ---
 
-## 📚 What You'll Learn
+## 📚 Technology Stack
 
-Our AI-generated curriculum covers **50+ technologies**:
+Our AI curriculum covers **50+ Technologies** across the entire stack:
 
-**Programming Languages**: Python, JavaScript, TypeScript, Java, C++, Go, Rust  
-**Web Development**: HTML, CSS, React, Next.js, Node.js, Express, FastAPI  
-**Databases**: PostgreSQL, MongoDB, Redis, SQL fundamentals  
-**DevOps & Cloud**: Docker, Kubernetes, AWS, Terraform, CI/CD, Linux  
-**Data Science & AI**: Pandas, NumPy, PyTorch, TensorFlow, Scikit-learn  
-**Security**: Penetration testing, SIEM, malware analysis, threat intel, EDR  
-**Computer Science**: Algorithms, data structures, system design, math foundations  
-
----
-
-## 🎓 How It Works
-
-### 1️⃣ **Choose Your Path**
-Select a career track that interests you (or explore all tracks)
-
-### 2️⃣ **Start Learning**
-Our AI generates comprehensive lessons with:
-- Real-world analogies to make concepts stick
-- Detailed explanations (1500+ words per lesson)
-- Code examples you can run in the browser
-- Links to official documentation
-- Progressive difficulty that builds on previous knowledge
-
-### 3️⃣ **Track Your Progress**
-Watch your skill tree grow as you complete lessons:
-- Visual progress bars for each technology
-- Career path completion percentage
-- Auto-saved progress (no manual marking needed)
-
-### 4️⃣ **Practice & Build**
-- Interactive code editor for hands-on practice
-- Real-time Python/JavaScript execution
-- Example code in every lesson
-- Challenges and projects (coming soon)
+* **Languages:** Python, JavaScript, TypeScript, Java, C++, C, C#, Go, Rust, Ruby, PHP, Swift, Kotlin
+* **Web Frameworks:** React, Next.js, Vue, Angular, Express, FastAPI, Django, Spring Boot, Laravel
+* **Systems & DevOps:** Docker, Kubernetes, Terraform, Ansible, Linux, Bash
+* **Databases:** PostgreSQL, MongoDB, Redis, Cassandra, Elasticsearch
+* **Security Tools:** Metasploit, Burp Suite, Nmap, Wireshark, Splunk, Kali Linux
+* **AI & Data:** PyTorch, TensorFlow, Scikit-learn, Pandas, LangChain, HuggingFace
 
 ---
 
-## 💡 Features
+## 🎓 Platform Features
 
-### 🤖 **AI-Powered Content**
-Every lesson is generated by state-of-the-art language models, ensuring:
-- Up-to-date information on modern technologies
-- Comprehensive coverage of each topic
-- Clear explanations with practical examples
-- No outdated content or deprecated practices
+### **Interactive IDE**
+* Built-in **Code Editor** with syntax highlighting.
+* Executes **Python** directly in the browser via Pyodide.
+* Executes **JavaScript** natively.
+* Slide-out interface for distraction-free coding.
 
-### 🎨 **Beautiful Interface**
-- Dark theme optimized for long reading sessions
-- Clean, distraction-free layout
-- Smooth animations and transitions
-- Responsive design for all devices
+### **Smart Progress Tracking**
+* **Skill Tree** visualization tracks your growth across all technologies.
+* **Auto-Save** functionality ensures you never lose your place.
+* **Resume-Ready** data: See exactly which skills you've mastered.
 
-### 💻 **Interactive Code Editor**
-- Ace Editor with syntax highlighting
-- Execute Python code directly in browser (via Pyodide)
-- Run JavaScript examples instantly
-- Copy/paste friendly code blocks
-
-### 📊 **Smart Progress Tracking**
-- Automatic progress saving as you view lessons
-- Skill tree visualization showing your journey
-- Career path filtering to focus on what matters
-- Track completion across 47+ technology tracks
-
-### 🔍 **Powerful Search**
-- Find lessons instantly across all tracks
-- Filter by career path
-- Search by technology or topic
+### **Recursive Learning Engine**
+* **Self-Healing:** If the AI makes a syntax error, a secondary "Medic" AI fixes it instantly.
+* **Lab Injection:** The system automatically inserts hands-on "Practice" lessons (`🎯`) after theory modules.
+* **Analogy Engine:** Complex topics are explained using real-world analogies.
 
 ---
 
@@ -140,82 +137,27 @@ Every lesson is generated by state-of-the-art language models, ensuring:
 
 No signup required. No credit card. Just start learning.
 
-### Quick Start Guide:
-
-1. **Visit the platform** at the link above
-2. **Select a career path** (or choose "All Tracks" to explore)
-3. **Click any lesson** to begin
-4. **Your progress auto-saves** as you view lessons
-5. **Use the code editor** to practice examples
-6. **Watch your skill tree grow**
+1.  **Select a Career Path:** Choose from **Penetration Tester**, **Full-Stack Developer**, **AI Engineer**, and more.
+2.  **Explore the Tree:** Click on tracks to expand them into sub-lessons.
+3.  **Open the Code:** Click the **"Open Code"** button to toggle the IDE and practice what you learn.
 
 ---
 
-## 📈 Learning Statistics
+## 📈 Stats
 
-![Lesson Count](https://img.shields.io/badge/Total_Lessons-700+-00ff88?style=flat-square)
+![Lesson Count](https://img.shields.io/badge/Curriculum-700+_Nodes-00ff88?style=flat-square)
+![Career Paths](https://img.shields.io/badge/Career_Paths-26-blue?style=flat-square)
 ![Technologies](https://img.shields.io/badge/Technologies-50+-ff6b35?style=flat-square)
-![Career Paths](https://img.shields.io/badge/Career_Paths-13-blue?style=flat-square)
-![AI Generated](https://img.shields.io/badge/AI_Generated-100%25-purple?style=flat-square)
+![AI Models](https://img.shields.io/badge/Models-Qwen_2.5_&_3-purple?style=flat-square)
 
 ---
-
-## 🎯 Who Is This For?
-
-✅ **Beginners** - Start from zero with foundational tracks  
-✅ **Self-Taught Developers** - Fill knowledge gaps systematically  
-✅ **Career Switchers** - Follow proven paths to new roles  
-✅ **Students** - Supplement formal education with practical knowledge  
-✅ **Professionals** - Learn new technologies for career growth  
-✅ **ADHD Learners** - Auto-tracking, visual progress, no manual steps  
-
----
-
-## 🔥 What Makes Us Different?
-
-| Feature | DEVQUEST | Traditional Courses |
-|---------|-----------|-------------------|
-| Content Freshness | AI-generated, always current | Pre-recorded, often outdated |
-| Lesson Depth | 1500+ word comprehensive lessons | Brief videos or short articles |
-| Progress Tracking | Automatic, visual skill tree | Manual checkboxes or none |
-| Career Focus | 13 specific career paths | Generic "learn to code" |
-| Cost | Free forever | $20-200/month |
-| Ads | None | Everywhere |
-| Upsells | None | Constant |
-| Prerequisites | None | Often hidden behind paywalls |
-
----
-
-## 🛣️ Roadmap
-
-### ✅ **Current Features**
-- 700+ AI-generated lessons
-- 13 career learning paths
-- Interactive code editor
-- Skill tree progress visualization
-- Auto-save progress tracking
-
-
-## 🙏 Credits
-
-**Built with:**
-- Advanced AI language models for content generation
-- Microsoft AutoGen for multi-agent orchestration
-- FastAPI for high-performance backend
-- Modern web technologies for seamless UX
-
 
 <div align="center">
 
 ### **[🚀 Start Your Learning Journey Today](https://xray55.github.io/dev-quest/)**
 
-**DEVQUEST Academy** - Master the skills that matter
+**DEVQUEST Academy** - Master the skills that matter.
 
-[![Website](https://img.shields.io/badge/Website-Live-00ff88?style=for-the-badge)](https://xray55.github.io/dev-quest/)
----
-
-**Built with ❤️ for developers who want to learn without limits**
-
-*No signup • No paywall • No BS*
+*Built with ❤️ for developers who want to learn without limits*
 
 </div>
