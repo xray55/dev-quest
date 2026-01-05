@@ -10,7 +10,7 @@
 ### 🚀 Recursive AI-Powered Learning Platform
 **Master Programming, Cybersecurity, Data Science, and Systems Engineering with an infinite-depth AI curriculum.**
 
-## **[🎯 Start Learning →](https://xray55.github.io/dev-quest/)**
+## **[🎯 Start Learning →](https://devquest.uk)**
 
 [![Discord](https://img.shields.io/badge/Discord-Join_Community-5865F2?style=flat-square&logo=discord)](https://discord.gg/VjC9G3WCHc)
 
@@ -133,7 +133,7 @@ Our AI curriculum covers **50+ Technologies** across the entire stack:
 
 ## 🚀 Getting Started
 
-### **[👉 Access DEVQUEST Academy](https://xray55.github.io/dev-quest/)**
+### **[👉 Access DEVQUEST Academy](https://devquest.uk)**
 
 No signup required. No credit card. Just start learning.
 
@@ -154,7 +154,7 @@ No signup required. No credit card. Just start learning.
 
 <div align="center">
 
-### **[🚀 Start Your Learning Journey Today](https://xray55.github.io/dev-quest/)**
+### **[🚀 Start Your Learning Journey Today](https://devquest.uk)**
 
 **DEVQUEST Academy** - Master the skills that matter.
 
